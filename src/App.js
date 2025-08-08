@@ -1,11 +1,13 @@
-import logo from './logo.svg';
+import React from 'react'
 import './App.css';
+import PageRoutes from './routes/PageRoutes';
+
 
 function App() {
   return (
-    <div className="App">
-     <h1>Arogyam Rahita project is ready to code </h1>
-    </div>
+    <>
+      <PageRoutes />
+    </>
   );
 }
 

@@ -1,0 +1,159 @@
+.headerBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3%;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    gap: 5%;
+}
+
+/* Mobile menu */
+.mobileMenu {
+    display: block;
+}
+
+.menuButton {
+    padding: 0.5rem;
+    color: #4b5563;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Logo */
+.logoSection {
+    display: flex;
+    align-items: center;
+}
+
+.logoImage {
+    height: 3rem;
+    width: 3rem;
+    margin-right: 0.5rem;
+}
+
+/* Search bar */
+.searchBar {
+    display: flex;
+    flex-grow: 1;
+    margin: 0 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.searchInput {
+    flex-grow: 1;
+    padding: 0.5rem 1rem;
+    outline: none;
+    color: #374151;
+    border: none;
+}
+
+.searchButton {
+    background: white;
+    padding: 0.5rem;
+    color: #6b7280;
+    border: none;
+}
+
+/* Nav links */
+.navLinks {
+    display: none;
+}
+
+.navLink {
+    color: #374151;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.navLink:hover {
+    color: orange;
+}
+
+.activeLink {
+    color: orange;
+    font-weight: bold;
+}
+
+/* User actions */
+.userActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
+}
+
+.loginButton {
+    display: none;
+}
+
+.signInButton {
+    display: none;
+}
+
+.cartButton {
+    color: #374151;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.userButton {
+    color: orange;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* ===================== */
+/* All Media Queries Here */
+/* ===================== */
+@media (min-width: 768px) {
+    .mobileMenu {
+        display: none;
+    }
+
+    .searchBar {
+        flex-grow: 0;
+        width: 33%;
+        margin: 0 2rem;
+    }
+
+    .navLinks {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .loginButton {
+        display: block;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+        color: #374151;
+        background: none;
+        transition: background 0.2s;
+    }
+
+    .loginButton:hover {
+        background: #f3f4f6;
+    }
+
+    .signInButton {
+        display: block;
+        background: orange;
+        color: white;
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+        transition: background 0.2s;
+        border: none;
+    }
+
+    .signInButton:hover {
+        background: #ea580c;
+    }
+}
