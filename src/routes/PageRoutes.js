@@ -13,12 +13,6 @@ const PageRoutes = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/products" element={<Products />} />
-                {/*
-                 add Quick Link Privacy Policy
-Terms Of Use
-FAQ
-Contact
- */}
             </Routes>
             <Footer />
         </>
