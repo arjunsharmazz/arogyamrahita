@@ -3,28 +3,31 @@ import styles from "../css/Home.module.css";
 import { Truck, ShoppingBag, Leaf, Headset } from "lucide-react";
 import heroImageWrapper from "../images/logo.png";
 import { FaCheckCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 // Mock data for the product sections
 const popularProducts = [
     {
         name: "Dal's",
-        image: "https://placehold.co/100x100/A08A5E/fff?text=Dal's",
+        image:
+            "https://media.istockphoto.com/id/2160775869/photo/image-of-dried-yellow-split-pea-chickpea-chana-dal-lentils-in-white-ceramic-bowl-surrounded.jpg?s=2048x2048&w=is&k=20&c=lW9JQMZSzcU_F0rpSkH4Qu0PzR8EgHSyXT3bVUmbY6U=",
     },
     {
         name: "Dry Fruit's",
-        image: "https://placehold.co/100x100/F0D29E/fff?text=Dry+Fruit's",
+        image: "https://images.pexels.com/photos/5425017/pexels-photo-5425017.jpeg",
     },
     {
         name: "Oil's",
-        image: "https://placehold.co/100x100/A08A5E/fff?text=Oil's",
+        image: "https://images.pexels.com/photos/8450512/pexels-photo-8450512.jpeg",
     },
     {
         name: "Spices's",
-        image: "https://placehold.co/100x100/F0D29E/fff?text=Spices's",
+        image: "https://images.pexels.com/photos/618491/pexels-photo-618491.jpeg",
     },
     {
         name: "Pickel's",
-        image: "https://placehold.co/100x100/A08A5E/fff?text=Pickel's",
+        image:
+            "https://media.istockphoto.com/id/1313674046/photo/mango-pickel-or-homemade-mango-pickle-or-aam-ka-achar-or-kairi-loncha-in-a-wodded-bowl-with.jpg?s=2048x2048&w=is&k=20&c=dTjP96W4xu5E7SXV8Tyfa4mk9vYT9EFMOHGEEmhTbwg=",
     },
 ];
 
@@ -32,70 +35,78 @@ const popularProducts = [
 const bestDeals = [
     {
         name: "Black Mustard Oil",
-        image: "https://placehold.co/100x100/F0D29E/fff?text=Oil",
+        image:
+            "https://media.istockphoto.com/id/1311256168/photo/mustard-oil-in-glass-jar-with-black-mustard-seed-flower-and-mustard-cake-isolated-on-white.jpg?s=2048x2048&w=is&k=20&c=j-9Si5ZqRi4ySVZfxpl6o6CLM1qPNNI24ykscRxUP7E=",
         price: 2999,
         oldPrice: 3500,
         discount: "50% Discount",
     },
     {
         name: "Mango Pickle",
-        image: "https://placehold.co/100x100/A08A5E/fff?text=Pickle",
+        image: "https://images.pexels.com/photos/7812134/pexels-photo-7812134.jpeg",
         price: 599,
         oldPrice: 650,
         discount: "50% Discount",
     },
     {
         name: "Sabut Jeera",
-        image: "https://placehold.co/100x100/F0D29E/fff?text=Jeera",
+        image:
+            "https://media.istockphoto.com/id/450227743/photo/cumin-seeds.jpg?s=2048x2048&w=is&k=20&c=MrYyP_nkOK3sboS08u-OnDTfUqGZcEFrFRORfVzsjbk=",
         price: 499,
         oldPrice: 550,
         discount: "50% Discount",
     },
     {
         name: "Afghani Akroad",
-        image: "https://placehold.co/100x100/A08A5E/fff?text=Akroad",
+        image: "https://5.imimg.com/data5/YX/PC/MY-17779515/akrod-500x500.png",
         price: 799,
         oldPrice: 850,
         discount: "50% Discount",
     },
     {
         name: "Yellow Mustard Oil",
-        image: "https://placehold.co/100x100/F0D29E/fff?text=Oil",
+        image:
+            "https://www.surbhiutpad.com/wp-content/uploads/2023/07/yellow-mustured-oil.png",
         price: 299,
         oldPrice: 350,
         discount: "50% Discount",
     },
     {
         name: "Small Green Chilly",
-        image: "https://placehold.co/100x100/A08A5E/fff?text=Chilly",
+        image:
+            "https://connect.healthkart.com/wp-content/uploads/2022/11/900x500_banner_HK-Connect_Health-Benefits-of-green-chillies.png",
         price: 699,
         oldPrice: 1000,
         discount: "50% Discount",
     },
     {
         name: "Green Elachi",
-        image: "https://placehold.co/100x100/F0D29E/fff?text=Elachi",
+        image:
+            "https://5.imimg.com/data5/SELLER/Default/2023/6/321260192/FB/XQ/YU/84813594/green-cardamom-elachi-.jpg",
         price: 499,
         oldPrice: 700,
         discount: "50% Discount",
     },
     {
         name: "Mountain Anjir",
-        image: "https://placehold.co/100x100/A08A5E/fff?text=Anjir",
+        image:
+            "https://nutshub.in/wp-content/uploads/2024/05/51nq28Gh0sL._AC_UF10001000_QL80_.jpg",
         price: 999,
         oldPrice: 2000,
         discount: "50% Discount",
     },
     {
         name: "ASUS Zenbook A14 OLED",
-        image: "https://placehold.co/100x100/F0D29E/fff?text=Laptop",
+        image:
+            "https://press.asus.com/assets/w_1200,h_630/e879b74c-55b3-4dba-a036-e76abec777c6/ASUS%20Zenbook%20A14%20(Iceland%20Gray).png",
         price: 99990,
         oldPrice: 100000,
         discount: "50% Discount",
     },
     {
         name: "Lemon Pickle",
-        image: "https://placehold.co/100x100/A08A5E/fff?text=Pickle",
+        image:
+            "https://punguskitchen.com/wp-content/uploads/2024/09/Naranga-Achar-Lemon-Pickle.jpg",
         price: 299,
         oldPrice: 500,
         discount: "50% Discount",
@@ -129,13 +140,22 @@ const ProductCard = ({ product }) => (
 // Reusable Product Deal Card component
 const ProductDealCard = ({ product }) => (
     <div className={styles.productDealCard}>
-        <img src={product.image} alt={product.name} />
-        <p className={styles.dealName}>{product.name}</p>
-        <div className={styles.dealPrices}>
-            <span className={styles.currentPrice}>₹{product.price}</span>
-            <span className={styles.oldPrice}>₹{product.oldPrice}</span>
+        <div className={styles.productDealCardOneBox}>
+            <img src={product.image} alt={product.name} />
+            <p className={styles.dealName}>{product.name}</p>
         </div>
-        <p className={styles.discountTag}>{product.discount}</p>
+
+        <div className={styles.productDealCardPriceAndBuyBox}>
+            <div className={styles.dealPrices}>
+                <span className={styles.currentPrice}>₹{product.price}</span>
+                <span className={styles.oldPrice}>₹{product.oldPrice}</span>
+            </div>
+
+            <div className={styles.productDealCardTwoBox}>
+                <p className={styles.discountTag}>{product.discount}</p>
+                <Link className={styles.buyNowBtn}>Buy Now</Link>
+            </div>
+        </div>
     </div>
 );
 
@@ -218,7 +238,8 @@ const HomePage = () => {
                                     ))}
                                 </div>
                                 <h3 className={styles.testimonialName}>
-                                    {testimonial.name}{" "}<FaCheckCircle className={styles.checkIcon} />
+                                    {testimonial.name}{" "}
+                                    <FaCheckCircle className={styles.checkIcon} />
                                 </h3>
                                 <p className={styles.testimonialText}>"{testimonial.text}"</p>
                             </div>

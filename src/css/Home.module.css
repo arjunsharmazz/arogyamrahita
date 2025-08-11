@@ -126,6 +126,12 @@
     flex-direction: column;
     align-items: center;
     padding: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.productCard:hover {
+    transform: scale(1.05);
 }
 
 .productCard img {
@@ -151,21 +157,22 @@
 }
 
 .productDealCard {
+    /* height: 21vh; */
+    height: auto;
     background-color: white;
     padding: 0.75rem;
     border-radius: 1rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    transition: transform 0.3s;
+    /* transition: transform 0.3s; */
     cursor: pointer;
 }
 
-.productDealCard:hover {
+/* .productDealCard:hover {
     transform: scale(1.05);
-}
+} */
 
 .productDealCard img {
     width: 100%;
@@ -173,6 +180,12 @@
     object-fit: cover;
     border-radius: 0.5rem;
     margin-bottom: 0.5rem;
+}
+
+.productDealCardPriceAndBuyBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .dealName {
@@ -201,9 +214,22 @@
 }
 
 .discountTag {
+    margin-bottom: 5%;
     font-size: 0.75rem;
     color: #ef4444;
     font-weight: 600;
+}
+
+.buyNowBtn {
+    font-size: 13px;
+    text-decoration: none;
+    color: #ea580c;
+    cursor: pointer;
+}
+
+.buyNowBtn:hover {
+    font-weight: 600;
+    color: green;
 }
 
 .populerSection {
@@ -298,7 +324,7 @@
 
 /* USP Section */
 .uspSection {
-    background-color: white;
+    background-color: #fef9f2;
     padding: 3rem 1rem;
     border-radius: 1.5rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
