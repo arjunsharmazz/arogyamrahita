@@ -11,14 +11,13 @@
 }
 
 .container {
-    /* max-width: 1200px; */
     margin: 0 auto;
     padding: 0 1rem;
 }
 
 /* Hero Section */
 .heroSection {
-    background-color: #fef3e6;
+    background-color: #ffedd5;
     padding: 3rem 1rem;
     border-radius: 40px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -37,22 +36,22 @@
 }
 
 .heroContent p:first-of-type {
-    color: #ea580c;
+    color: #3a3e45;
     font-size: 0.875rem;
     margin-bottom: 0.5rem;
 }
 
 .heroContent h1 {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 800;
-    color: #9a3412;
+    color: #ea580c;
     line-height: 1.2;
     margin: 0;
 }
 
 .heroContent p:last-of-type {
     margin-top: 1rem;
-    color: #4b5563;
+    color: #3a3e45;
     font-size: 1rem;
 }
 
@@ -74,32 +73,15 @@
 }
 
 .heroImageWrapper {
+    width: 25rem;
+    height: 25vh;
     flex-shrink: 0;
 }
 
 .heroImageWrapper img {
-    width: 20rem;
+    width: 25rem;
+    height: 25vh;
     border-radius: 0.5rem;
-}
-
-@media (min-width: 768px) {
-    .heroSection {
-        flex-direction: row;
-        text-align: left;
-        padding: 3rem 3rem;
-        border-bottom-left-radius: 60px;
-        border-bottom-right-radius: 60px;
-    }
-
-    .heroContent h1 {
-        font-size: 3rem;
-    }
-}
-
-@media (min-width: 1024px) {
-    .heroContent h1 {
-        font-size: 4rem;
-    }
 }
 
 /* General Sections */
@@ -139,18 +121,6 @@
     justify-items: center;
 }
 
-@media (min-width: 640px) {
-    .popularProductsGrid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (min-width: 768px) {
-    .popularProductsGrid {
-        grid-template-columns: repeat(5, 1fr);
-    }
-}
-
 .productCard {
     display: flex;
     flex-direction: column;
@@ -180,18 +150,6 @@
     gap: 1.5rem;
 }
 
-@media (min-width: 768px) {
-    .bestDealsGrid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (min-width: 1024px) {
-    .bestDealsGrid {
-        grid-template-columns: repeat(5, 1fr);
-    }
-}
-
 .productDealCard {
     background-color: white;
     padding: 0.75rem;
@@ -202,6 +160,7 @@
     align-items: flex-start;
     width: 100%;
     transition: transform 0.3s;
+    cursor: pointer;
 }
 
 .productDealCard:hover {
@@ -247,12 +206,26 @@
     font-weight: 600;
 }
 
+.populerSection {
+    margin-top: 5%;
+}
+
+.dealSection {
+    margin-top: 5%;
+}
+
+.ctaSectionSpan {
+    background-color: #ffedd5;
+    padding: 3% 0;
+    border-radius: 1.5rem;
+}
+
 /* Testimonials & CTA Section */
 .ctaSection {
-    background-color: white;
+    margin-top: 4%;
+    /* background-color: white; */
     padding: 3rem 1rem;
-    border-radius: 1.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
     margin-bottom: 3rem;
     text-align: center;
 }
@@ -275,12 +248,6 @@
     grid-template-columns: 1fr;
     gap: 2rem;
     margin-top: 2.5rem;
-}
-
-@media (min-width: 768px) {
-    .testimonialsGrid {
-        grid-template-columns: repeat(3, 1fr);
-    }
 }
 
 .testimonialCard {
@@ -335,12 +302,6 @@
     text-align: center;
 }
 
-@media (min-width: 768px) {
-    .uspGrid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
 .uspItem {
     display: flex;
     flex-direction: column;
@@ -359,4 +320,53 @@
     color: #1f2937;
     margin: 0;
     font-size: 1rem;
+}
+
+/* ===========================
+   MEDIA QUERIES (All at Bottom)
+   =========================== */
+@media (min-width: 640px) {
+    .popularProductsGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .heroSection {
+        flex-direction: row;
+        text-align: left;
+        padding: 3rem 3rem;
+        border-bottom-left-radius: 60px;
+        border-bottom-right-radius: 60px;
+    }
+
+    .heroContent h1 {
+        font-size: 3rem;
+    }
+
+    .popularProductsGrid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .bestDealsGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .testimonialsGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .uspGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .heroContent h1 {
+        font-size: 4rem;
+    }
+
+    .bestDealsGrid {
+        grid-template-columns: repeat(5, 1fr);
+    }
 }

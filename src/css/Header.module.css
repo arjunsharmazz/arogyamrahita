@@ -62,7 +62,7 @@
 }
 
 .searchButton:hover {
-    color: #ea580c;
+    color: #F97316;
 }
 
 .navLinks {
@@ -77,11 +77,11 @@
 }
 
 .navLink:hover {
-    color: orange;
+    color: #F97316;
 }
 
 .activeLink {
-    color: orange;
+    color: #F97316;
     font-weight: bold;
 }
 
@@ -106,6 +106,7 @@
 
 .signInButton:hover {
     cursor: pointer;
+    background: #cf6317;
 }
 
 .cartButton {
@@ -116,9 +117,10 @@
 }
 
 .userButton {
-    color: orange;
+    color: #F97316;
     background: none;
-    border: none;
+    border: 1px solid #F97316;
+    border-radius: 50%;
     cursor: pointer;
 }
 
@@ -155,7 +157,7 @@
 
     .signInButton {
         display: block;
-        background: orange;
+        background: #F97316;
         color: white;
         border-radius: 0.5rem;
         padding: 0.5rem 1rem;
@@ -163,7 +165,5 @@
         border: none;
     }
 
-    .signInButton:hover {
-        background: #ea580c;
-    }
+
 }
