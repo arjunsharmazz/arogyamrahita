@@ -233,7 +233,7 @@
 .ctaSection h2 {
     font-size: 2.25rem;
     font-weight: 800;
-    color: #9a3412;
+    color: #ea580c;
     margin-bottom: 1rem;
 }
 
@@ -286,6 +286,16 @@
     color: #ea580c;
 }
 
+.testimonialText {
+    padding-top: 2%;
+    line-height: 20px;
+}
+
+.checkIcon {
+    color: #10b981;
+    font-size: 20px;
+}
+
 /* USP Section */
 .uspSection {
     background-color: white;
@@ -322,9 +332,6 @@
     font-size: 1rem;
 }
 
-/* ===========================
-   MEDIA QUERIES (All at Bottom)
-   =========================== */
 @media (min-width: 640px) {
     .popularProductsGrid {
         grid-template-columns: repeat(3, 1fr);

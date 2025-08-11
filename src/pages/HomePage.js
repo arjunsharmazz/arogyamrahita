@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../css/Home.module.css";
 import { Truck, ShoppingBag, Leaf, Headset } from "lucide-react";
 import heroImageWrapper from "../images/logo.png";
+import { FaCheckCircle } from "react-icons/fa";
 
 // Mock data for the product sections
 const popularProducts = [
@@ -216,7 +217,9 @@ const HomePage = () => {
                                         <span key={i}>★</span>
                                     ))}
                                 </div>
-                                <h3 className={styles.testimonialName}>{testimonial.name}</h3>
+                                <h3 className={styles.testimonialName}>
+                                    {testimonial.name}{" "}<FaCheckCircle className={styles.checkIcon} />
+                                </h3>
                                 <p className={styles.testimonialText}>"{testimonial.text}"</p>
                             </div>
                         ))}
