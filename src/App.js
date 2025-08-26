@@ -1,12 +1,11 @@
 import React from 'react'
 import './App.css';
-import PageRoutes from './routes/PageRoutes';
-
+import ProductsPage from "./pages/ProductsPage"
 
 function App() {
   return (
     <>
-      <PageRoutes />
+      <ProductsPage />
     </>
   );
 }
