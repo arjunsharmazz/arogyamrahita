@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import products from "../dummydata/CardData";
+import products from "../dummydata/ProductData";
 import {
     ChevronRight,
     ChevronDown,
