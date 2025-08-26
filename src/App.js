@@ -1,11 +1,13 @@
 import React from 'react'
 import './App.css';
-import ProductsPage from "./pages/ProductsPage"
+// import ProductPage from "./pages/ProductPage"
+import ProductCard from './pages/ProductCard';
 
 function App() {
   return (
     <>
-      <ProductsPage />
+      {/* <ProductPage /> */}
+      <ProductCard />
     </>
   );
 }

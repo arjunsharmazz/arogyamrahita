@@ -9,7 +9,7 @@ import {
 
 import styles from "../css/ProductPage.module.css";
 
-const ProductsPage = () => {
+const ProductPage = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [openFilters, setOpenFilters] = useState({
         category: true,
@@ -276,4 +276,4 @@ const ProductsPage = () => {
     );
 };
 
-export default ProductsPage;
+export default ProductPage;
