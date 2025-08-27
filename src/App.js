@@ -1,13 +1,15 @@
 import React from 'react'
 import './App.css';
-import ProductPage from "./pages/ProductPage"
-import ProductCard from './pages/ProductCard';
+import Home from './pages/Home';
+
+
 
 function App() {
   return (
     <>
-      <ProductPage />
-      <ProductCard />
+  
+      <Home/>
+
     </>
   );
 }
