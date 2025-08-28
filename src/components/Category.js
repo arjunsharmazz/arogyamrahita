@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { Link } from "react-router-dom"; 
 import styles from "../css/Category.module.css"; // ✅ import CSS module
 
-const Categorry = () => {
+const Category = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -19,11 +20,12 @@ const Categorry = () => {
 
       <nav className={styles.navbarMenu}>
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Shop</a></li>
-          <li><a href="#">Product</a></li>
-          <li><a href="#">Pages</a></li>
-          <li><a href="#">About</a></li>
+          <li><Link to= "/"> Home</Link></li>
+           <li><Link to= "/product"> Product</Link></li>
+            <li><Link to= "/"> Home</Link></li>
+             <li><Link to= "/"> Home</Link></li>
+              <li><Link to= "/"> Home</Link></li>
+         
         </ul>
       </nav>
 
@@ -42,4 +44,4 @@ const Categorry = () => {
   );
 };
 
-export default Categorry;
+export default Category;

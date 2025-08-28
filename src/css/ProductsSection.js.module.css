@@ -143,7 +143,7 @@
 /* Responsive */
 @media (max-width: 640px) {
   .productCard {
-    width: 14rem;
+    width: 16rem;
   }
 }
 @media (min-width: 1024px) {

@@ -1,12 +1,20 @@
+/* ============================= */
+/* 🔹 Top Navbar Block (Logo, Search, Icons) */
+/* ============================= */
 .navbar {
-  width: 100vw;
+  width: 100%;
   background-color: #f2f4f6;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding: 10px 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  position: fixed;   /* ✅ fixed top */
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
 .logo img {
@@ -68,13 +76,117 @@
   font-size: 12px;
 }
 
-/* ✅ Responsive Styles */
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+/* ============================= */
+/* 🔹 Category Navbar Block */
+/* ============================= */
+.navbarContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #fff;
+  padding: 12px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  border-top: 1px solid #e5e5e5;
 
+  position: fixed;  /* ✅ fixed just below top navbar */
+  top: 70px;        /* ✅ top navbar ki height ke neeche */
+  left: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+.navbarLeft {
+  display: flex;
+  align-items: center;
+}
+
+/* All Categories Button */
+.allCategoriesBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 20px;
+}
+
+.allCategoriesBtn:hover {
+  background-color: #f0f0f0;
+}
+
+.hamburgerIcon {
+  font-size: 20px;
+}
+
+/* Navbar Menu */
+.navbarMenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.navbarMenu li {
+  list-style: none;
+}
+
+.navbarMenu a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.navbarMenu a:hover {
+  color: #007bff;
+}
+
+/* Product Dropdown */
+.productDropdown {
+  position: absolute;
+  top: 100%; /* dropdown niche open hoga */
+  left: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.productDropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
+}
+
+.productDropdown li a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #555;
+  transition: background-color 0.3s;
+}
+
+.productDropdown li a:hover {
+  background-color: #f0f0f0;
+}
+
+/* ============================= */
+/* 🔹 Mobile Menu (Responsive) */
+/* ============================= */
+.mobileMenuBtn {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+@media (max-width: 768px) {
   .searchBar {
     width: 100%;
     margin: 10px 0;
@@ -88,6 +200,26 @@
 
   .navIcons button {
     flex: 1 1 auto;
+  }
+
+  /* Show Hamburger */
+  .mobileMenuBtn {
+    display: block;
+  }
+
+  /* Hide normal menu */
+  .navbarMenu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: #fff;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+  }
+
+  /* Show menu when open */
+  .navbarMenu.showMenu {
+    display: flex;
   }
 }
 
@@ -105,5 +237,14 @@
   .navIcons .iconBox {
     font-size: 12px;
     padding: 8px;
+  }
+
+  .allCategoriesBtn {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .navbarMenu {
+    gap: 10px;
   }
 }
