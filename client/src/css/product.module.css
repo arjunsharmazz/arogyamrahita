@@ -1,0 +1,166 @@
+.productsSection {
+  padding: 60px 40px;
+  background-color: #f9f9f9;
+  text-align: start;
+  width: 100vw;
+  justify-content: space-around;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.title {
+  padding-left: 100px;
+  font-size: 32px;
+  margin-bottom: 40px;
+  color: #333;
+  font-weight: bold;
+}
+
+.producterGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.prodCard {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 300px;
+  margin: auto;
+}
+
+.prodCard:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.productImage {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.productName {
+  font-size: 20px;
+  margin: 10px 0;
+  color: #222;
+  font-weight: 600;
+  text-align: center;
+}
+
+.productPrices {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.productPrice {
+  color: green;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.productOldPrice {
+  text-decoration: line-through;
+  color: gray;
+  font-size: 15px;
+}
+
+.buyBtn {
+  background: green;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  align-self: center;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.buyBtn:hover {
+  background: darkgreen;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 26px;
+    text-align: center;
+  }
+
+  .prodCard {
+    max-width: 100%;
+  }
+
+  .productPrices {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .buyBtn {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 22px;
+  }
+
+  .productImage {
+    height: 160px;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 8px;
+  height: 200px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.error {
+  color: #d32f2f;
+  text-align: center;
+  padding: 20px;
+  font-weight: 600;
+}
+
+.retryBtn {
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 16px;
+}
+
+.retryBtn:hover {
+  background: #1565c0;
+}
