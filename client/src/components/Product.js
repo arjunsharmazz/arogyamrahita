@@ -20,12 +20,12 @@ const ProductCard = ({ product, onAddToCart, onBuyNow }) => (
       <button className={styles.buyBtn} onClick={() => onBuyNow(product)}>
         Buy Now
       </button>
-      <button
+      {/* <button
         className={styles.cartBtn}
         onClick={() => onAddToCart(product)}
       >
         Add to Cart
-      </button>
+      </button> */}
     </div>
   </div>
 );

@@ -11,14 +11,12 @@ import ProductsSection from "../components/ProductsSection"
 function Home() {
   return (
     <div>
-      <Header />
       <Banner />
       <Handpick />
       <Products />
       <ProductsSection />
       <DiscountHero />
       <Review />
-      <Fotter />
     </div>
   )
 }

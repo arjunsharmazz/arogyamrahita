@@ -14,6 +14,8 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Home from "./pages/Home";
 import Cart from './pages/Cart';
+import Header from './components/Header';
+import Fotter from './components/Fotter';
 
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -32,6 +34,7 @@ function App() {
   return (
     <AuthProvider>
       <CartProvider>
+        <Header/>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -82,6 +85,7 @@ function App() {
           pauseOnHover
           theme="light"
         />
+        <Fotter/>
       </CartProvider>
     </AuthProvider>
   );
