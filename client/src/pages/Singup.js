@@ -137,7 +137,7 @@ const Signup = () => {
 
     return (
         <>
-            
+            <Header />
             {notification && (
                 <div
                     className={`custom-notification custom-notification-${notification.type}`}
@@ -331,7 +331,7 @@ const Signup = () => {
                     </Col>
                 </Row>
             </Container>
-        
+            <Fotter />
         </>
     );
 };

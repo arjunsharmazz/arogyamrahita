@@ -3,7 +3,7 @@ import Header from "../components/Header";
 
 export default function Contact() {
   return (<>
-    
+    <Header />
     <div className={styles.page}>
       <div className={styles.card}>
         <h2 className={styles.heading}>READY TO WORK WITH US</h2>

@@ -5,8 +5,8 @@ import { useCart } from "../context/CartContext";
 import { productAPI } from "../services/Api";
 import { toast } from "react-toastify";
 import styles from "../css/ProductDetail.module.css";
-// import Header from "../components/Header";
-// import Fotter from "../components/Fotter"
+import Header from "../components/Header";
+import Fotter from "../components/Fotter"
 
 const ProductDetail = () => {
     const { id } = useParams();
@@ -114,7 +114,7 @@ const ProductDetail = () => {
 
     return (
         <>
-            
+            <Header />
             <div className={styles.container}>
                 <div className={styles.productDetail}>
                     <div className={styles.productImages}>
@@ -201,7 +201,7 @@ const ProductDetail = () => {
                     </div>
                 </div>
             </div>
-            
+            <Fotter />
         </>
     );
 };
