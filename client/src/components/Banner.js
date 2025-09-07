@@ -10,7 +10,7 @@ const Banner = () => {
         <div className={styles.heroLeft}>
           <img src={lamp} alt="lamp" className={styles.lamp} />
           <p className={styles.highlightText}>
-            Discover specialized, natural health products for a balanced and
+             specialized, natural health products for a balanced and
             healthier life.
           </p>
           <h1 className={styles.mainHeading}>
