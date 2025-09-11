@@ -14,7 +14,6 @@ const Fotter = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        {/* Logo Section */}
         <motion.div
           className={`${styles.footerSection} ${styles.logoSection}`}
           whileHover={{ scale: 1.05 }}
@@ -26,34 +25,50 @@ const Fotter = () => {
           />
         </motion.div>
 
-        {/* Support Section */}
         <motion.div
           className={`${styles.footerSection} ${styles.supportSection}`}
           whileHover={{ x: 5 }}
         >
           <h3>Support</h3>
-          <p>3E-Near Divider Road,<br />Meerut, Uttar Pradesh</p>
-          <p>rhythm@gmail.com</p>
-          <p>+91 9012897031</p>
+          <p>
+            C-3 Sainik Vihar Near Divider Road,
+            <br />
+            Meerut 250001 Uttar Pradesh
+          </p>
+          <p>
+            <a href="mailto:rahitaarogyam@gmail.com">rahitaarogyam@gmail.com</a>
+          </p>
+
+          <p>
+            <a href="tel:+918979444801">+91 89794 44801</a>
+          </p>
         </motion.div>
 
-        {/* Quick Links Section */}
         <motion.div
           className={`${styles.footerSection} ${styles.linksSection}`}
           whileHover={{ x: 5 }}
         >
           <h3>Quick Link</h3>
           <ul>
-            <li><Link to="/privacy">Privacy Policy</Link></li>
-            <li><Link to="/termCondition">Terms Of Use</Link></li>
-            <li><Link to="/faq">FAQ</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
-            <li><Link to="/returnRefund">Return & Refund</Link></li>
+            <li>
+              <Link to="/privacy">Privacy Policy</Link>
+            </li>
+            <li>
+              <Link to="/termCondition">Terms Of Use</Link>
+            </li>
+            <li>
+              <Link to="/faq">FAQ</Link>
+            </li>
+            <li>
+              <Link to="/contact">Contact</Link>
+            </li>
+            <li>
+              <Link to="/returnRefund">Return & Refund</Link>
+            </li>
           </ul>
         </motion.div>
       </motion.div>
 
-      {/* Bottom */}
       <motion.div
         className={styles.footerBottom}
         initial={{ opacity: 0 }}

@@ -12,6 +12,8 @@ import Fotter from "./components/Fotter";
 import Login from "./pages/Login";
 import Signup from "./pages/Singup";
 import Dashboard from "./Admin/Dashboard";
+import CategoryAdmin from "./Admin/CategoryAdmin";
+import DiscountHeroAdmin from "./Admin/DiscountHeroAdmin";
 import ProductPage from "./pages/ProductPage";
 import ProductDetail from "./pages/ProductDetail";
 import About from "./pages/About";
@@ -22,6 +24,8 @@ import Services from "./pages/Services";
 import TermCondition from "./pages/TermCondition";
 import Faq from "./pages/Faq";
 import ReturnRefund from "./pages/ReturnRefund";
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -40,7 +44,7 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0); // jab bhi path change ho → top pe scroll
+    window.scrollTo(0, 0);
   }, [pathname]);
 
   return null;
@@ -50,20 +54,36 @@ function App() {
     <AuthProvider>
       <CartProvider>
         <div className="app-layout">
-          {/* Fixed Header */}
           <ScrollToTop />
           <Header />
 
-          {/* Main content (always below header) */}
           <main className="app-main">
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route
                 path="/admin"
                 element={
                   <AdminRoute>
                     <Dashboard />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/categories"
+                element={
+                  <AdminRoute>
+                    <CategoryAdmin />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/discount-hero"
+                element={
+                  <AdminRoute>
+                    <DiscountHeroAdmin />
                   </AdminRoute>
                 }
               />
@@ -74,15 +94,14 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="*" element={<Navigate to="/" replace />} />
-              <Route path="/privacy" element={<Services/>} />
-              <Route path="/termCondition" element={<TermCondition/>} />
-              <Route path="/faq" element={<Faq/>} />
-              <Route path="/returnRefund" element={<ReturnRefund/>} />
+              <Route path="/privacy" element={<Services />} />
+              <Route path="/termCondition" element={<TermCondition />} />
+              <Route path="/faq" element={<Faq />} />
+              <Route path="/returnRefund" element={<ReturnRefund />} />
 
             </Routes>
           </main>
 
-          {/* Fixed Footer */}
           <Fotter />
         </div>
       </CartProvider>

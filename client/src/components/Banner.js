@@ -1,14 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import styles from "../css/banner.module.css";
 import lamp from "../images/lamp.png";
 import bottle from "../images/bottel.png";
 
 const Banner = () => {
+  const navigate = useNavigate();
   return (
     <div className={styles.heroContainer}>
       <section className={styles.hero}>
-        {/* Left Content */}
         <motion.div
           className={styles.heroLeft}
           initial={{ x: -100, opacity: 0 }}
@@ -22,6 +23,13 @@ const Banner = () => {
             animate={{ y: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 3 }}
           />
+          {/* <img
+            src={logo}
+            alt="Arogyam Logo"
+            className={styles.lamp}
+            animate={{ y: [0, -10, 0] }}
+            transition={{ repeat: Infinity, duration: 3 }}
+          /> */}
 
           <p className={styles.highlightText}>
             Specialized, natural health products for a balanced and healthier life.
@@ -45,12 +53,12 @@ const Banner = () => {
             className={styles.shopBtn}
             whileHover={{ scale: 1.1, backgroundColor: "#16a34a", color: "#fff" }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => navigate("/products")}
           >
             Shop Now
           </motion.button>
         </motion.div>
 
-        {/* Right Image */}
         <motion.div
           className={styles.heroRight}
           initial={{ x: 100, opacity: 0 }}

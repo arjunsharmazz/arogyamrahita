@@ -32,7 +32,6 @@ const ProductPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Read query params for category/search
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const category = params.get("category") || "";
@@ -274,7 +273,10 @@ const ProductPage = () => {
                                         onError={(e) => {
                                             e.target.style.display = "none";
                                         }}
+                                        onClick={() => navigate(`/product/${product._id}`)}
+                                        style={{ cursor: "pointer" }}
                                     />
+
                                 ) : (
                                     <ImagePlaceholder width="100%" height="auto" text="No Image" />
                                 )}

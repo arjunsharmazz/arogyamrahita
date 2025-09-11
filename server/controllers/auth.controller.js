@@ -1,14 +1,49 @@
+exports.resetPassword = async (req, res) => {
+    const { email, token, newPassword } = req.body;
+    if (!email || !token || !newPassword) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
+    try {
+        const user = await User.findOne({ email: email.toLowerCase().trim() });
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        const hashedToken = typeof user.generatePasswordResetToken === "function"
+            ? require("crypto").createHash("sha256").update(token).digest("hex")
+            : token;
+
+        if (
+            !user.resetPasswordToken ||
+            user.resetPasswordToken !== hashedToken ||
+            !user.resetPasswordExpires ||
+            user.resetPasswordExpires < Date.now()
+        ) {
+            return res.status(400).json({ message: "Invalid or expired reset token" });
+        }
+
+        user.password = newPassword;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+        await user.save();
+
+        res.json({ message: "Password reset successful. You can now log in." });
+    } catch (error) {
+        console.error("Reset Password Error:", error);
+        res.status(500).json({ message: "Server error during password reset" });
+    }
+};
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 const Otp = require("../models/otp.model");
 const { sendEmail } = require("../services/email.service");
 const dotenv = require("dotenv");
+const crypto = require("crypto");
 
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || "your_refresh_secret";
+const FRONTEND_URL = process.env.FRONTEND_URL || process.env.CLIENT_URL || "";
 
 const generateTokens = (user) => {
     const payload = {
@@ -123,7 +158,6 @@ exports.login = async (req, res) => {
             resend: false,
         });
 
-        // Send OTP via Email (best-effort)
         try {
             if (user.email) {
                 await sendEmail(
@@ -217,19 +251,24 @@ exports.resendOtp = async (req, res) => {
         const newOtp = await Otp.create({
             email: user.email,
             otp,
-            expiresAt: new Date(Date.now() + 2 * 60 * 1000),
+            expiresAt: new Date(Date.now() + 5 * 60 * 1000),
             used: false,
             resend: true,
             createdAt: new Date(),
         });
 
-        // Resend OTP via Email (best-effort)
         try {
             if (user.email) {
                 await sendEmail(
                     user.email,
                     "Your OTP Code",
-                    `<div style=\"font-family:Arial,sans-serif;font-size:14px;line-height:1.6;\">\n                        <p>Dear ${user.name || "User"},</p>\n                        <p>Your new One-Time Password (OTP) is:</p>\n                        <h2 style=\"margin:8px 0 16px;\">${otp}</h2>\n                        <p>This code is valid for 5 minutes. Do not share it with anyone.</p>\n                        <p>— Arogya Rahita</p>\n                    </div>`
+                    `<div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.6;">
+                        <p>Dear ${user.name || "User"},</p>
+                        <p>Your new One-Time Password (OTP) is:</p>
+                        <h2 style="margin:8px 0 16px;">${otp}</h2>
+                        <p>This code is valid for 5 minutes. Do not share it with anyone.</p>
+                        <p>— Arogya Rahita</p>
+                    </div>`
                 );
             }
         } catch (e) {
@@ -360,9 +399,7 @@ exports.updateProfile = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // Update user profile
         user.name = name || user.name;
-        // keep both phone & number compatibility
         user.phone = phone || user.phone || user.number || "";
         user.address = address || user.address;
         user.city = city || user.city;
@@ -390,5 +427,66 @@ exports.updateProfile = async (req, res) => {
     } catch (error) {
         console.error("Update Profile Error:", error);
         res.status(500).json({ message: "Server error during profile update" });
+    }
+};
+
+exports.forgotPassword = async (req, res) => {
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({ message: "Email is required" });
+    }
+
+    try {
+        const user = await User.findOne({ email: email.toLowerCase().trim() });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        let token;
+        if (typeof user.generatePasswordResetToken === "function") {
+            token = await user.generatePasswordResetToken();
+            if (!token && user.resetPasswordToken) token = user.resetPasswordToken;
+            await user.save();
+        } else {
+            token = crypto.randomBytes(20).toString("hex");
+            user.resetPasswordToken = token;
+            user.resetPasswordExpires = Date.now() + 60 * 60 * 1000;
+            await user.save();
+        }
+
+        const origin = req.headers && req.headers.origin ? req.headers.origin : FRONTEND_URL;
+        const resetUrl = origin
+            ? `${origin.replace(/\/$/, "")}/reset-password?token=${token}&email=${encodeURIComponent(user.email)}`
+            : `Please use this token to reset your password: ${token}`;
+
+        const emailHtml = origin
+            ? `<div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.6;">
+                    <p>Dear ${user.name || "User"},</p>
+                    <p>We received a request to reset your password. Click the link below to reset it:</p>
+                    <p><a href="${resetUrl}">Reset your password</a></p>
+                    <p>If you did not request this, please ignore this email.</p>
+                    <p>This link will expire in 1 hour.</p>
+                    <p>— Arogya Rahita</p>
+               </div>`
+            : `<div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.6;">
+                    <p>Dear ${user.name || "User"},</p>
+                    <p>We received a request to reset your password. Use this token to reset it:</p>
+                    <pre style="padding:8px;background:#f5f5f5;border-radius:4px;">${token}</pre>
+                    <p>If you did not request this, please ignore this email.</p>
+                    <p>This token will expire in 1 hour.</p>
+                    <p>— Arogya Rahita</p>
+               </div>`;
+
+        try {
+            await sendEmail(user.email, "Password reset request", emailHtml);
+        } catch (e) {
+            console.warn("Failed to send password reset email:", e.message || e);
+        }
+
+        return res.json({ message: "Password reset email sent" });
+    } catch (error) {
+        console.error("Forgot Password Error:", error);
+        res.status(500).json({ message: "Server error" });
     }
 };
