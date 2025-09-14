@@ -24,6 +24,8 @@ const Dashboard = () => {
         newPrice: "",
         category: "general",
         stock: "",
+        weight: "",
+        weightUnit: "kg",
     });
     const [users, setUsers] = useState([]);
     const [orders, setOrders] = useState([]);
@@ -121,10 +123,14 @@ const Dashboard = () => {
             setError("");
             setSuccess("");
 
+            const submitData = {
+                ...formData,
+                weight: formData.weight ? Number(formData.weight) : 0,
+            };
             if (editingProduct) {
-                await productAPI.updateProduct(editingProduct._id, formData);
+                await productAPI.updateProduct(editingProduct._id, submitData);
             } else {
-                await productAPI.createProduct(formData);
+                await productAPI.createProduct(submitData);
             }
             setSuccess(
                 editingProduct
@@ -139,6 +145,8 @@ const Dashboard = () => {
                 newPrice: "",
                 category: "general",
                 stock: "",
+                weight: "",
+                weightUnit: "kg",
             });
             setEditingProduct(null);
             setShowModal(false);
@@ -153,13 +161,15 @@ const Dashboard = () => {
     const handleEdit = (product) => {
         setEditingProduct(product);
         setFormData({
-            name: product.name,
-            description: product.description,
-            image: product.image,
-            oldPrice: product.oldPrice,
-            newPrice: product.newPrice,
-            category: product.category,
-            stock: product.stock,
+            name: product.name || "",
+            description: product.description || "",
+            image: product.image || "",
+            oldPrice: product.oldPrice || "",
+            newPrice: product.newPrice || "",
+            category: product.category || "general",
+            stock: product.stock || "",
+            weight: product.weight !== undefined ? product.weight : "",
+            weightUnit: product.weightUnit || "kg",
         });
         setShowModal(true);
     };
@@ -196,6 +206,8 @@ const Dashboard = () => {
             newPrice: "",
             category: "general",
             stock: "",
+            weight: "",
+            weightUnit: "kg",
         });
         setShowModal(true);
         setError("");
@@ -506,6 +518,35 @@ const Dashboard = () => {
                                 </select>
                             </div>
 
+
+                            <div className={styles.formGroup}>
+                                <label>Weight:</label>
+                                <input
+                                    type="number"
+                                    name="weight"
+                                    value={formData.weight}
+                                    onChange={handleInputChange}
+                                    placeholder="Enter weight"
+                                    min="0"
+                                    step="0.01"
+                                    required
+                                />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Weight Unit:</label>
+                                <select
+                                    name="weightUnit"
+                                    value={formData.weightUnit}
+                                    onChange={handleInputChange}
+                                    required
+                                >
+                                    <option value="kg">kg</option>
+                                    <option value="gm">gm</option>
+                                    <option value="mg">mg</option>
+                                    <option value="lb">lb</option>
+                                    <option value="oz">oz</option>
+                                </select>
+                            </div>
                             <div className={styles.formGroup}>
                                 <label>Stock:</label>
                                 <input

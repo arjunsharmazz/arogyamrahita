@@ -1,79 +1,76 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import styles from "../css/banner.module.css";
-import lamp from "../images/lamp.png";
-import bottle from "../images/bottel.png";
+import lamp from "../images/benar1.jpg";
+import bottle from "../images/benar2.jpg";
+import logo from "../images/benar3.jpg";
+
+const images = [lamp, bottle, logo];
+
+const variants = {
+  enter: (direction) => ({
+    x: direction > 0 ? 300 : -300,
+    opacity: 0,
+    position: "absolute",
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    position: "relative",
+    transition: { duration: 1, ease: "easeInOut" },
+  },
+  exit: (direction) => ({
+    x: direction > 0 ? -300 : 300,
+    opacity: 0,
+    position: "absolute",
+    transition: { duration: 1, ease: "easeInOut" },
+  }),
+};
 
 const Banner = () => {
-  const navigate = useNavigate();
+  const [[current, direction], setCurrent] = useState([0, 0]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent(([prev]) => [(prev + 1) % images.length, 1]);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const goTo = (index) => {
+    const dir = index > current ? 1 : -1;
+    setCurrent([index, dir]);
+  };
+
   return (
-    <div className={styles.heroContainer}>
-      <section className={styles.hero}>
-        <motion.div
-          className={styles.heroLeft}
-          initial={{ x: -100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
+    <div className={styles.sliderContainer}>
+      <div className={styles.slider}>
+        <AnimatePresence mode="sync" custom={direction}>
           <motion.img
-            src={lamp}
-            alt="lamp"
-            className={styles.lamp}
-            animate={{ y: [0, -10, 0] }}
-            transition={{ repeat: Infinity, duration: 3 }}
+            key={images[current]}
+            src={images[current]}
+            alt="banner"
+            className={styles.slideImage}
+            variants={variants}
+            custom={direction}
+            initial="enter"
+            animate="center"
+            exit="exit"
           />
-          {/* <img
-            src={logo}
-            alt="Arogyam Logo"
-            className={styles.lamp}
-            animate={{ y: [0, -10, 0] }}
-            transition={{ repeat: Infinity, duration: 3 }}
-          /> */}
+        </AnimatePresence>
+      </div>
 
-          <p className={styles.highlightText}>
-            Specialized, natural health products for a balanced and healthier life.
-          </p>
-
-          <motion.h1
-            className={styles.mainHeading}
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-          >
-            Arogyam Rahita <br /> Wellness Rooted in Nature.
-          </motion.h1>
-
-          <p className={styles.subtext}>
-            We provide Best Quality using the least amount of time, energy, and
-            money.
-          </p>
-
-          <motion.button
-            className={styles.shopBtn}
-            whileHover={{ scale: 1.1, backgroundColor: "#16a34a", color: "#fff" }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => navigate("/products")}
-          >
-            Shop Now
-          </motion.button>
-        </motion.div>
-
-        <motion.div
-          className={styles.heroRight}
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <motion.img
-            src={bottle}
-            alt="Oil bottle"
-            className={styles.heroImage}
-            animate={{ y: [0, 20, 0] }}
-            transition={{ repeat: Infinity, duration: 4 }}
+      {/* Indicators */}
+      <div className={styles.dots}>
+        {images.map((_, index) => (
+          <span
+            key={index}
+            className={`${styles.dot} ${index === current ? styles.activeDot : ""
+              }`}
+            onClick={() => goTo(index)}
           />
-        </motion.div>
-      </section>
+        ))}
+      </div>
     </div>
   );
 };

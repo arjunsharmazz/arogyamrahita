@@ -36,20 +36,29 @@ function ProductCard({ product, onAddToCart, onBuyNow }) {
       />
 
       <div className={styles.productInfo}>
-        <h3 className={styles.productName}>{product.name}</h3>
+        <h3 className={styles.productName}>
+          {product.name} {product.weight} {product.weightUnit}
+        </h3>
         <div className={styles.productPrices}>
           <span className={styles.productPrice}>₹{product.newPrice}</span>
           {product.oldPrice && (
             <span className={styles.productOldPrice}>₹{product.oldPrice}</span>
           )}
+          {/* <div className={styles.productWeightInfo}>
+            <span>
+              {product.weight} {product.weightUnit}
+            </span>
+          </div> */}
         </div>
-        <p className={styles.productDescription}>{product.description}</p>
+        <p className={styles.productDescription}>
+          {product.description
+            ? product.description.split(" ").slice(0, 12).join(" ") +
+            (product.description.split(" ").length > 12 ? "..." : "")
+            : ""}
+        </p>
       </div>
 
-      <div
-        className={styles.buttonGroup}
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className={styles.buttonGroup} onClick={(e) => e.stopPropagation()}>
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -76,6 +85,7 @@ function Products() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showAll, setShowAll] = useState(false);
 
   const { addToCart } = useCart();
   const { isAuthenticated } = useAuth();
@@ -176,6 +186,9 @@ function Products() {
     );
   }
 
+  const PRODUCTS_TO_SHOW = 12;
+  const visibleProducts = showAll ? products : products.slice(0, PRODUCTS_TO_SHOW);
+
   return (
     <section className={styles.productsSection}>
       <motion.h2
@@ -188,7 +201,7 @@ function Products() {
       </motion.h2>
 
       <div className={styles.producterGrid}>
-        {products.map((product, index) => (
+        {visibleProducts.map((product, index) => (
           <ProductCard
             key={product._id}
             product={product}
@@ -198,6 +211,15 @@ function Products() {
           />
         ))}
       </div>
+      {!showAll && products.length > PRODUCTS_TO_SHOW && (
+        <button
+          className={styles.showAllBtn}
+          onClick={() => setShowAll(true)}
+          style={{ margin: '2rem auto', display: 'block' }}
+        >
+          Show All Products
+        </button>
+      )}
     </section>
   );
 }
