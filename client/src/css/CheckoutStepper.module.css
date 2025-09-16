@@ -1,0 +1,123 @@
+.stepperContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 24px 0 32px 0;
+    flex-wrap: wrap;
+}
+
+.stepWrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.stepNumber {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    line-height: 32px;
+    margin-right: 8px;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.stepLabel {
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: 12px;
+    white-space: nowrap;
+}
+
+.connector {
+    width: 40px;
+    height: 3px;
+    background: #e0e0e0;
+    margin: 0 8px;
+    border-radius: 2px;
+}
+
+.completed .stepNumber {
+    background: #4caf50;
+    color: #fff;
+}
+
+.completed .stepLabel {
+    color: #4caf50;
+}
+
+.active .stepNumber {
+    background: #2196f3;
+    color: #fff;
+}
+
+.active .stepLabel {
+    color: #2196f3;
+}
+
+.inactive .stepNumber {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.inactive .stepLabel {
+    color: #888;
+}
+
+@media (max-width: 480px) {
+    .stepNumber {
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        font-size: 10px;
+        margin-right: 4px;
+    }
+
+    .stepLabel {
+        font-size: 10px;
+    }
+
+    .connector {
+        display: none;
+    }
+}
+
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .stepNumber {
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+        font-size: 14px;
+    }
+
+    .stepLabel {
+        font-size: 14px;
+    }
+
+    .connector {
+        width: 30px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .stepNumber {
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        font-size: 18px;
+    }
+
+    .stepLabel {
+        font-size: 16px;
+    }
+
+    .connector {
+        width: 50px;
+    }
+}
