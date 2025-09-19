@@ -111,8 +111,6 @@ const Cart = () => {
     );
   }
 
-  // Place order handler for PaymentModal
-  // Instead of placing order, navigate to payment page with address and cart info
   const handleAddressSubmit = (address, onSuccess, onError) => {
     setShowPayment(false);
     navigate('/payment', {
@@ -185,7 +183,14 @@ const Cart = () => {
                   </div>
 
                   <div className={styles.itemDetails}>
-                    <h3>{item.name}</h3>
+                    <h3>
+                      {item.name}
+                      {item.weight ? (
+                        <span className={styles.itemWeight}>
+                          {item.weight} {item.weightUnit || ''}
+                        </span>
+                      ) : null}
+                    </h3>
                     <p className={styles.itemCategory}>{item.category}</p>
                     <div className={styles.itemPrice}>
                       <span className={styles.currentPrice}>

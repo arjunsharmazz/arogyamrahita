@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import ImageUpload from "../components/ImageUpload";
 import ImagePlaceholder from "../components/ImagePlaceholder";
 import { productAPI, adminAPI, ordersAPI } from "../services/Api";
+import OrderTracker from "../components/OrderTracker";
 import { BsGlobeCentralSouthAsia } from "react-icons/bs";
 
 const Dashboard = () => {
@@ -30,6 +31,21 @@ const Dashboard = () => {
     const [users, setUsers] = useState([]);
     const [orders, setOrders] = useState([]);
     const [orderUpdating, setOrderUpdating] = useState(null);
+    const [orderNameFilter, setOrderNameFilter] = useState("");
+    const [orderDateFilter, setOrderDateFilter] = useState("");
+    const filteredOrders = orders.filter((o) => {
+        let match = true;
+        if (orderNameFilter) {
+            match = o.user?.name
+                ?.toLowerCase()
+                .includes(orderNameFilter.toLowerCase());
+        }
+        if (match && orderDateFilter) {
+            const orderDate = o.createdAt ? o.createdAt.slice(0, 10) : "";
+            match = orderDate === orderDateFilter;
+        }
+        return match;
+    });
 
     const categories = [
         "general",
@@ -239,9 +255,6 @@ const Dashboard = () => {
             <div className={styles.header}>
                 <h1>Admin Dashboard</h1>
                 <div className={styles.headerButtons}>
-                    <Link to="/admin/categories" className={styles.mainSiteBtn}>
-                        Manage Categories
-                    </Link>
                     <Link to="/admin/discount-hero" className={styles.mainSiteBtn}>
                         Manage Discount
                     </Link>
@@ -276,8 +289,28 @@ const Dashboard = () => {
 
                 <div className={styles.ordersSection}>
                     <h2 className={styles.sectionTitle}>Orders</h2>
+                    <div style={{ display: "flex", gap: 16, marginBottom: 16 }}>
+                        <input
+                            type="text"
+                            placeholder="Filter by user name"
+                            value={orderNameFilter}
+                            onChange={(e) => setOrderNameFilter(e.target.value)}
+                            style={{
+                                padding: 8,
+                                borderRadius: 8,
+                                border: "1px solid #ccc",
+                                minWidth: 180,
+                            }}
+                        />
+                        <input
+                            type="date"
+                            value={orderDateFilter}
+                            onChange={(e) => setOrderDateFilter(e.target.value)}
+                            style={{ padding: 8, borderRadius: 8, border: "1px solid #ccc" }}
+                        />
+                    </div>
                     <div className={styles.ordersList}>
-                        {orders.map((o) => (
+                        {filteredOrders.map((o) => (
                             <div key={o._id} className={styles.orderCard}>
                                 <div className={styles.orderHeader}>
                                     <div>
@@ -298,6 +331,7 @@ const Dashboard = () => {
                                     <div>
                                         <strong>Total:</strong> ₹{o.totalAmount}
                                     </div>
+
                                     <div className={styles.statusControls}>
                                         <select
                                             value={o.status}
@@ -318,6 +352,9 @@ const Dashboard = () => {
                                             ))}
                                         </select>
                                     </div>
+                                </div>
+                                <div style={{ margin: "12px 0" }}>
+                                    <OrderTracker status={o.status} />
                                 </div>
                             </div>
                         ))}
@@ -378,12 +415,6 @@ const Dashboard = () => {
                                                 text="No Image"
                                             />
                                         )}
-                                        {/* <ImagePlaceholder
-                                            width="100%"
-                                            height="200px"
-                                            text="No Image"
-                                            style={{ display: 'none' }}
-                                        /> */}
                                         <div className={styles.productInfo}>
                                             <h3 className={styles.productName}>{product.name}</h3>
                                             <p className={styles.productDescription}>
@@ -518,7 +549,6 @@ const Dashboard = () => {
                                 </select>
                             </div>
 
-
                             <div className={styles.formGroup}>
                                 <label>Weight:</label>
                                 <input
@@ -542,8 +572,8 @@ const Dashboard = () => {
                                 >
                                     <option value="kg">kg</option>
                                     <option value="gm">gm</option>
+                                    <option value="ltr">ltr</option>
                                     <option value="mg">mg</option>
-                                    <option value="lb">lb</option>
                                     <option value="oz">oz</option>
                                 </select>
                             </div>
