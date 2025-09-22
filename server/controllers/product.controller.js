@@ -9,19 +9,23 @@ exports.createProduct = async (req, res) => {
         // Use Cloudinary URL directly (already complete URL)
         let imageUrl = image;
 
-        const product = new Product({
+        let productData = {
             name,
             description,
             image: imageUrl,
-            oldPrice,
-            newPrice,
             category,
             stock,
-            weight,
-            weightUnit,
-            variants: Array.isArray(variants) ? variants : [],
             createdBy: req.user.id
-        });
+        };
+        if (Array.isArray(variants) && variants.length > 0) {
+            productData.variants = variants;
+        } else {
+            productData.oldPrice = oldPrice;
+            productData.newPrice = newPrice;
+            productData.weight = weight;
+            productData.weightUnit = weightUnit;
+        }
+        const product = new Product(productData);
 
         const savedProduct = await product.save();
         res.status(201).json({
