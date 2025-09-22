@@ -4,7 +4,7 @@ const imageService = require("../services/image.service");
 // Create a new product
 exports.createProduct = async (req, res) => {
     try {
-        const { name, description, image, oldPrice, newPrice, category, stock, weight, weightUnit } = req.body;
+        const { name, description, image, oldPrice, newPrice, category, stock, weight, weightUnit, variants } = req.body;
 
         // Use Cloudinary URL directly (already complete URL)
         let imageUrl = image;
@@ -19,6 +19,7 @@ exports.createProduct = async (req, res) => {
             stock,
             weight,
             weightUnit,
+            variants: Array.isArray(variants) ? variants : [],
             createdBy: req.user.id
         });
 
@@ -95,7 +96,7 @@ exports.getProductById = async (req, res) => {
 // Update product
 exports.updateProduct = async (req, res) => {
     try {
-        const { name, description, image, oldPrice, newPrice, category, stock, isActive } = req.body;
+        const { name, description, image, oldPrice, newPrice, category, stock, isActive, variants } = req.body;
 
         // Use Cloudinary URL directly (already complete URL)
         let imageUrl = image;
@@ -110,7 +111,8 @@ exports.updateProduct = async (req, res) => {
                 newPrice,
                 category,
                 stock,
-                isActive
+                isActive,
+                variants: Array.isArray(variants) ? variants : [],
             },
             { new: true, runValidators: true }
         );

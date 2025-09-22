@@ -44,6 +44,15 @@ const productSchema = new mongoose.Schema(
             enum: ["kg", "gm", "mg", "lb", "oz"],
             required: true,
         },
+        variants: [
+            {
+                name: { type: String, required: true }, // e.g., 'Small', 'Red', etc.
+                additionalPrice: { type: Number, default: 0 },
+                stock: { type: Number, default: 0 },
+                sku: { type: String },
+                // Add more fields as needed (e.g., color, size)
+            }
+        ],
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
