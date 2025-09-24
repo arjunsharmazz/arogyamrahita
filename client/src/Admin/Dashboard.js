@@ -120,6 +120,16 @@ const Dashboard = () => {
             return;
         setFormData((prev) => {
             const safeVariants = Array.isArray(prev.variants) ? prev.variants : [];
+            // Duplicate check: name, weight, weightUnit
+            const isDuplicate = safeVariants.some(v =>
+                v.name === variantInput.name &&
+                Number(v.weight) === Number(variantInput.weight) &&
+                v.weightUnit === variantInput.weightUnit
+            );
+            if (isDuplicate) {
+                // Optionally show error/toast here
+                return prev;
+            }
             return {
                 ...prev,
                 variants: [
