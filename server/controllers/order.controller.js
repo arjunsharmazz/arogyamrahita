@@ -13,15 +13,29 @@ exports.createOrder = async (req, res) => {
             return res.status(400).json({ message: "Items are required" });
         }
 
-        // Fetch product names for each item
+        // Fetch product names and variant info for each item
         const itemsWithNames = await Promise.all(items.map(async (item) => {
             const product = await Product.findById(item.product);
             if (!product) throw new Error(`Product not found: ${item.product}`);
+            let variant = null;
+            if (item.variant && Array.isArray(product.variants)) {
+                // Try to find the matching variant by name, weight, and weightUnit
+                variant = product.variants.find(v =>
+                    v.name === item.variant.name &&
+                    Number(v.weight) === Number(item.variant.weight) &&
+                    v.weightUnit === item.variant.weightUnit
+                );
+            }
             return {
                 ...item,
                 name: product.name,
                 price: item.price || product.newPrice,
                 image: item.image || product.image,
+                variant: variant ? {
+                    name: variant.name,
+                    weight: variant.weight,
+                    weightUnit: variant.weightUnit
+                } : undefined
             };
         }));
 

@@ -12,6 +12,10 @@ exports.getCart = async (req, res) => {
             await cart.save();
         }
 
+        // Remove items with missing product (populated as null)
+        if (cart && Array.isArray(cart.items)) {
+            cart.items = cart.items.filter(item => item.product);
+        }
         res.json({ cart });
     } catch (error) {
         console.error("Get Cart Error:", error);

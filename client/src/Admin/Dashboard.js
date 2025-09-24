@@ -233,7 +233,9 @@ const Dashboard = () => {
         doc.text(order.user?.address || "_________", 100, 78);
 
         const items = (order.items || []).map((it) => [
-            it.name,
+            it.variant && it.variant.weight && it.variant.weightUnit
+                ? `${it.name} (${it.variant.weight} ${it.variant.weightUnit})`
+                : it.name,
             it.quantity,
             "" + String(it.price),
             "" + String(it.price * it.quantity),
@@ -466,11 +468,19 @@ const Dashboard = () => {
                                     <div>
                                         <strong>User:</strong> {o.user?.name} ({o.user?.email})
                                     </div>
+                                    <div style={{marginTop:4, color:'#6b7280', fontSize:13}}>
+                                        <strong>Date/Time:</strong> {o.createdAt ? new Date(o.createdAt).toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, year: 'numeric', month: 'short', day: 'numeric' }) : '-'}
+                                    </div>
                                 </div>
                                 <div className={styles.orderItems}>
                                     {(o.items || []).map((it, idx) => (
                                         <div key={idx} className={styles.orderItem}>
-                                            x{it.quantity} {it.name} — ₹{it.price}
+                                            x{it.quantity} {it.name}
+                                            {it.variant && it.variant.weight && it.variant.weightUnit && (
+                                                <span style={{ color: '#888', fontSize: 13, marginLeft: 6 }}>
+                                                    ({it.variant.weight} {it.variant.weightUnit})
+                                                </span>
+                                            )} — ₹{it.price}
                                         </div>
                                     ))}
                                 </div>

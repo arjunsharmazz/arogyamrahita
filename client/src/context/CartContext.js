@@ -36,17 +36,19 @@ export const CartProvider = ({ children }) => {
             setLoading(true);
             const response = await cartAPI.getCart();
             if (response.cart && response.cart.items) {
-                const items = response.cart.items.map(item => ({
-                    _id: item.product._id,
-                    name: item.product.name,
-                    newPrice: item.price,
-                    oldPrice: item.product.oldPrice || item.price,
-                    image: item.product.image,
-                    category: item.product.category,
-                    quantity: item.quantity,
-                    weight: item.product.weight,
-                    weightUnit: item.product.weightUnit
-                }));
+                const items = response.cart.items
+                    .filter(item => item.product)
+                    .map(item => ({
+                        _id: item.product._id,
+                        name: item.product.name,
+                        newPrice: item.price,
+                        oldPrice: item.product.oldPrice || item.price,
+                        image: item.product.image,
+                        category: item.product.category,
+                        quantity: item.quantity,
+                        weight: item.product.weight,
+                        weightUnit: item.product.weightUnit
+                    }));
                 setCartItems(items);
                 setCartCount(items.reduce((total, item) => total + item.quantity, 0));
             }
@@ -75,8 +77,15 @@ export const CartProvider = ({ children }) => {
     }, [cartItems, isAuthenticated]);
 
     const addToCart = async (product, quantity = 1) => {
-        // Compose a unique key for product+variant
-        const variantKey = product.selectedVariant ? `${product._id}_${product.selectedVariant.name || product.selectedVariant.sku || ''}` : product._id;
+        // Compose a unique key for product+variant (use all relevant variant properties)
+        let variantKey = product._id;
+        if (product.selectedVariant) {
+            if (product.selectedVariant.sku) {
+                variantKey += `_${product.selectedVariant.sku}`;
+            } else {
+                variantKey += `_${product.selectedVariant.name || ''}_${product.selectedVariant.weight || ''}_${product.selectedVariant.weightUnit || ''}`;
+            }
+        }
         if (isAuthenticated()) {
             try {
                 // Send variant info to backend if present

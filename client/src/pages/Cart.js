@@ -167,14 +167,14 @@ const Cart = () => {
           <div className={styles.cartItems}>
             <AnimatePresence>
               {cartItems.map((item, idx) => {
+                // Always generate a unique key for each cart item, including variant info if present
                 let itemKey = item._id;
                 if (item.variant) {
                   if (item.variant.sku) {
                     itemKey += `_${item.variant.sku}`;
-                  } else if (item.variant.name) {
-                    itemKey += `_${item.variant.name}`;
                   } else {
-                    itemKey += `_${idx}`;
+                    // Use all variant properties for uniqueness
+                    itemKey += `_${item.variant.name || ''}_${item.variant.weight || ''}_${item.variant.weightUnit || ''}`;
                   }
                 }
 

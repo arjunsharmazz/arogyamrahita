@@ -188,15 +188,22 @@ const ProductPage = () => {
 
     return (
         <div className={styles.container}>
+            {/* Sidebar Overlay for mobile */}
+            {isSidebarOpen && (
+                <div
+                    className={styles.sidebarOverlay}
+                    onClick={() => setIsSidebarOpen(false)}
+                    style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.25)', zIndex: 1000, display: 'block' }}
+                />
+            )}
             {/* Sidebar */}
             <aside
-                className={`${styles.sidebar} ${isSidebarOpen ? styles.showSidebar : ""
-                    }`}
+                className={`${styles.sidebar} ${isSidebarOpen ? styles.showSidebar : ""}`}
+                style={isSidebarOpen ? { zIndex: 1100, position: 'fixed', top: 0, left: 0, height: '100vh', maxHeight: '100vh', boxShadow: '2px 0 16px rgba(0,0,0,0.13)' } : {}}
             >
                 <div className={styles.sidebarHeader}>
                     <h2 className={styles.sidebarTitle}>Filters</h2>
                     <div className={styles.sidebarIcons}>
-                        {/* <ListFilter size={20} /> */}
                         <Menu
                             size={18}
                             className={styles.closeBtn}
@@ -215,9 +222,9 @@ const ProductPage = () => {
                                 const params = new URLSearchParams(location.search);
                                 params.delete("category");
                                 navigate(
-                                    `/products${params.toString() ? `?${params.toString()}` : ""
-                                    }`
+                                    `/products${params.toString() ? `?${params.toString()}` : ""}`
                                 );
+                                setIsSidebarOpen(false);
                             }}
                             style={{
                                 cursor: "pointer",
@@ -236,6 +243,7 @@ const ProductPage = () => {
                                     const params = new URLSearchParams(location.search);
                                     params.set("category", item);
                                     navigate(`/products?${params.toString()}`);
+                                    setIsSidebarOpen(false);
                                 }}
                                 style={{
                                     cursor: "pointer",
