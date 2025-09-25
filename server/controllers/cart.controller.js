@@ -29,8 +29,8 @@ exports.addToCart = async (req, res) => {
         const { productId, quantity = 1, variant } = req.body;
         const userId = req.user.id;
 
-        console.log("[addToCart] Request body:", req.body);
-        console.log("[addToCart] User:", req.user);
+        // console.log("[addToCart] Request body:", req.body);
+        // console.log("[addToCart] User:", req.user);
 
         const product = await Product.findById(productId);
         if (!product) {

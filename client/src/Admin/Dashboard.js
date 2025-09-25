@@ -196,7 +196,7 @@ const Dashboard = () => {
         }
     };
 
-
+    // let invoiceCounter = 1;
     const generateInvoicePDF = (order) => {
         const doc = new jsPDF();
 
@@ -207,7 +207,8 @@ const Dashboard = () => {
         doc.text("Phone: (000) 000-0000", 20, 34);
 
         doc.setFontSize(11);
-        doc.text(`Invoice #: ${order._id || "_____"}`, 150, 40);
+        doc.text(`Invoice: INV-${order.invoiceNumber}`, 150, 40);
+
         doc.text(
             `Date: ${order.createdAt ? order.createdAt.slice(0, 10) : "_____"}`,
             150,
@@ -468,7 +469,7 @@ const Dashboard = () => {
                                     <div>
                                         <strong>User:</strong> {o.user?.name} ({o.user?.email})
                                     </div>
-                                    <div style={{marginTop:4, color:'#6b7280', fontSize:13}}>
+                                    <div style={{ marginTop: 4, color: '#6b7280', fontSize: 13 }}>
                                         <strong>Date/Time:</strong> {o.createdAt ? new Date(o.createdAt).toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, year: 'numeric', month: 'short', day: 'numeric' }) : '-'}
                                     </div>
                                 </div>

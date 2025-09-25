@@ -12,13 +12,15 @@
         max-height: 100vh !important;
         z-index: 1100 !important;
         transform: translateX(-100%);
-        box-shadow: 2px 0 16px rgba(0,0,0,0.13);
+        box-shadow: 2px 0 16px rgba(0, 0, 0, 0.13);
         border-radius: 0 10px 10px 0;
-        transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+        transition: transform 0.3s cubic-bezier(.4, 0, .2, 1);
     }
+
     .showSidebar {
         transform: translateX(0) !important;
     }
+
     .sidebarOverlay {
         display: block;
         position: fixed;
@@ -26,9 +28,10 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(0,0,0,0.25);
+        background: rgba(0, 0, 0, 0.25);
         z-index: 1000;
     }
+
     .main.sidebarVisible {
         width: 100%;
         margin-left: 0;
@@ -37,6 +40,7 @@
         user-select: none;
     }
 }
+
 .container {
     width: 100%;
     display: flex;
@@ -259,7 +263,7 @@
     position: relative;
     background: linear-gradient(135deg, #f8fafc 60%, #e0f7fa 100%);
     border-radius: 1.1rem;
-    box-shadow: 0 4px 18px rgba(56,239,125,0.08);
+    box-shadow: 0 4px 18px rgba(56, 239, 125, 0.08);
     overflow: hidden;
     transition: box-shadow 0.22s, transform 0.18s;
     display: flex;
@@ -269,24 +273,24 @@
 
 .card:hover {
     transform: translateY(-7px) scale(1.025);
-    box-shadow: 0 12px 32px rgba(56,239,125,0.18);
+    box-shadow: 0 12px 32px rgba(56, 239, 125, 0.18);
 }
 
 .productImage {
     width: 100%;
     aspect-ratio: 1/1;
     max-height: 260px;
-    object-fit: contain;
+    object-fit: cover;
     display: block;
     background: #f7fafc;
     border-top-left-radius: 0.75rem;
     border-top-right-radius: 0.75rem;
-    transition: transform 0.25s cubic-bezier(.4,0,.2,1);
+    transition: transform 0.25s cubic-bezier(.4, 0, .2, 1);
 }
 
 .card:hover .productImage {
     transform: scale(1.04);
-    box-shadow: 0 6px 18px rgba(56,239,125,0.13);
+    box-shadow: 0 6px 18px rgba(56, 239, 125, 0.13);
 }
 
 .cardBody {

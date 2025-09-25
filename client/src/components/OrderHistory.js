@@ -21,9 +21,9 @@ const OrderHistory = () => {
         fetchOrders();
     }, []);
 
-    if (loading) return <div style={{textAlign:'center',marginTop:40}}>Loading order history...</div>;
-    if (error) return <div style={{color:'#b91c1c',textAlign:'center',marginTop:40}}>{error}</div>;
-    if (!orders.length) return <div style={{textAlign:'center',marginTop:40}}>No orders found.</div>;
+    if (loading) return <div style={{ textAlign: 'center', marginTop: 40 }}>Loading order history...</div>;
+    if (error) return <div style={{ color: '#b91c1c', textAlign: 'center', marginTop: 40 }}>{error}</div>;
+    if (!orders.length) return <div style={{ textAlign: 'center', marginTop: 40 }}>No orders found.</div>;
 
     return (
         <div className={styles.profileOrderHistoryGrid}>

@@ -18,6 +18,7 @@ const orderSchema = new mongoose.Schema(
             },
         ],
         totalAmount: { type: Number, required: true },
+        invoiceNumber: { type: Number, unique: true }, // 👈 add kiya
         status: {
             type: String,
             enum: [
@@ -46,5 +47,3 @@ const orderSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Order", orderSchema);
-
-
