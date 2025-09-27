@@ -14,12 +14,12 @@ import ImagePlaceholder from "../components/ImagePlaceholder";
 import styles from "../css/ProductPage.module.css";
 
 const ProductPage = () => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    // Start with sidebar open on large screens, closed on small screens
+    const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 900);
     const [openFilters, setOpenFilters] = useState({
         category: true,
         price: true,
     });
-
     const [priceValue, setPriceValue] = useState(1000);
     const [products, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -31,6 +31,15 @@ const ProductPage = () => {
     const { isAuthenticated } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
+
+    // Use effect to handle window resize for responsiveness
+    useEffect(() => {
+        const handleResize = () => {
+            setIsSidebarOpen(window.innerWidth > 900);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -76,12 +85,10 @@ const ProductPage = () => {
         fetchProducts();
     }, [location.search, selectedCategory]);
 
-    // Collect all categories from products
     const categories = useMemo(() => {
         return [...new Set(products.map((product) => product.category))];
     }, [products]);
 
-    // Helper to flatten products by variants for filtering/sorting
     const flattenProductsByVariants = (products) => {
         let result = [];
         for (const product of products) {
@@ -141,16 +148,6 @@ const ProductPage = () => {
         return filtered;
     }, [products, priceValue, selectedCategory, sortBy, location.search]);
 
-    // const handleAddToCart = (product) => {
-    //     if (!isAuthenticated()) {
-    //         // toast.info("Please sign up to add items to cart!");
-    //         navigate("/signup");
-    //         return;
-    //     }
-    //     addToCart(product, 1);
-    //     // toast.success("Added to cart!");
-    // };
-
     const handleBuyNow = (product) => {
         if (!isAuthenticated()) {
             // toast.info("Please sign up to purchase products!");
@@ -189,17 +186,16 @@ const ProductPage = () => {
     return (
         <div className={styles.container}>
             {/* Sidebar Overlay for mobile */}
-            {isSidebarOpen && (
+            {window.innerWidth <= 900 && isSidebarOpen && (
                 <div
                     className={styles.sidebarOverlay}
                     onClick={() => setIsSidebarOpen(false)}
-                    style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.25)', zIndex: 1000, display: 'block' }}
                 />
             )}
+
             {/* Sidebar */}
             <aside
-                className={`${styles.sidebar} ${isSidebarOpen ? styles.showSidebar : ""}`}
-                style={isSidebarOpen ? { zIndex: 1000, position: 'fixed', top: 0, left: 0, height: '100vh', maxHeight: '100vh', boxShadow: '2px 0 16px rgba(0,0,0,0.13)' } : {}}
+                className={`${styles.sidebar} ${window.innerWidth <= 900 ? (isSidebarOpen ? styles.showSidebar : '') : (isSidebarOpen ? '' : styles.closed)}`}
             >
                 <div className={styles.sidebarHeader}>
                     <h2 className={styles.sidebarTitle}>Filters</h2>
@@ -224,7 +220,7 @@ const ProductPage = () => {
                                 navigate(
                                     `/products${params.toString() ? `?${params.toString()}` : ""}`
                                 );
-                                setIsSidebarOpen(false);
+                                if (window.innerWidth <= 900) setIsSidebarOpen(false);
                             }}
                             style={{
                                 cursor: "pointer",
@@ -243,7 +239,7 @@ const ProductPage = () => {
                                     const params = new URLSearchParams(location.search);
                                     params.set("category", item);
                                     navigate(`/products?${params.toString()}`);
-                                    setIsSidebarOpen(false);
+                                    if (window.innerWidth <= 900) setIsSidebarOpen(false);
                                 }}
                                 style={{
                                     cursor: "pointer",
@@ -280,9 +276,9 @@ const ProductPage = () => {
             </aside>
 
             {/* Main */}
-            <main className={`${styles.main} ${isSidebarOpen ? styles.sidebarVisible : ""}`}>
+            <main className={`${styles.main} ${window.innerWidth <= 900 && isSidebarOpen ? styles.sidebarVisible : ""}`}>
                 <div className={styles.topBar}>
-                    {/* Hamburger left side */}
+                    {/* Hamburger button is now conditionally rendered */}
                     {!isSidebarOpen && (
                         <button
                             className={styles.hamburgerBtn}
@@ -347,7 +343,6 @@ const ProductPage = () => {
                                 <div className={styles.cardBody}>
                                     <h3 className={styles.productName}>
                                         {product.name} {product.weight} {product.weightUnit}
-                                        {/* {product.variantName ? ` (${product.variantName})` : ''} */}
                                     </h3>
                                     <div className={styles.priceWrapper}>
                                         <span className={styles.newPrice}>
@@ -366,12 +361,6 @@ const ProductPage = () => {
                                             : product.description}
                                     </p>
                                     <div className={styles.cardActions}>
-                                        {/* <button
-                                            className={styles.cartButton}
-                                            onClick={() => handleAddToCart(product)}
-                                        >
-                                            <ShoppingCart size={20} />
-                                        </button> */}
                                         <button
                                             className={styles.buyButton}
                                             onClick={() => handleBuyNow(product)}
