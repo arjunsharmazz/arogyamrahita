@@ -45,6 +45,11 @@ const orderSchema = new mongoose.Schema(
             method: { type: String },
             transactionId: { type: String },
         },
+        paymentCollectedAs: {
+            type: String,
+            enum: ["cash", "upi", "due", "online", null],
+            default: null,
+        },
     },
     { timestamps: true }
 );

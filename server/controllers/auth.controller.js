@@ -34,10 +34,10 @@ exports.resetPassword = async (req, res) => {
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
-const Otp = require("../models/otp.model");
 const { sendEmail } = require("../services/email.service");
 const dotenv = require("dotenv");
 const crypto = require("crypto");
+const { ensureDeliveryUser, DEFAULT_DELIVERY_EMAIL, DEFAULT_DELIVERY_PASSWORD } = require("../utils/ensureDeliveryUser");
 
 dotenv.config();
 
@@ -142,81 +142,27 @@ exports.login = async (req, res) => {
             return res.status(400).json({ message: "Email and password required" });
         }
 
+        const normalizedEmail = email.toLowerCase().trim();
+
+        if (
+            normalizedEmail === DEFAULT_DELIVERY_EMAIL &&
+            password === DEFAULT_DELIVERY_PASSWORD
+        ) {
+            try {
+                await ensureDeliveryUser();
+            } catch (bootstrapError) {
+                console.error("Delivery login bootstrap failed:", bootstrapError);
+            }
+        }
+
         let user = await User.findOne({
-            email: email.toLowerCase().trim(),
+            email: normalizedEmail,
             isActive: true,
         });
 
         if (!user || !(await user.comparePassword(password))) {
             return res.status(401).json({ message: "Invalid email or password" });
         }
-
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
-        await Otp.create({
-            email: user.email,
-            otp,
-            expiresAt: new Date(Date.now() + 2 * 60 * 1000),
-            used: false,
-            resend: false,
-        });
-
-        try {
-            if (user.email) {
-                await sendEmail(
-                    user.email,
-                    "Your OTP Code",
-                    `<div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.6;">
-                        <p>Dear ${user.name || "User"},</p>
-                        <p>Your One-Time Password (OTP) is:</p>
-                        <h2 style="margin:8px 0 16px;">${otp}</h2>
-                        <p>This code is valid for 2 minutes. Do not share it with anyone.</p>
-                        <p>— Arogya Rahita</p>
-                    </div>`
-                );
-            }
-        } catch (e) {
-            console.warn("Email send failed, proceeding:", e.message || e);
-        }
-
-        const isProd = process.env.NODE_ENV === "production";
-        return res.status(200).json({
-            message: "OTP sent to your email",
-            email: user.email,
-            otp: isProd ? undefined : otp,
-        });
-    } catch (error) {
-        console.error("Login Error:", error);
-        res.status(500).json({ message: "Server error during login" });
-    }
-};
-
-exports.verifyOtp = async (req, res) => {
-    const { email, otp } = req.body;
-
-    if (!email || !otp) {
-        return res.status(400).json({ message: "Email and OTP are required" });
-    }
-
-    try {
-        const user = await User.findOne({ email: email.toLowerCase().trim() });
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        const record = await Otp.findOne({
-            email: user.email,
-            otp,
-            used: false,
-        }).sort({ createdAt: -1 });
-        if (!record) return res.status(400).json({ message: "Invalid OTP" });
-
-        if (record.expiresAt < new Date()) {
-            return res.status(400).json({ message: "OTP expired" });
-        }
-
-        record.used = true;
-        await record.save();
 
         user.lastLogin = new Date();
         const { accessToken, refreshToken } = generateTokens(user);
@@ -230,66 +176,14 @@ exports.verifyOtp = async (req, res) => {
         await user.save();
 
         return res.status(200).json({
-            message: "OTP verified successfully",
+            message: "Login successful",
             token: accessToken,
             refreshToken,
             user: getUserData(user),
         });
     } catch (error) {
-        console.error("OTP Verification Error:", error);
-        res.status(500).json({ message: "Server error during OTP verification" });
-    }
-};
-
-exports.resendOtp = async (req, res) => {
-    try {
-        const { email } = req.body;
-        if (!email) return res.status(400).json({ message: "Email is required" });
-
-        const user = await User.findOne({ email: email.toLowerCase().trim() });
-        if (!user) return res.status(404).json({ message: "User not found" });
-
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
-        const newOtp = await Otp.create({
-            email: user.email,
-            otp,
-            expiresAt: new Date(Date.now() + 5 * 60 * 1000),
-            used: false,
-            resend: true,
-            createdAt: new Date(),
-        });
-
-        try {
-            if (user.email) {
-                await sendEmail(
-                    user.email,
-                    "Your OTP Code",
-                    `<div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.6;">
-                        <p>Dear ${user.name || "User"},</p>
-                        <p>Your new One-Time Password (OTP) is:</p>
-                        <h2 style="margin:8px 0 16px;">${otp}</h2>
-                        <p>This code is valid for 5 minutes. Do not share it with anyone.</p>
-                        <p>— Arogya Rahita</p>
-                    </div>`
-                );
-            }
-        } catch (e) {
-            console.warn("Email resend failed, proceeding:", e.message || e);
-        }
-
-        const isProd = process.env.NODE_ENV === "production";
-        return res.status(200).json({
-            message: "New OTP sent to your email",
-            email: user.email,
-            otpId: newOtp._id,
-            otp: isProd ? undefined : otp,
-        });
-    } catch (error) {
-        console.error("Resend OTP Error:", error);
-        return res
-            .status(500)
-            .json({ message: "Server error while resending OTP" });
+        console.error("Login Error:", error);
+        res.status(500).json({ message: "Server error during login" });
     }
 };
 
@@ -379,6 +273,12 @@ exports.getProfile = async (req, res) => {
                 phone: user.phone || user.number || "",
                 role: user.role,
                 lastLogin: user.lastLogin,
+                address: user.address || "",
+                addressLine2: user.addressLine2 || "",
+                landmark: user.landmark || "",
+                city: user.city || "",
+                state: user.state || "",
+                pincode: user.pincode || "",
             },
         });
     } catch (error) {
@@ -389,7 +289,7 @@ exports.getProfile = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
     try {
-        const { name, number } = req.body;
+        const { name, number, address, addressLine2, landmark, city, state, pincode } = req.body;
         const userId = req.user && req.user.id;
         if (!userId) return res.status(400).json({ message: "User not authenticated" });
 
@@ -401,14 +301,39 @@ exports.updateProfile = async (req, res) => {
         // Validation: name (letters, numbers, spaces), number (digits only)
         const nameRegex = /^[A-Za-z0-9 ]+$/;
         const numberRegex = /^[0-9]+$/;
-        if (!nameRegex.test(name)) {
+        if (name && !nameRegex.test(name)) {
             return res.status(400).json({ message: "Name can only contain letters, numbers, and spaces. No emoji or symbols allowed." });
         }
-        if (!numberRegex.test(number)) {
+        if (number && !numberRegex.test(number)) {
             return res.status(400).json({ message: "Number can only contain digits. No emoji or symbols allowed." });
         }
-        user.name = name || user.name;
-        user.number = number || user.number;
+
+        // Address field validation
+        const addressFieldRegex = /^[a-zA-Z0-9\s,.\/\-]*$/;
+        if (address && !addressFieldRegex.test(address)) {
+            return res.status(400).json({ message: "Address can only contain letters, numbers, and basic symbols (, . - /)." });
+        }
+        if (addressLine2 && !addressFieldRegex.test(addressLine2)) {
+            return res.status(400).json({ message: "Address Line 2 can only contain letters, numbers, and basic symbols (, . - /)." });
+        }
+        if (landmark && !addressFieldRegex.test(landmark)) {
+            return res.status(400).json({ message: "Landmark can only contain letters, numbers, and basic symbols (, . - /)." });
+        }
+        if (city && !/^[a-zA-Z0-9\s]*$/.test(city)) {
+            return res.status(400).json({ message: "City can only contain letters, numbers and spaces." });
+        }
+        if (pincode && !/^[0-9]{6}$/.test(pincode)) {
+            return res.status(400).json({ message: "Please enter a valid 6-digit pincode." });
+        }
+
+        if (name) user.name = name;
+        if (number) user.number = number;
+        if (address !== undefined) user.address = address;
+        if (addressLine2 !== undefined) user.addressLine2 = addressLine2;
+        if (landmark !== undefined) user.landmark = landmark;
+        if (city !== undefined) user.city = city;
+        if (state !== undefined) user.state = state;
+        if (pincode !== undefined) user.pincode = pincode;
 
         await user.save();
 
@@ -422,6 +347,12 @@ exports.updateProfile = async (req, res) => {
                 phone: user.phone || user.number || "",
                 role: user.role,
                 lastLogin: user.lastLogin,
+                address: user.address || "",
+                addressLine2: user.addressLine2 || "",
+                landmark: user.landmark || "",
+                city: user.city || "",
+                state: user.state || "",
+                pincode: user.pincode || "",
             },
         });
     } catch (error) {

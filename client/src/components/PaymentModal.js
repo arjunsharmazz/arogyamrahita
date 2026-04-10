@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import PhoneInput from "react-phone-input-2";
+import React, { useState, useEffect } from "react";
 import styles from "../css/PaymentModal.module.css";
-import "react-phone-input-2/lib/style.css";
+import { authAPI, userAPI } from "../services/Api";
 const states = [
     "Andhra Pradesh",
     "Arunachal Pradesh",
@@ -49,6 +48,31 @@ const PaymentModal = ({ isOpen, onClose, onPlaceOrder }) => {
         pincode: "",
     });
     const [error, setError] = useState("");
+
+    useEffect(() => {
+        if (!isOpen) return;
+        const loadSavedAddress = async () => {
+            try {
+                const res = await authAPI.getProfile();
+                const u = res.user || {};
+                setAddress(prev => ({
+                    ...prev,
+                    name: u.name || prev.name,
+                    phone: u.phone || u.number || prev.phone,
+                    email: u.email || prev.email,
+                    address: u.address || prev.address,
+                    addressLine2: u.addressLine2 || prev.addressLine2,
+                    landmark: u.landmark || prev.landmark,
+                    city: u.city || prev.city,
+                    state: u.state || prev.state,
+                    pincode: u.pincode || prev.pincode,
+                }));
+            } catch (e) {
+                // ignore - user can fill manually
+            }
+        };
+        loadSavedAddress();
+    }, [isOpen]);
 
     if (!isOpen) return null;
 
@@ -108,6 +132,15 @@ const PaymentModal = ({ isOpen, onClose, onPlaceOrder }) => {
                 () => {
                     setProcessing(false);
                     setSuccess(true);
+                    // Save address to user profile for next time
+                    userAPI.updateProfile({
+                        address: address.address,
+                        addressLine2: address.addressLine2,
+                        landmark: address.landmark,
+                        city: address.city,
+                        state: address.state,
+                        pincode: address.pincode,
+                    }).catch(() => {});
                 },
                 (err) => {
                     setProcessing(false);
@@ -167,14 +200,27 @@ const PaymentModal = ({ isOpen, onClose, onPlaceOrder }) => {
                                 className={styles.input}
                                 disabled={processing}
                             />
-                            <PhoneInput
-                                country={"in"}
-                                value={address.phone}
-                                onChange={(phone) => setAddress({ ...address, phone })}
-                                inputClass={styles.phoneInput}
-                                disabled={processing}
-                                style={{ marginBottom: "15px" }}
-                            />
+                            {/* Lightweight fallback phone input so app compiles without react-phone-input-2 */}
+                            <div className={styles.phoneWrapper} style={{ marginBottom: 15 }}>
+                                <select
+                                    value={address.countryCode || "+91"}
+                                    onChange={(e) => setAddress({ ...address, countryCode: e.target.value })}
+                                    className={styles.countrySelect}
+                                    disabled={processing}
+                                >
+                                    <option value="+91">+91</option>
+                                    <option value="+1">+1</option>
+                                    <option value="+44">+44</option>
+                                </select>
+                                <input
+                                    type="tel"
+                                    placeholder="Phone number"
+                                    value={address.phone}
+                                    onChange={(e) => setAddress({ ...address, phone: e.target.value.replace(/[^0-9]/g, '') })}
+                                    className={`${styles.input} ${styles.phoneInput}`}
+                                    disabled={processing}
+                                />
+                            </div>
                             <input
                                 type="email"
                                 placeholder="Email"

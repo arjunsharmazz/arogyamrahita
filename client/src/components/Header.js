@@ -219,7 +219,7 @@ const Header = () => {
           <div className={styles.navIcons}>
             {user ? (
               <>
-                {isAdmin() && location.pathname !== "/admin" && (
+                {isAdmin() && !location.pathname.startsWith("/admin") && (
                   <motion.div whileHover={{ scale: 1.05 }}>
                     <NavLink
                       to="/admin"

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../css/PaymentPage.module.css';
 import CheckoutStepper from '../components/CheckoutStepper';
-import confetti from 'canvas-confetti';
+// dynamic import of confetti to avoid build errors when package is not installed
 
 const PaymentPage = ({ onPayment }) => {
     const [selectedMethod, setSelectedMethod] = useState('cash');
@@ -23,22 +23,24 @@ const PaymentPage = ({ onPayment }) => {
             const duration = 3000;
             const end = Date.now() + duration;
 
-            (function frame() {
-                confetti({
-                    particleCount: 5,
-                    startVelocity: 30,
-                    spread: 360,
-                    ticks: 200,
-                    origin: {
-                        x: Math.random(),
-                        y: 0
-                    }
+            // try to dynamically load canvas-confetti; if not available, skip animation
+            import('canvas-confetti')
+                .then((mod) => {
+                    const confetti = mod.default || mod;
+                    (function frame() {
+                        confetti({
+                            particleCount: 5,
+                            startVelocity: 30,
+                            spread: 360,
+                            ticks: 200,
+                            origin: { x: Math.random(), y: 0 }
+                        });
+                        if (Date.now() < end) requestAnimationFrame(frame);
+                    })();
+                })
+                .catch(() => {
+                    // silently ignore if confetti is not installed
                 });
-
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
-            })();
 
             setTimeout(() => {
                 setShowSuccess(false);

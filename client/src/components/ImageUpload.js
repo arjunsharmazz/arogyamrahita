@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import styles from "../css/AdminDashboard.module.css";
 
+const API_BASE_URL = (process.env.REACT_APP_API_URL || "http://localhost:4000/api").replace(/\/$/, "");
+const PRODUCT_IMAGE_UPLOAD_URL = `${API_BASE_URL}/products/upload-image`;
+
 const ImageUpload = ({
     onImageUpload,
     currentImageUrl = "",
     label = "Image",
-    // uploadPath = "http://localhost:4000/api/products/upload-image"
-    // uploadPath = "https://arogya-production.up.railway.app/api/products/upload-image",
-    uploadPath = process.env.REACT_APP_PRODUCT_IMAGE_UPLOAD_URL,
+    uploadPath = PRODUCT_IMAGE_UPLOAD_URL,
 }) => {
     const [uploading, setUploading] = useState(false);
     const [uploadError, setUploadError] = useState("");

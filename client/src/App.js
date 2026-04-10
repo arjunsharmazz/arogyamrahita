@@ -15,8 +15,16 @@ import Header from "./components/Header";
 import Fotter from "./components/Fotter";
 import Login from "./pages/Login";
 import Signup from "./pages/Singup";
+import AdminLayout from "./Admin/AdminLayout";
+import AdminOrders from "./Admin/AdminOrders";
+import AdminProducts from "./Admin/AdminProducts";
+import AdminUsers from "./Admin/AdminUsers";
+import AdminDeliveryDistance from "./Admin/AdminDeliveryDistance";
 import Dashboard from "./Admin/Dashboard";
 import DiscountHeroAdmin from "./Admin/DiscountHeroAdmin";
+import DeliveryLayout from "./Admin/DeliveryLayout";
+import DeliveryDistance from "./Admin/DeliveryDistance";
+import DeliveryOrders from "./Admin/DeliveryOrders";
 import ProductPage from "./pages/ProductPage";
 import ProductDetail from "./pages/ProductDetail";
 import About from "./pages/About";
@@ -55,6 +63,13 @@ const AdminRoute = ({ children }) => {
   if (loading) return null;
   if (!isAuthenticated()) return <Navigate to="/login" replace />;
   return isAdmin() ? children : <Navigate to="/" replace />;
+};
+
+const DeliveryRoute = ({ children }) => {
+  const { isAuthenticated, isDelivery, loading } = useAuth();
+  if (loading) return null;
+  if (!isAuthenticated()) return <Navigate to="/login" replace />;
+  return isDelivery() ? children : <Navigate to="/" replace />;
 };
 
 function PaymentPageWrapper() {
@@ -133,18 +148,31 @@ function App() {
                 path="/admin"
                 element={
                   <AdminRoute>
-                    <Dashboard />
+                    <AdminLayout />
                   </AdminRoute>
                 }
-              />
+              >
+                <Route index element={<Navigate to="overview" replace />} />
+                <Route path="overview" element={<Dashboard />} />
+                <Route path="products" element={<AdminProducts />} />
+                <Route path="orders" element={<AdminOrders />} />
+                <Route path="users" element={<AdminUsers />} />
+                <Route path="delivery-distance" element={<AdminDeliveryDistance />} />
+                <Route path="discount-hero" element={<DiscountHeroAdmin />} />
+              </Route>
+
               <Route
-                path="/admin/discount-hero"
+                path="/delivery"
                 element={
-                  <AdminRoute>
-                    <DiscountHeroAdmin />
-                  </AdminRoute>
+                  <DeliveryRoute>
+                    <DeliveryLayout />
+                  </DeliveryRoute>
                 }
-              />
+              >
+                <Route index element={<Navigate to="orders" replace />} />
+                <Route path="orders" element={<DeliveryOrders />} />
+                <Route path="distance" element={<DeliveryDistance />} />
+              </Route>
 
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<ProductPage />} />

@@ -9,6 +9,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "seed:delivery": "node scripts/seedDeliveryUser.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "echo \"no build\""
   },
@@ -19,6 +20,7 @@
     "axios": "^1.11.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
+    "canvas-confetti": "^1.9.4",
     "cloudinary": "^1.41.3",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
@@ -32,6 +34,7 @@
     "multer": "^2.0.2",
     "multer-storage-cloudinary": "^4.0.0",
     "nodemon": "^3.1.10",
+    "react-phone-input-2": "^2.15.1",
     "sib-api-v3-sdk": "^8.5.0"
   }
 }

@@ -13,6 +13,9 @@ import { useAuth } from "../context/AuthContext";
 import ImagePlaceholder from "../components/ImagePlaceholder";
 import styles from "../css/ProductPage.module.css";
 
+const API_BASE_URL = (process.env.REACT_APP_API_URL || "http://localhost:4000/api").replace(/\/$/, "");
+const PRODUCTS_ENDPOINT = `${API_BASE_URL}/products`;
+
 const ProductPage = () => {
     // Start with sidebar open on large screens, closed on small screens
     const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 900);
@@ -58,7 +61,7 @@ const ProductPage = () => {
                 const searchParam = params.get("search");
 
                 if (categoryParam) categoryParam = categoryParam.trim();
-                let url = process.env.REACT_APP_PRODUCTS_URL || "http://localhost:4000/api/products";
+                let url = PRODUCTS_ENDPOINT;
                 const queryParts = [];
                 if (categoryParam)
                     queryParts.push(`category=${encodeURIComponent(categoryParam)}`);

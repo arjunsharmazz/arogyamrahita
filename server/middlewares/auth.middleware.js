@@ -81,8 +81,32 @@ const isAdmin = (req, res, next) => {
     }
 };
 
+const verifyDelivery = (req, res, next) => {
+    if (req.user && req.user.role === "delivery") {
+        next();
+    } else {
+        res.status(403).json({
+            message: "Delivery access required",
+            code: "DELIVERY_REQUIRED",
+        });
+    }
+};
+
+const verifyAdminOrDelivery = (req, res, next) => {
+    if (req.user && (req.user.role === "admin" || req.user.role === "delivery")) {
+        next();
+    } else {
+        res.status(403).json({
+            message: "Admin or Delivery access required",
+            code: "ACCESS_DENIED",
+        });
+    }
+};
+
 module.exports = {
     verifyToken,
     verifyAdmin,
     isAdmin,
+    verifyDelivery,
+    verifyAdminOrDelivery,
 };

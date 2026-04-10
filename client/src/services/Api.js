@@ -47,11 +47,6 @@ export const authAPI = {
         return response.data;
     },
 
-    verifyOtp: async (data) => {
-        const response = await api.post('/auth/verify-otp', data);
-        return response.data;
-    },
-
     refreshToken: async () => {
         const response = await api.post('/auth/refresh-token');
         return response.data;
@@ -64,11 +59,6 @@ export const authAPI = {
 
     getProfile: async () => {
         const response = await api.get('/auth/profile');
-        return response.data;
-    },
-
-    resendOtp: async (data) => {
-        const response = await api.post('/auth/resend-otp', data);
         return response.data;
     },
 
@@ -174,8 +164,14 @@ export const ordersAPI = {
         const response = await api.get('/orders');
         return response.data;
     },
-    updateStatus: async (orderId, status) => {
-        const response = await api.put(`/orders/${orderId}/status`, { status });
+    updateStatus: async (orderId, status, paymentCollectedAs) => {
+        const body = { status };
+        if (paymentCollectedAs) body.paymentCollectedAs = paymentCollectedAs;
+        const response = await api.put(`/orders/${orderId}/status`, body);
+        return response.data;
+    },
+    bulkAccept: async (date) => {
+        const response = await api.post('/orders/bulk-accept', { date });
         return response.data;
     },
 };
@@ -187,6 +183,21 @@ export const adminAPI = {
     },
     listOrders: async () => {
         const response = await api.get('/admin/orders');
+        return response.data;
+    },
+    updateUserGroup: async (userId, group) => {
+        const response = await api.put(`/admin/users/${userId}/group`, { group });
+        return response.data;
+    },
+};
+
+export const deliveryLogAPI = {
+    list: async (params = {}) => {
+        const response = await api.get('/delivery-logs', { params });
+        return response.data;
+    },
+    create: async (payload) => {
+        const response = await api.post('/delivery-logs', payload);
         return response.data;
     },
 };

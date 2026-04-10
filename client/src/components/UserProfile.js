@@ -11,6 +11,12 @@ const UserProfile = ({ isOpen, onClose }) => {
     const [formData, setFormData] = useState({
         name: user?.name || '',
         number: user?.number || '',
+        address: '',
+        addressLine2: '',
+        landmark: '',
+        city: '',
+        state: '',
+        pincode: '',
     });
 
     useEffect(() => {
@@ -21,12 +27,24 @@ const UserProfile = ({ isOpen, onClose }) => {
                 setFormData({
                     name: u.name || '',
                     number: u.number || '',
+                    address: u.address || '',
+                    addressLine2: u.addressLine2 || '',
+                    landmark: u.landmark || '',
+                    city: u.city || '',
+                    state: u.state || '',
+                    pincode: u.pincode || '',
                 });
             } catch (e) {
                 if (user) {
                     setFormData({
                         name: user.name || '',
                         number: user.number || '',
+                        address: '',
+                        addressLine2: '',
+                        landmark: '',
+                        city: '',
+                        state: '',
+                        pincode: '',
                     });
                 }
             }
@@ -140,6 +158,81 @@ const UserProfile = ({ isOpen, onClose }) => {
                                 />
                             </div>
 
+                            <div className={styles.sectionTitle}>
+                                <IoLocation className={styles.icon} />
+                                <span>Delivery Address</span>
+                            </div>
+
+                            <div className={styles.formGroup}>
+                                <label>Address</label>
+                                <textarea
+                                    name="address"
+                                    value={formData.address}
+                                    onChange={handleChange}
+                                    placeholder="Enter your delivery address"
+                                    rows={2}
+                                />
+                            </div>
+
+                            <div className={styles.formGroup}>
+                                <label>Address Line 2</label>
+                                <textarea
+                                    name="addressLine2"
+                                    value={formData.addressLine2}
+                                    onChange={handleChange}
+                                    placeholder="Apartment, floor, etc. (optional)"
+                                    rows={2}
+                                />
+                            </div>
+
+                            <div className={styles.formGroup}>
+                                <label>Landmark</label>
+                                <input
+                                    type="text"
+                                    name="landmark"
+                                    value={formData.landmark}
+                                    onChange={handleChange}
+                                    placeholder="Nearby landmark (optional)"
+                                />
+                            </div>
+
+                            <div className={styles.formGroup}>
+                                <label>City</label>
+                                <input
+                                    type="text"
+                                    name="city"
+                                    value={formData.city}
+                                    onChange={handleChange}
+                                    placeholder="City"
+                                />
+                            </div>
+
+                            <div className={styles.formGroup}>
+                                <label>State</label>
+                                <select
+                                    name="state"
+                                    value={formData.state}
+                                    onChange={handleChange}
+                                >
+                                    <option value="">-- Select State --</option>
+                                    {["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal"].map(s => (
+                                        <option key={s} value={s}>{s}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className={styles.formGroup}>
+                                <label>Pincode</label>
+                                <input
+                                    type="text"
+                                    name="pincode"
+                                    value={formData.pincode}
+                                    onChange={handleChange}
+                                    placeholder="6-digit pincode"
+                                    maxLength={6}
+                                />
+                            </div>
+
                             <div className={styles.formActions}>
                                 <button
                                     type="button"
@@ -182,6 +275,18 @@ const UserProfile = ({ isOpen, onClose }) => {
                                     <p>{user?.email || 'Not provided'}</p>
                                 </div>
                             </div>
+
+                            {(formData.address || formData.city || formData.state || formData.pincode) && (
+                                <div className={styles.infoItem}>
+                                    <IoLocation className={styles.icon} />
+                                    <div>
+                                        <label>Saved Address</label>
+                                        <p>
+                                            {[formData.address, formData.addressLine2, formData.landmark, formData.city, formData.state, formData.pincode].filter(Boolean).join(', ')}
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
 
                             <div className={styles.profileActions}>
                                 <button

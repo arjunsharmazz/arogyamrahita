@@ -30,6 +30,14 @@ const userSchema = new mongoose.Schema(
             type: String,
             trim: true,
         },
+        addressLine2: {
+            type: String,
+            trim: true,
+        },
+        landmark: {
+            type: String,
+            trim: true,
+        },
         city: {
             type: String,
             trim: true,
@@ -56,8 +64,13 @@ const userSchema = new mongoose.Schema(
         },
         role: {
             type: String,
-            enum: ["user", "admin"],
+            enum: ["user", "admin", "delivery"],
             default: "user",
+        },
+        group: {
+            type: String,
+            enum: ["group1","group2","group3","group4","group5","group6","group7","group8","group9","group10","group11","group12","group13","group14","group15","group16","group17","group18","group19","group20"],
+            default: "group1",
         },
         lastLogin: {
             type: Date,

@@ -152,7 +152,7 @@ exports.listOrders = async (req, res) => {
 exports.updateOrderStatus = async (req, res) => {
     try {
         const { orderId } = req.params;
-        const { status } = req.body;
+        const { status, paymentCollectedAs } = req.body;
         const allowed = [
             "PLACED",
             "PAID",
@@ -165,9 +165,19 @@ exports.updateOrderStatus = async (req, res) => {
             return res.status(400).json({ message: "Invalid status" });
         }
 
+        const updateData = { status };
+
+        // Save payment collection method when marking as DELIVERED
+        if (status === "DELIVERED" && paymentCollectedAs) {
+            if (!["cash", "upi", "due", "online"].includes(paymentCollectedAs)) {
+                return res.status(400).json({ message: "paymentCollectedAs must be 'cash', 'upi', or 'due'" });
+            }
+            updateData.paymentCollectedAs = paymentCollectedAs;
+        }
+
         const order = await Order.findByIdAndUpdate(
             orderId,
-            { status },
+            updateData,
             { new: true }
         ).populate("user", "name email number phone");
 
@@ -206,6 +216,37 @@ exports.updateOrderStatus = async (req, res) => {
         res.json({ message: "Order updated", order });
     } catch (error) {
         console.error("Update Order Error:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+// Admin: bulk accept (mark READY_FOR_DELIVERY) all PLACED orders for a specific date
+exports.bulkAcceptOrders = async (req, res) => {
+    try {
+        const { date } = req.body; // expected format: "YYYY-MM-DD"
+        if (!date) {
+            return res.status(400).json({ message: "Date is required" });
+        }
+
+        const startOfDay = new Date(date);
+        startOfDay.setHours(0, 0, 0, 0);
+        const endOfDay = new Date(date);
+        endOfDay.setHours(23, 59, 59, 999);
+
+        const result = await Order.updateMany(
+            {
+                status: "PLACED",
+                createdAt: { $gte: startOfDay, $lte: endOfDay },
+            },
+            { $set: { status: "READY_FOR_DELIVERY" } }
+        );
+
+        res.json({
+            message: `${result.modifiedCount} order(s) accepted for ${date}`,
+            modifiedCount: result.modifiedCount,
+        });
+    } catch (error) {
+        console.error("Bulk Accept Error:", error);
         res.status(500).json({ message: "Server error" });
     }
 };

@@ -116,6 +116,17 @@
   color: #3730a3;
 }
 
+.orderInvoiceNo {
+  font-size: 0.88rem;
+  color: #6366f1;
+  font-weight: 600;
+  margin-bottom: 10px;
+  background: #eef2ff;
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
 .orderActions {
   margin-top: 16px;
   padding-top: 12px;

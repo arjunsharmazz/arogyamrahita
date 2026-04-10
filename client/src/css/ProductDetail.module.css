@@ -4,6 +4,47 @@
     padding: 50px 20px;
     min-height: 80vh;
 }
+/* Make container grayscale and slightly dim when out of stock */
+.outOfStockCard {
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: filter 0.25s ease, opacity 0.25s ease;
+  pointer-events: auto; /* keep pointer-events so buttons can be disabled independently */
+}
+
+/* Allow image wrapper to position badge */
+.imageWrapper .mainImage {
+  position: relative;
+}
+
+/* Out of stock badge on top of image */
+.outOfStockBadge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  z-index: 5;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+/* Large 'outOfStock' paragraph already exists — keep or tweak */
+.outOfStock {
+  color: #b00020;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+/* Optional: dim buttons further when disabled (if you want visual hint) */
+.productActions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
 .productDetail {
     display: grid;

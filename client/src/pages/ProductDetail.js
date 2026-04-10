@@ -45,9 +45,20 @@ const ProductDetail = () => {
     }
   };
 
+  // ----------- NEW: compute out-of-stock state (variant-aware) --------------
+  const isVariantOutOfStock = () => {
+    if (!product) return false;
+    if (product.variants && product.variants.length > 0 && selectedVariant !== null) {
+      return product.variants[selectedVariant].stock <= 0;
+    }
+    return product.stock <= 0;
+  };
+
+  const isOutOfStock = isVariantOutOfStock();
+  // -------------------------------------------------------------------------
+
   const handleAddToCart = () => {
     if (!isAuthenticated()) {
-      // toast.info("Please sign up to add items to cart!");
       navigate("/signup");
       return;
     }
@@ -73,13 +84,10 @@ const ProductDetail = () => {
       },
       quantity
     );
-
-    // toast.success("Added to cart!");
   };
 
   const handleBuyNow = () => {
     if (!isAuthenticated()) {
-      // toast.info("Please sign up to purchase products!");
       navigate("/signup");
       return;
     }
@@ -148,7 +156,8 @@ const ProductDetail = () => {
   return (
     <>
       <motion.div
-        className={styles.container}
+        // APPLY grayscale class conditionally on the whole container when out of stock
+        className={`${styles.container} ${isOutOfStock ? styles.outOfStockCard : ""}`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
@@ -160,13 +169,20 @@ const ProductDetail = () => {
           transition={{ duration: 0.6 }}
         >
           <motion.div
-            className={styles.productImages}
+            // make the image wrapper relative so badge can be absolute
+            className={`${styles.productImages} ${styles.imageWrapper}`}
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
             <div className={styles.mainImage}>
               <img src={product.image} alt={product.name} />
+              {/* NEW: Out of stock badge on image */}
+              {isOutOfStock && (
+                <div className={styles.outOfStockBadge}>
+                  Out of Stock
+                </div>
+              )}
             </div>
           </motion.div>
 
@@ -262,7 +278,7 @@ const ProductDetail = () => {
               <div className={styles.quantityControls}>
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  disabled={quantity <= 1}
+                  disabled={quantity <= 1 || isOutOfStock}
                 >
                   -
                 </button>
@@ -270,12 +286,15 @@ const ProductDetail = () => {
                 <button
                   onClick={() => setQuantity(quantity + 1)}
                   disabled={
-                    product.variants &&
-                      product.variants.length > 0 &&
-                      selectedVariant !== null
-                      ? product.variants[selectedVariant].stock <= 0 ||
-                      quantity >= product.variants[selectedVariant].stock
-                      : product.stock <= 0 || quantity >= product.stock
+                    isOutOfStock ||
+                    (
+                      product.variants &&
+                        product.variants.length > 0 &&
+                        selectedVariant !== null
+                        ? product.variants[selectedVariant].stock <= 0 ||
+                        quantity >= product.variants[selectedVariant].stock
+                        : product.stock <= 0 || quantity >= product.stock
+                    )
                   }
                 >
                   +
@@ -293,6 +312,7 @@ const ProductDetail = () => {
                       setQuantity(1);
                     }}
                     className={styles.variantDropdown}
+                    disabled={isOutOfStock}
                   >
                     {product.variants.map((variant, idx) => (
                       <option key={idx} value={idx}>
@@ -313,13 +333,7 @@ const ProductDetail = () => {
               <motion.button
                 className={styles.buyNowBtn}
                 onClick={handleBuyNow}
-                disabled={
-                  product.variants &&
-                    product.variants.length > 0 &&
-                    selectedVariant !== null
-                    ? product.variants[selectedVariant].stock <= 0
-                    : product.stock <= 0
-                }
+                disabled={isOutOfStock}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -328,13 +342,7 @@ const ProductDetail = () => {
               <motion.button
                 className={styles.addToCartBtn}
                 onClick={handleAddToCart}
-                disabled={
-                  product.variants &&
-                    product.variants.length > 0 &&
-                    selectedVariant !== null
-                    ? product.variants[selectedVariant].stock <= 0
-                    : product.stock <= 0
-                }
+                disabled={isOutOfStock}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -342,19 +350,15 @@ const ProductDetail = () => {
               </motion.button>
             </motion.div>
 
-            {(product.variants &&
-              product.variants.length > 0 &&
-              selectedVariant !== null
-              ? product.variants[selectedVariant].stock <= 0
-              : product.stock <= 0) && (
-                <motion.p
-                  className={styles.outOfStock}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  This product is currently out of stock
-                </motion.p>
-              )}
+            {isOutOfStock && (
+              <motion.p
+                className={styles.outOfStock}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                This product is currently out of stock
+              </motion.p>
+            )}
           </motion.div>
         </motion.div>
       </motion.div>
