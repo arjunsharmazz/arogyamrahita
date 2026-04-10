@@ -63,7 +63,7 @@ const ImageUpload = ({
                 {currentImageUrl && (
                     <img
                         src={currentImageUrl}
-                        alt="Current product image"
+                        alt="Current product"
                         style={{
                             width: "100px",
                             height: "100px",

@@ -3,11 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import {
     ChevronRight,
     ChevronDown,
-    ShoppingCart,
     Menu,
-    ListFilter,
 } from "lucide-react";
-import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 // import { toast } from "react-toastify";
 import ImagePlaceholder from "../components/ImagePlaceholder";
@@ -30,7 +27,6 @@ const ProductPage = () => {
     const [error, setError] = useState("");
     const [sortBy, setSortBy] = useState("popular");
 
-    const { addToCart } = useCart();
     const { isAuthenticated } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();

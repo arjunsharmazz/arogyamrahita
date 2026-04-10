@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import styles from "../css/handpick.module.css";
@@ -80,6 +80,39 @@ const Handpick = () => {
     fetchProducts();
   }, []);
 
+  const startAutoScroll = useCallback(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const scrollSpeed = 0.7;
+
+    const scroll = () => {
+      container.scrollLeft += scrollSpeed;
+      if (container.scrollLeft >= container.scrollWidth / 2) {
+        container.scrollLeft = 0;
+      }
+      autoScrollRef.current = requestAnimationFrame(scroll);
+    };
+
+    autoScrollRef.current = requestAnimationFrame(scroll);
+  }, []);
+
+  const stopAutoScroll = useCallback(() => {
+    if (autoScrollRef.current) {
+      cancelAnimationFrame(autoScrollRef.current);
+      autoScrollRef.current = null;
+    }
+    if (resumeTimeout.current) {
+      clearTimeout(resumeTimeout.current);
+    }
+  }, []);
+
+  const restartAutoScroll = useCallback(() => {
+    resumeTimeout.current = setTimeout(() => {
+      startAutoScroll();
+    }, 2000);
+  }, [startAutoScroll]);
+
   useEffect(() => {
     if (categoryProducts.length > 0) {
       startAutoScroll();
@@ -136,40 +169,7 @@ const Handpick = () => {
         container.removeEventListener("touchend", handleTouchEnd);
       };
     }
-  }, [categoryProducts]);
-
-  const startAutoScroll = () => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const scrollSpeed = 0.7;
-
-    const scroll = () => {
-      container.scrollLeft += scrollSpeed;
-      if (container.scrollLeft >= container.scrollWidth / 2) {
-        container.scrollLeft = 0;
-      }
-      autoScrollRef.current = requestAnimationFrame(scroll);
-    };
-
-    autoScrollRef.current = requestAnimationFrame(scroll);
-  };
-
-  const stopAutoScroll = () => {
-    if (autoScrollRef.current) {
-      cancelAnimationFrame(autoScrollRef.current);
-      autoScrollRef.current = null;
-    }
-    if (resumeTimeout.current) {
-      clearTimeout(resumeTimeout.current);
-    }
-  };
-
-  const restartAutoScroll = () => {
-    resumeTimeout.current = setTimeout(() => {
-      startAutoScroll();
-    }, 2000);
-  };
+  }, [categoryProducts, restartAutoScroll, startAutoScroll, stopAutoScroll]);
 
   const scrollManually = (direction) => {
     const container = scrollContainerRef.current;

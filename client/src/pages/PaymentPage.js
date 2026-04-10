@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../css/PaymentPage.module.css';
 import CheckoutStepper from '../components/CheckoutStepper';

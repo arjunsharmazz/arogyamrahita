@@ -1,5 +1,3 @@
-import { IoMenu, IoCartOutline } from "react-icons/io5";
-import { LuUser } from "react-icons/lu";
 import styles from "./css/TermCondition.module.css";
 
 const TermCondition = () => {

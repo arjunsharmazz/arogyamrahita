@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { authAPI } from '../services/Api';
-import { toast } from 'react-toastify';
 import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
 
 function useQuery() {

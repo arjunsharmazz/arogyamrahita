@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { productAPI } from "../services/Api";
-import { toast } from "react-toastify";
 import styles from "../css/ProductDetail.module.css";
 import { motion } from "framer-motion";
 
@@ -19,13 +18,7 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState(null);
 
-  useEffect(() => {
-    if (id) {
-      fetchProduct();
-    }
-  }, [id]);
-
-  const fetchProduct = async () => {
+  const fetchProduct = useCallback(async () => {
     try {
       setLoading(true);
       const response = await productAPI.getProductById(id);
@@ -43,7 +36,13 @@ const ProductDetail = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    if (id) {
+      fetchProduct();
+    }
+  }, [id, fetchProduct]);
 
   // ----------- NEW: compute out-of-stock state (variant-aware) --------------
   const isVariantOutOfStock = () => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { FiCheckCircle, FiFileText, FiFilter, FiPrinter, FiTruck } from "react-icons/fi";
+import { FiFileText, FiFilter, FiPrinter, FiTruck } from "react-icons/fi";
 import InvoiceModal, { BulkInvoicePrint } from "../components/InvoiceModal";
 import OrderTracker from "../components/OrderTracker";
 import styles from "../css/AdminPanel.module.css";
@@ -130,22 +130,6 @@ const DeliveryOrders = () => {
     contentRef: bulkPrintRef,
     documentTitle: `All-Invoices-${activeTab}-${dateFilter || new Date().toISOString().slice(0, 10)}`,
   });
-
-  const toggleSelect = (orderId) => {
-    setSelectedOrders((prev) =>
-      prev.includes(orderId) ? prev.filter((id) => id !== orderId) : [...prev, orderId]
-    );
-  };
-
-  const toggleSelectAll = () => {
-    if (selectedOrders.length === filteredOrders.length) {
-      setSelectedOrders([]);
-    } else {
-      setSelectedOrders(filteredOrders.map((o) => o._id));
-    }
-  };
-
-  const isPlacedTab = activeTab === "PLACED";
 
   return (
     <div className={styles.pageSection}>

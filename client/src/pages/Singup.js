@@ -18,7 +18,7 @@ import styles from "../css/AuthForms.module.css";
 
 const Signup = () => {
     const navigate = useNavigate();
-    const { login } = useAuth();
+    useAuth();
     const [formData, setFormData] = useState({
         name: "",
         email: "",

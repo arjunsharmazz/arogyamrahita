@@ -33,7 +33,6 @@ const states = [
 ];
 
 const PaymentModal = ({ isOpen, onClose, onPlaceOrder }) => {
-    const [method] = useState("cod");
     const [processing, setProcessing] = useState(false);
     const [success, setSuccess] = useState(false);
     const [address, setAddress] = useState({

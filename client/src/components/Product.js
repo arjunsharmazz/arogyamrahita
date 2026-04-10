@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import styles from "../css/product.module.css";
+import styles from "../css/Product.module.css";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
-import { toast } from "react-toastify";
 import { productAPI } from "../services/Api";
-import { GrCart } from "react-icons/gr";
 
-function ProductCard({ product, onAddToCart, onBuyNow }) {
+function ProductCard({ product, onBuyNow }) {
   const navigate = useNavigate();
 
   const lastVariant = product.variants && product.variants.length > 0
