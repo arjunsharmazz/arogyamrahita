@@ -6,7 +6,24 @@
 
 .app-main {
   flex: 1;
-  background: #f8fafc;
-  padding-top: 80px;
-  /* padding-bottom: 70px; */
+  background: transparent;
+  padding-top: 110px;
+  position: relative;
+}
+
+.app-main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 10% 35%, rgba(15, 143, 95, 0.08), transparent 35%),
+    radial-gradient(circle at 90% 65%, rgba(242, 181, 69, 0.1), transparent 30%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+@media (max-width: 768px) {
+  .app-main {
+    padding-top: 86px;
+  }
 }
