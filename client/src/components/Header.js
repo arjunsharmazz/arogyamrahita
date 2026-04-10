@@ -20,7 +20,6 @@ const Header = () => {
   const { isAdmin, user, logout } = useAuth();
   const location = useLocation();
   const { cartCount } = useCart();
-  const [showUserProfile, setShowUserProfile] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -223,8 +222,9 @@ const Header = () => {
                   <motion.div whileHover={{ scale: 1.05 }}>
                     <NavLink
                       to="/admin"
-                      className={`${styles.adminBtn} ${({ isActive }) =>
-                        isActive ? "active" : ""}`}
+                      className={({ isActive }) =>
+                        `${styles.adminBtn} ${isActive ? "active" : ""}`
+                      }
                     >
                       Admin Panel
                     </NavLink>

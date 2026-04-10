@@ -96,11 +96,11 @@ const Fotter = () => {
         transition={{ duration: 1, delay: 0.3 }}
       >
         <div className={styles.socialIcons}>
-          <a href="#"><i className="fab fa-instagram"></i></a>
-          <a href="#"><i className="fab fa-facebook-f"></i></a>
-          <a href="#"><i className="fab fa-twitter"></i></a>
-          <a href="#"><i className="fab fa-youtube"></i></a>
-          <a href="#"><i className="fab fa-pinterest"></i></a>
+          <a href="https://www.instagram.com" target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com" target="_blank" rel="noreferrer"><i className="fab fa-facebook-f"></i></a>
+          <a href="https://x.com" target="_blank" rel="noreferrer"><i className="fab fa-twitter"></i></a>
+          <a href="https://www.youtube.com" target="_blank" rel="noreferrer"><i className="fab fa-youtube"></i></a>
+          <a href="https://in.pinterest.com" target="_blank" rel="noreferrer"><i className="fab fa-pinterest"></i></a>
         </div>
         <div className={styles.bottomLinks}>
           <Link to="/sitemap">Site Map</Link>

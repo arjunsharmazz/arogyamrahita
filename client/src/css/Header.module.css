@@ -1,141 +1,190 @@
+.headerContainer {
+  margin-top: 0;
+}
+
 .header {
   position: fixed;
+  inset: 10px 0 auto;
+  z-index: 1000;
+  width: min(96%, 1320px);
+  margin: 0 auto;
+  height: 76px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(11, 109, 72, 0.16);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 12px 35px rgba(16, 35, 26, 0.15);
+  transition: all 0.25s ease;
+}
+
+.scrolled {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 24px rgba(16, 35, 26, 0.17);
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(220px, 420px) 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 0 18px;
+}
+
+.logoImage {
+  width: 78px;
+  height: auto;
+}
+
+.searchBar {
+  position: relative;
+  width: 100%;
+}
+
+.searchInput,
+.searchBar input {
+  width: 100%;
+  border: 1px solid rgba(11, 109, 72, 0.2);
+  border-radius: 12px;
+  background: var(--surface-muted);
+  padding: 10px 14px 10px 38px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.searchInput:focus,
+.searchBar input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  color: var(--text-soft);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.suggestionsBox {
+  position: absolute;
+  top: calc(100% + 8px);
   left: 0;
   right: 0;
-  top: 7px;
-  width: 100%;
-  height: 80px;
-  z-index: 1000;
-  background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.12),
-      rgba(0, 168, 107, 0.08));
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  max-height: 290px;
+  overflow-y: auto;
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(11, 109, 72, 0.2);
+  background: #ffffff;
+  box-shadow: 0 14px 30px rgba(16, 35, 26, 0.16);
+  z-index: 20;
 }
 
-.headerContainer {
-  margin-top: 10px;
+.suggestionsBox::-webkit-scrollbar {
+  width: 7px;
 }
 
-.suggestionType {
-  font-size: 12px;
-  color: #666;
-  padding: 2px 6px;
-  border-radius: 4px;
-  text-transform: capitalize;
-  min-width: 70px;
-  text-align: center;
-  background: rgba(230, 230, 230, 0.6);
-  overflow-y: scroll;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+.suggestionsBox::-webkit-scrollbar-thumb {
+  background: #c8d6cc;
+  border-radius: 8px;
 }
 
 .suggestionLabel {
   font-size: 14px;
-  color: #111;
-}
-
-.scrolled {
-  background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.25),
-      rgba(0, 168, 107, 0.15));
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-}
-
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: nowrap;
-  gap: 16px;
-  width: 100%;
-  max-width: 1700px;
-  margin: 0 auto;
-  padding-top: 5px;
-  padding-left: 5%;
-  padding-right: 5%;
-}
-
-.logoImage {
-  width: 100px;
-  height: auto;
+  color: var(--text);
 }
 
 .navList {
   display: flex;
+  align-items: center;
+  justify-content: center;
   list-style: none;
-  gap: 28px;
+  gap: 20px;
   margin: 0;
   padding: 0;
 }
 
 .navList a {
-  color: #111;
-  font-weight: 500;
   font-size: 15px;
+  font-weight: 600;
   text-decoration: none;
-  display: inline-block;
-  transition: transform 0.2s ease, color 0.3s ease;
-  transform-origin: center;
+  color: var(--text);
+  opacity: 0.84;
+  transition: color 0.2s ease, opacity 0.2s ease;
 }
 
 .navList a:hover,
-.navList a:focus,
-.navList a:active {
-  color: #00a86b;
-  transform: scale(1.2);
-}
-
 .navList a.active,
 .mobileNav a.active {
-  color: #00a86b;
-  transform: scale(1.2);
-  font-weight: 600;
+  color: var(--primary-deep);
+  opacity: 1;
 }
 
 .navIcons {
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-self: end;
+  gap: 8px;
 }
 
 .adminBtn,
-.signupBtn {
-  padding: 6px 12px;
+.signupBtn,
+.loginBtn {
+  border: 0;
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 500;
-  background: #fff;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  color: #111;
-  cursor: pointer;
-  transition: 0.3s;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
   text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.signupBtn {
+  background: #f3efe2;
+  color: #5f4a1f;
 }
 
 .loginBtn {
-  display: none;
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.adminBtn {
+  background: #16221d;
+  color: #ffffff;
+}
+
+.adminBtn:hover,
+.signupBtn:hover,
+.loginBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(16, 35, 26, 0.14);
 }
 
 .cartBtn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  position: relative;
   text-decoration: none;
-  color: #111;
-  font-weight: 500;
-  padding: 6px 12px;
+  color: var(--text);
+  border-radius: 10px;
+  padding: 6px;
+  transition: background 0.2s ease;
+}
+
+.cartBtn:hover {
+  background: rgba(11, 109, 72, 0.1);
 }
 
 .iconWrapper {
   position: relative;
-  display: inline-block;
 }
 
 .cartIcon {
@@ -145,89 +194,33 @@
 .cartCount {
   position: absolute;
   top: -6px;
-  right: -10px;
-  background: red;
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  border-radius: 50%;
-  padding: 2px 6px;
-  line-height: 1;
+  right: -8px;
   min-width: 18px;
+  padding: 2px 5px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  background: #e3342f;
+  color: #ffffff;
   text-align: center;
 }
 
-.searchBar {
-  position: relative;
-  flex: 1;
-  max-width: 350px;
-  min-width: 120px;
-}
-
-.searchBar input {
-  width: 100%;
-  padding: 9px 14px 9px 36px;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(8px);
-  font-size: 14px;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-}
-
-.suggestionsBox {
-  position: absolute;
-  top: 110%;
-  left: 0;
-  right: 0;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  z-index: 20;
-  padding: 8px;
-  max-height: 280px;
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.suggestionsBox::-webkit-scrollbar {
-  display: none;
-}
-
-
-.searchIcon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 18px;
-  color: #444;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .iconBox {
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
+  display: inline-flex;
   align-items: center;
-  font-size: 26px;
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(6px);
-  color: #111;
-  cursor: pointer;
-  transition: 0.3s;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--text);
+  background: rgba(11, 109, 72, 0.08);
+  font-size: 22px;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .iconBox:hover {
-  background: #00a86b;
-  color: #fff;
+  background: var(--primary);
+  color: #ffffff;
 }
 
 .desktopNav {
@@ -238,219 +231,143 @@
   display: none;
 }
 
-/* 🔹 Animations */
-@keyframes slideDown {
-  from {
-    transform: translateY(-30px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.hiMenu,
+.hixCros {
+  font-size: 22px;
+  color: var(--text);
 }
 
-@media (max-width: 1024px) {
+.mobileNav {
+  display: none;
+}
+
+@media (max-width: 1160px) {
   .container {
-    padding: auto 15px;
-    gap: 12px;
+    grid-template-columns: auto minmax(170px, 270px) 1fr auto;
   }
 
   .navList {
-    gap: 18px;
+    gap: 14px;
   }
 
-  .searchBar {
-    max-width: 220px;
-  }
-
-  .adminBtn,
-  .signupBtn {
-    padding: 5px 10px;
-    font-size: 13px;
+  .navList a {
+    font-size: 14px;
   }
 }
 
-@media (max-width: 768px) {
-  .mobileNav {
-    display: block;
-    position: absolute;
-    top: 80px;
-    left: 0;
-    width: 100vw;
-    background: #fff;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    z-index: 9999;
-    border-radius: 0 0 16px 16px;
-    overflow: hidden;
-    padding: 0 0 16px 0;
-    animation: slideDown 0.3s;
-  }
-
-  .mobileNav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .mobileNav li {
-    border-bottom: 1px solid #eee;
+@media (max-width: 920px) {
+  .header {
     width: 100%;
-  }
-
-  .mobileNav li:last-child {
-    border-bottom: none;
-  }
-
-  .mobileNav a {
-    display: block;
-    padding: 16px 20px;
-    color: #111;
-    font-size: 16px;
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .mobileNav a:hover,
-  .mobileNav a.active {
-    background: #e6f7f0;
-    color: #00a86b;
+    inset: 0 0 auto;
+    border-radius: 0;
+    height: 68px;
+    border-left: 0;
+    border-right: 0;
   }
 
   .container {
-    padding: auto 12px;
-    gap: 8px;
-  }
-
-  .logoImage {
-    width: 45px;
-  }
-
-  .searchBar {
-    max-width: 160px;
-  }
-
-  .navList {
-    display: none;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    padding: 0 12px;
   }
 
   .desktopNav {
     display: none;
   }
 
-  .hamburger {
-    display: block;
-    font-size: 26px;
-    color: #111;
-    cursor: pointer;
-    background: transparent;
-    border: none;
-  }
-
-  .navIcons {
-    gap: 8px;
-  }
-
-  .adminBtn,
-  .signupBtn {
-    padding: 4px 8px;
-    font-size: 11px;
-  }
-
-  .cartBtn {
-    padding: 4px 8px;
-    font-size: 12px;
-  }
-
-  .suggestionType {
-    font-size: 9px;
-    padding: 2px 6px;
-    min-width: 40px;
-  }
-
-  .suggestionLabel {
-    font-size: 7px;
-  }
-}
-
-@media (max-width: 480px) {
-  .suggestionsBox {
-    padding: 0;
-  }
-
-  .suggestionType {
-    font-size: 8px;
-    padding: 2px 6px;
-    min-width: 40px;
-  }
-
-  .suggestionLabel {
-    font-size: 7px;
-  }
-
-  .container {
-    padding: 18px 15px;
-    gap: 6px;
-  }
-
-  .logoImage {
-    width: 40px;
-  }
-
-  .hiMenu {
-    font-size: 15px;
-  }
-
-  .hixCros {
-    font-size: 15px;
-  }
-
-
   .searchBar {
-    height: 35px;
-    max-width: 120px;
+    max-width: 100%;
   }
 
+  .searchInput,
   .searchBar input {
-    font-size: 10px;
+    padding: 9px 12px 9px 34px;
+    font-size: 13px;
   }
 
   .searchIcon {
     font-size: 16px;
-    left: 10px;
-  }
-
-  .searchBar input::placeholder {
-    font-size: 12px;
-    color: #666;
-  }
-
-  .cartIcon {
-    font-size: 15px;
-  }
-
-  .iconBox {
-    font-size: 15px;
-  }
-
-  .adminBtn {
-    padding: 4px 8px;
-    font-size: 9px;
   }
 
   .signupBtn {
     display: none;
   }
 
+  .adminBtn,
+  .loginBtn {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .hamburger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    background: rgba(11, 109, 72, 0.08);
+    border-radius: 8px;
+    margin-left: 4px;
+  }
+
+  .mobileNav {
+    display: block;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-bottom: 1px solid rgba(11, 109, 72, 0.18);
+    box-shadow: 0 14px 24px rgba(16, 35, 26, 0.12);
+    overflow: hidden;
+  }
+
+  .mobileNav ul {
+    list-style: none;
+    margin: 0;
+    padding: 6px 0;
+  }
+
+  .mobileNav li {
+    border-bottom: 1px solid rgba(11, 109, 72, 0.1);
+  }
+
+  .mobileNav li:last-child {
+    border-bottom: 0;
+  }
+
+  .mobileNav a {
+    display: block;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 560px) {
+  .logoImage {
+    width: 60px;
+  }
+
+  .adminBtn,
+  .loginBtn {
+    display: none;
+  }
+
+  .iconBox {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
+
+  .cartIcon {
+    font-size: 21px;
+  }
+
   .cartCount {
-    font-size: 7px;
     min-width: 15px;
-    top: -5px;
-    right: -8px;
-    padding: 2px 5px;
+    font-size: 9px;
   }
 }

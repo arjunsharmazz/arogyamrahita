@@ -1,243 +1,208 @@
 .footer {
-  background: #000;
-  color: #fff;
-  padding: 50px 20px 20px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 52px;
+  color: #f1f7f3;
+  background:
+    radial-gradient(circle at 8% 4%, rgba(242, 181, 69, 0.15), transparent 36%),
+    linear-gradient(150deg, #081f16 0%, #0c2a1f 45%, #113727 100%);
+  padding: 54px 20px 20px;
 }
 
 .footerContainer {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  max-width: 1400px;
+  max-width: 1240px;
   margin: 0 auto;
-  border-bottom: 1px solid #333;
-  padding-bottom: 30px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 18px;
+  border-bottom: 1px solid rgba(197, 232, 209, 0.18);
+  padding-bottom: 34px;
 }
 
-/* Newsletter */
-.newsletterSection {
-  flex: 1.5;
-  min-width: 280px;
-  margin: 15px;
+.footerSection {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(197, 232, 209, 0.1);
+  border-radius: 14px;
+  padding: 18px;
 }
 
 .newsletterTitle {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.6rem;
+  font-weight: 700;
   margin-bottom: 10px;
+  color: #ffffff;
 }
 
 .newsletterText {
   font-size: 0.95rem;
-  margin-bottom: 15px;
-  color: #ddd;
+  line-height: 1.6;
+  color: #d4e7dc;
+  margin-bottom: 14px;
 }
 
 .newsletterForm {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
 }
 
 .newsletterForm input {
+  border: 1px solid rgba(197, 232, 209, 0.25);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #f7fbf8;
   padding: 12px 14px;
-  border: 1px solid #444;
-  border-radius: 4px;
-  background: #111;
-  color: #fff;
+}
+
+.newsletterForm input::placeholder {
+  color: rgba(241, 247, 243, 0.7);
 }
 
 .newsletterForm button {
-  background: transparent;
-  border: 1px solid #fff;
-  color: #fff;
+  border: 0;
+  border-radius: 10px;
   padding: 12px;
-  text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;
+  background: linear-gradient(120deg, #f2b545, #e79f1a);
+  color: #2b2208;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .newsletterForm button:hover {
-  background: #fff;
-  color: #000;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(242, 181, 69, 0.3);
 }
 
 .note {
-  font-size: 0.75rem;
   margin-top: 12px;
-  color: #aaa;
+  color: #c2d6cb;
+  font-size: 0.76rem;
+  line-height: 1.5;
 }
 
 .note a {
-  color: #fff;
-  text-decoration: underline;
-}
-
-/* Links Columns */
-.linksSection {
-  flex: 1;
-  min-width: 180px;
-  margin: 15px;
+  color: #f7cb73;
+  text-decoration: none;
 }
 
 .linksSection h3 {
+  margin-bottom: 10px;
   font-size: 1rem;
-  margin-bottom: 12px;
-  font-weight: 600;
+  font-weight: 700;
+  color: #ffffff;
 }
 
 .linksSection ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.linksSection li {
-  margin-bottom: 8px;
+.linksSection li + li {
+  margin-top: 7px;
 }
 
 .linksSection a {
-  color: #ccc;
+  color: #d3e4da;
   text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.3s;
+  font-size: 0.92rem;
+  transition: color 0.2s ease;
 }
 
 .linksSection a:hover {
-  color: #fff;
+  color: #f2b545;
 }
 
-/* Bottom Bar */
 .footerBottom {
+  max-width: 1240px;
+  margin: 16px auto 0;
   text-align: center;
-  margin-top: 25px;
-  font-size: 0.8rem;
-  color: #aaa;
+  color: #c7d9cf;
+  font-size: 0.82rem;
 }
 
 .socialIcons {
-  margin-bottom: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .socialIcons a {
-  margin: 0 8px;
-  color: #ccc;
-  font-size: 1.2rem;
-  transition: color 0.3s;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(197, 232, 209, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #d6e7de;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
 .socialIcons a:hover {
-  color: #fff;
+  background: rgba(242, 181, 69, 0.15);
+  border-color: rgba(242, 181, 69, 0.7);
+  color: #ffd58a;
 }
 
 .bottomLinks {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
   margin-bottom: 10px;
 }
 
 .bottomLinks a {
-  margin: 0 10px;
-  font-size: 0.85rem;
-  color: #ccc;
+  color: #d3e4da;
   text-decoration: none;
 }
 
 .bottomLinks a:hover {
-  color: #fff;
+  color: #f2b545;
 }
 
 .footerBottom p {
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .footerContainer {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .linksSection {
-    margin: 20px 0;
-  }
-
-  .newsletterForm {
-    align-items: center;
-  }
-}
-
-@media (max-width: 768px) {
-  .footerContainer {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding-bottom: 0px;
+    grid-template-columns: 1fr 1fr;
   }
 
   .newsletterSection {
-    margin-bottom: 25px;
-    flex: 1 1 100%;
-  }
-
-  .newsletterForm {
-    width: 100%;
-    align-items: stretch;
-  }
-
-  .newsletterForm input,
-  .newsletterForm button {
-    width: 100%;
-  }
-
-  .linksSection {
-    margin: 5px 0;
-    flex: 1 1 100%;
-  }
-
-  .bottomLinks {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .bottomLinks a {
-    margin: 5px 8px;
-  }
-
-  .linksSection li {
-    margin-bottom: 0;
-  }
-
-  .socialIcons {
-    margin-bottom: 0;
+    grid-column: 1 / -1;
   }
 }
 
-/* Mobile (480px and below) */
-@media (max-width: 480px) {
+@media (max-width: 640px) {
+  .footer {
+    margin-top: 42px;
+    padding: 40px 14px 18px;
+  }
+
+  .footerContainer {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding-bottom: 20px;
+  }
+
+  .footerSection {
+    padding: 14px;
+  }
+
   .newsletterTitle {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
   }
 
-  .newsletterText {
-    font-size: 0.85rem;
-  }
-
-  .linksSection h3 {
-    font-size: 0.9rem;
-  }
-
+  .newsletterText,
   .linksSection a {
-    font-size: 0.8rem;
+    font-size: 0.87rem;
   }
 
-  .socialIcons a {
-    font-size: 1.4rem;
-    margin: 0 10px;
-  }
-
-  .footerBottom {
-    font-size: 0.75rem;
+  .bottomLinks {
+    gap: 10px;
   }
 }
