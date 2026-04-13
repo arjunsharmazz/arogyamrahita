@@ -118,6 +118,21 @@ const Dashboard = () => {
       to: "/admin/users",
     },
     {
+      title: "Manage Referrals",
+      description: "Assign 20 group admins, add referral codes, and monitor joined members.",
+      to: "/admin/group-admins",
+    },
+    {
+      title: "Manage Videos",
+      description: "Paste YouTube URLs and publish videos directly on the videos page.",
+      to: "/admin/videos",
+    },
+    {
+      title: "Publish Share Posts",
+      description: "Upload one image with title and blog-style content for the mixed public feed.",
+      to: "/admin/share-posts",
+    },
+    {
       title: "Update Discount Hero",
       description: "Refresh homepage promotional blocks and active campaign visuals.",
       to: "/admin/discount-hero",

@@ -22,8 +22,9 @@
   z-index: -1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 920px) {
   .app-main {
     padding-top: 86px;
+    padding-bottom: 92px;
   }
 }

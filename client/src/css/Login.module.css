@@ -3,24 +3,89 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f8f9fa;
+    background:
+        radial-gradient(circle at top left, rgba(236, 72, 153, 0.14), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.14), transparent 32%),
+        linear-gradient(180deg, #fff8fc 0%, #f7f9fc 100%);
     padding: 20px;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+}
+
+.authShell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 430px);
+    gap: 24px;
+    align-items: stretch;
+}
+
+.heroPanel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 34px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, #5b1239, #be185d 52%, #f472b6 100%);
+    color: #ffffff;
+    box-shadow: 0 24px 60px rgba(190, 24, 93, 0.22);
+}
+
+.badge {
+    width: fit-content;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.heroTitle {
+    margin: 18px 0 10px;
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    line-height: 1.08;
+    font-weight: 800;
+}
+
+.heroText {
+    margin: 0;
+    max-width: 36rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
+.heroHighlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.highlightChip {
+    padding: 9px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    font-size: 0.86rem;
+    font-weight: 600;
 }
 
 .card {
-    min-width: 350px;
-    max-width: 500px;
-    width: 90%;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+    border-radius: 28px;
+    padding: 14px;
+    box-shadow: 0 22px 60px rgba(15, 23, 42, 0.12);
     border: none;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px);
 }
 
 .logo {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     object-fit: contain;
     margin-bottom: 8px;
 }
@@ -28,10 +93,11 @@
 .title {
     font-weight: 700;
     margin-bottom: 5px;
+    color: #111827;
 }
 
 .subtitle {
-    color: #6c757d;
+    color: #6b7280;
     margin-bottom: 20px;
 }
 
@@ -41,8 +107,17 @@
 }
 
 .input {
-    font-size: 1rem;
-    padding: 10px;
+    font-size: 0.98rem;
+    padding: 0.82rem 0.95rem;
+    border-radius: 14px;
+    border: 1px solid #e5d5df;
+    background: #fffafd;
+}
+
+.input:focus {
+    border-color: #ec4899;
+    box-shadow: 0 0 0 0.2rem rgba(236, 72, 153, 0.15);
+    background: #ffffff;
 }
 
 .passwordWrapper {
@@ -61,18 +136,28 @@
     transform: translateY(-50%);
     cursor: pointer;
     font-size: 1rem;
-    color: #495057;
+    color: #6b7280;
 }
 
 .button {
-    font-weight: bold;
-    padding: 10px;
+    font-weight: 700;
+    padding: 0.85rem 1rem;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #d946ef, #ec4899);
+    box-shadow: 0 16px 30px rgba(217, 70, 239, 0.2);
+}
+
+.button:hover,
+.button:focus,
+.button:active {
+    background: linear-gradient(135deg, #c026d3, #db2777) !important;
 }
 
 .link {
     text-decoration: none;
-    font-weight: bold;
-    color: #007bff;
+    font-weight: 700;
+    color: #db2777;
 }
 
 .link:hover {
@@ -84,28 +169,57 @@
 }
 
 @media (max-width: 768px) {
+    .container {
+        padding: 12px;
+        align-items: flex-start;
+    }
+
+    .authShell {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .heroPanel {
+        padding: 20px 18px;
+        border-radius: 22px;
+    }
+
+    .heroTitle {
+        font-size: 1.55rem;
+    }
+
+    .heroText {
+        font-size: 0.88rem;
+        line-height: 1.55;
+    }
+
+    .highlightChip {
+        font-size: 0.74rem;
+        padding: 7px 11px;
+    }
+
     .card {
-        min-width: 300px;
-        width: 90%;
-        padding: 15px;
+        width: 100%;
+        padding: 8px;
+        border-radius: 22px;
     }
 
     .logo {
-        width: 70px;
-        height: 70px;
+        width: 64px;
+        height: 64px;
     }
 
     .title {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
     }
 
     .subtitle {
-        font-size: 0.75rem;
-        margin-bottom: 15px;
+        font-size: 0.8rem;
+        margin-bottom: 14px;
     }
 
     .input {
-        padding: 0.3rem 0.55rem;
+        padding: 0.72rem 0.88rem;
         font-size: 0.9rem;
     }
 
@@ -119,15 +233,45 @@
     }
 
     .link {
-        font-size: 10px;
+        font-size: 0.8rem;
     }
 
     .button {
         font-size: 0.9rem;
-        padding: 0.5rem;
+        padding: 0.78rem;
     }
 
     .p {
-        font-size: 10px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    .heroPanel {
+        padding: 18px 16px;
+    }
+
+    .heroTitle {
+        font-size: 1.32rem;
+    }
+
+    .heroHighlights {
+        gap: 8px;
+    }
+
+    .card {
+        padding: 6px;
+    }
+
+    .input {
+        font-size: 0.86rem;
+    }
+
+    .button {
+        font-size: 0.85rem;
     }
 }

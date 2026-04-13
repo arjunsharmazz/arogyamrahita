@@ -4,6 +4,71 @@
     justify-content: center;
     align-items: center;
     padding: 20px;
+    background:
+        radial-gradient(circle at top left, rgba(236, 72, 153, 0.12), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.14), transparent 30%),
+        linear-gradient(180deg, #fff7fb 0%, #f7f9fc 100%);
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+}
+
+.authShell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.02fr) minmax(320px, 620px);
+    gap: 24px;
+    align-items: stretch;
+}
+
+.heroPanel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 34px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, #6d1452, #db2777 52%, #f472b6 100%);
+    color: #ffffff;
+    box-shadow: 0 24px 60px rgba(190, 24, 93, 0.22);
+}
+
+.badge {
+    width: fit-content;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.heroTitle {
+    margin: 18px 0 10px;
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    line-height: 1.08;
+    font-weight: 800;
+}
+
+.heroText {
+    margin: 0;
+    max-width: 36rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
+.heroHighlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.highlightChip {
+    padding: 9px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    font-size: 0.86rem;
+    font-weight: 600;
 }
 
 .customNotification {
@@ -23,13 +88,13 @@
     animation: fadeIn 0.3s ease;
 }
 
-.customNotification-success {
+.customNotificationSuccess {
     background-color: #e9f7ef;
     color: #0f5132;
     border: 1px solid #badbcc;
 }
 
-.customNotification-error {
+.customNotificationError {
     background-color: #f8d7da;
     color: #842029;
     border: 1px solid #f5c2c7;
@@ -57,14 +122,15 @@
 }
 
 .card {
-    min-width: 750px;
-    max-width: 600px;
-    width: 90%;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+    box-shadow: 0 22px 60px rgba(15, 23, 42, 0.12);
     border: none;
-    border-radius: 15px;
-    padding: 20px;
-    background: #ffffff;
+    border-radius: 28px;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
 }
 
 .cardBody {
@@ -88,7 +154,16 @@
 }
 
 .input {
-    padding: 0.6rem 0.75rem !important;
+    padding: 0.82rem 0.95rem !important;
+    border-radius: 14px !important;
+    border: 1px solid #ecd5df !important;
+    background: #fffafd !important;
+}
+
+.input:focus {
+    border-color: #ec4899 !important;
+    box-shadow: 0 0 0 0.2rem rgba(236, 72, 153, 0.15) !important;
+    background: #ffffff !important;
 }
 
 .eyeButton {
@@ -117,11 +192,21 @@
 
 .submitBtn {
     font-weight: 600;
-    padding: 0.6rem;
+    padding: 0.88rem;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #d946ef, #ec4899);
+    box-shadow: 0 16px 30px rgba(217, 70, 239, 0.2);
+}
+
+.submitBtn:hover,
+.submitBtn:focus,
+.submitBtn:active {
+    background: linear-gradient(135deg, #c026d3, #db2777) !important;
 }
 
 .loginLink {
-    color: #0d6efd;
+    color: #db2777;
     font-weight: 600;
     text-decoration: none;
 }
@@ -131,18 +216,47 @@
 }
 
 @media (max-width: 768px) {
+    .mainContainer {
+        padding: 12px;
+        align-items: flex-start;
+    }
+
+    .authShell {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .heroPanel {
+        padding: 20px 18px;
+        border-radius: 22px;
+    }
+
+    .heroTitle {
+        font-size: 1.55rem;
+    }
+
+    .heroText {
+        font-size: 0.88rem;
+        line-height: 1.55;
+    }
+
+    .highlightChip {
+        font-size: 0.74rem;
+        padding: 7px 11px;
+    }
+
     .logoImage {
-        width: 70px;
-        height: 70px;
+        width: 64px;
+        height: 64px;
     }
 
     .title {
         margin: 0;
-        font-size: 15px;
+        font-size: 1.15rem;
     }
 
     .subTitle {
-        font-size: 0.70rem;
+        font-size: 0.8rem;
     }
 
     .cardBody {
@@ -155,30 +269,61 @@
     }
 
     .input {
-        padding: 0.3rem 0.55rem !important;
-        font-size: 10px;
+        padding: 0.72rem 0.88rem !important;
+        font-size: 0.9rem;
     }
 
     .passwordHint {
-        font-size: 11px;
-        font-weight: 300;
+        font-size: 0.78rem;
+        font-weight: 400;
     }
 
     .eyeButton {
-        font-size: 12px;
+        font-size: 0.9rem;
     }
 
     .submitBtn {
         font-weight: 500;
-        padding: 0.5rem;
-        font-size: 15px;
+        padding: 0.78rem;
+        font-size: 0.92rem;
     }
 
     .p {
-        font-size: 10px;
+        font-size: 0.8rem;
     }
 
     .card {
-        min-width: 345px;
+        padding: 8px;
+        border-radius: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mainContainer {
+        padding: 10px;
+    }
+
+    .heroPanel {
+        padding: 18px 16px;
+    }
+
+    .heroTitle {
+        font-size: 1.32rem;
+    }
+
+    .heroHighlights {
+        gap: 8px;
+    }
+
+    .card {
+        padding: 6px;
+    }
+
+    .input {
+        font-size: 0.86rem;
+    }
+
+    .submitBtn {
+        font-size: 0.85rem;
     }
 }

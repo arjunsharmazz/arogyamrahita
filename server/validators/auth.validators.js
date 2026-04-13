@@ -30,6 +30,11 @@ exports.validateRegister = [
         .withMessage("Password must include at least one number")
         .matches(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/)
         .withMessage("Password must include at least one special character"),
+
+    body("referralCode")
+        .trim()
+        .matches(/^[A-Za-z0-9_-]{4,20}$/)
+        .withMessage("Referral code must be 4-20 characters using letters, numbers, dash or underscore"),
 ];
 
 exports.validateLogin = [

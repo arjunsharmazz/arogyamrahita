@@ -7,6 +7,9 @@ import {
   FiLogOut,
   FiMapPin,
   FiPackage,
+  FiPlayCircle,
+  FiImage,
+  FiShare2,
   FiShoppingBag,
   FiUsers,
 } from "react-icons/fi";
@@ -18,6 +21,9 @@ const navItems = [
   { to: "/admin/products", label: "Products", icon: <FiPackage /> },
   { to: "/admin/orders", label: "Orders", icon: <FiShoppingBag /> },
   { to: "/admin/users", label: "Users", icon: <FiUsers /> },
+  { to: "/admin/group-admins", label: "Referrals", icon: <FiShare2 /> },
+  { to: "/admin/videos", label: "Videos", icon: <FiPlayCircle /> },
+  { to: "/admin/share-posts", label: "Share Posts", icon: <FiImage /> },
   { to: "/admin/delivery-distance", label: "Delivery Distance", icon: <FiMapPin /> },
   { to: "/admin/discount-hero", label: "Discount Hero", icon: <FiGift /> },
 ];
@@ -27,6 +33,9 @@ const pageTitles = {
   "/admin/products": "Product Manager",
   "/admin/orders": "Order Operations",
   "/admin/users": "Customer Directory",
+  "/admin/group-admins": "Referral Groups",
+  "/admin/videos": "Videos Manager",
+  "/admin/share-posts": "Share Posts Manager",
   "/admin/delivery-distance": "Delivery Distance",
   "/admin/discount-hero": "Discount Hero Manager",
 };

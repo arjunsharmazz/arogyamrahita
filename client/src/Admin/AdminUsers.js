@@ -1,23 +1,25 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { FiMail, FiUserCheck, FiUsers, FiSearch } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { FiMail, FiUserCheck, FiUsers, FiSearch, FiShare2 } from "react-icons/fi";
 import { adminAPI } from "../services/Api";
 import styles from "../css/AdminPanel.module.css";
 
-const GROUPS = Array.from({ length: 20 }, (_, i) => `group${i + 1}`);
-
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
+  const [groupAdmins, setGroupAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [editingGroupUserId, setEditingGroupUserId] = useState(null);
-  const [savingGroup, setSavingGroup] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const data = await adminAPI.listUsers();
+        const [data, groupAdminData] = await Promise.all([
+          adminAPI.listUsers(),
+          adminAPI.listGroupAdmins(),
+        ]);
         setUsers(Array.isArray(data) ? data : []);
+        setGroupAdmins(Array.isArray(groupAdminData) ? groupAdminData : []);
       } catch (error) {
         console.error("Failed to load users", error);
       } finally {
@@ -27,32 +29,17 @@ const AdminUsers = () => {
 
     fetchUsers();
   }, []);
-
-  const handleGroupChange = async (userId, newGroup) => {
-    setSavingGroup(userId);
-    try {
-      await adminAPI.updateUserGroup(userId, newGroup);
-      setUsers((prev) =>
-        prev.map((u) => (u.id === userId || u._id === userId ? { ...u, group: newGroup } : u))
-      );
-      setEditingGroupUserId(null);
-    } catch (error) {
-      console.error("Failed to update group", error);
-    } finally {
-      setSavingGroup(null);
-    }
-  };
-
   const stats = useMemo(() => {
     const online = users.filter((user) => user.online).length;
-    const admins = users.filter((user) => user.role === "admin").length;
+    const referralLinkedUsers = users.filter((user) => user.usedReferralCode).length;
 
     return [
       { label: "Total users", value: users.length, icon: <FiUsers /> },
       { label: "Online now", value: online, icon: <FiUserCheck /> },
-      { label: "Admin accounts", value: admins, icon: <FiMail /> },
+      { label: "Group admins", value: groupAdmins.length, icon: <FiMail /> },
+      { label: "Referral joins", value: referralLinkedUsers, icon: <FiShare2 /> },
     ];
-  }, [users]);
+  }, [groupAdmins.length, users]);
 
   const filteredUsers = useMemo(() => {
     if (!searchQuery.trim()) return users;
@@ -96,9 +83,43 @@ const AdminUsers = () => {
           <section className={styles.panelCard}>
             <div className={styles.cardHeaderRow}>
               <div>
+                <h3 className={styles.cardTitle}>Referral group admins</h3>
+                <p className={styles.cardDescription}>
+                  Quick view of each group admin and the users joined through their code.
+                </p>
+              </div>
+              <Link to="/admin/group-admins" className={styles.textLink}>
+                Manage referrals
+              </Link>
+            </div>
+
+            <div className={styles.listStack}>
+              {groupAdmins.length === 0 ? (
+                <div className={styles.emptyState}>No group admins assigned yet.</div>
+              ) : (
+                groupAdmins.map((admin) => (
+                  <div key={admin.id} className={styles.listItem}>
+                    <div>
+                      <p className={styles.listTitle}>{admin.name}</p>
+                      <p className={styles.listMeta}>{admin.email}</p>
+                      <p className={styles.listMeta}>{admin.referralCode || "No referral code"}</p>
+                    </div>
+                    <div className={styles.userMetaGroup}>
+                      <span className={styles.groupBadge}>{admin.group}</span>
+                      <span className={styles.successBadge}>{admin.joinedUsersCount} joined</span>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </section>
+
+          <section className={styles.panelCard}>
+            <div className={styles.cardHeaderRow}>
+              <div>
                 <h3 className={styles.cardTitle}>Registered users</h3>
                 <p className={styles.cardDescription}>
-                  Customer information with role and session status.
+                  Customer information with role, referral source, and session status.
                 </p>
               </div>
             </div>
@@ -119,7 +140,6 @@ const AdminUsers = () => {
             <div className={styles.listStack}>
               {filteredUsers.map((user) => {
                 const userId = user._id || user.id;
-                const isEditingGroup = editingGroupUserId === userId;
                 return (
                   <div key={userId} className={styles.listItem}>
                     <div>
@@ -128,29 +148,14 @@ const AdminUsers = () => {
                       <p className={styles.listMeta} style={{ fontSize: "0.82rem", color: "#374151" }}>
                         {user.number || user.phone || "No number"}
                       </p>
+                      {user.usedReferralCode ? (
+                        <p className={styles.listMeta} style={{ fontSize: "0.82rem", color: "#1d4ed8" }}>
+                          Joined via {user.usedReferralCode} {user.referredByName ? `(${user.referredByName})` : ""}
+                        </p>
+                      ) : null}
                     </div>
                     <div className={styles.userMetaGroup}>
-                      {isEditingGroup ? (
-                        <select
-                          value={user.group || "group1"}
-                          onChange={(e) => handleGroupChange(userId, e.target.value)}
-                          disabled={savingGroup === userId}
-                          className={styles.groupSelect}
-                        >
-                          {GROUPS.map((g) => (
-                            <option key={g} value={g}>{g}</option>
-                          ))}
-                        </select>
-                      ) : (
-                        <span
-                          className={styles.groupBadge}
-                          onClick={() => setEditingGroupUserId(userId)}
-                          title="Click to change group"
-                          style={{ cursor: "pointer" }}
-                        >
-                          {user.group || "group1"}
-                        </span>
-                      )}
+                      <span className={styles.groupBadge}>{user.group || "unassigned"}</span>
                       <span className={styles.neutralBadge}>{user.role || "user"}</span>
                       <span className={user.online ? styles.successBadge : styles.neutralBadge}>
                         {user.online ? "Online" : "Offline"}

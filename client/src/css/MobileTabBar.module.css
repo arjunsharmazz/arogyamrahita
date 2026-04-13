@@ -1,0 +1,107 @@
+.mobileTabBar {
+  display: none;
+}
+
+@media (max-width: 920px) {
+  .mobileTabBar {
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    z-index: 1100;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+    padding: 8px;
+    border-radius: 24px;
+    border: 1px solid rgba(219, 39, 119, 0.12);
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 20px 42px rgba(15, 23, 42, 0.16);
+  }
+
+  .tabItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-height: 58px;
+    padding: 7px 4px;
+    border-radius: 18px;
+    text-decoration: none;
+    color: #6b7280;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+
+  .active {
+    background: linear-gradient(180deg, rgba(236, 72, 153, 0.16), rgba(219, 39, 119, 0.09));
+    color: #be185d;
+    transform: translateY(-1px);
+  }
+
+  .iconWrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tabIcon {
+    font-size: 1.3rem;
+  }
+
+  .tabLabel {
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.01em;
+  }
+
+  .badge {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    min-width: 18px;
+    padding: 2px 5px;
+    border-radius: 999px;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-align: center;
+    box-shadow: 0 6px 14px rgba(239, 68, 68, 0.28);
+  }
+}
+
+@media (max-width: 480px) {
+  .mobileTabBar {
+    left: 8px;
+    right: 8px;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    gap: 4px;
+    padding: 7px 6px;
+    border-radius: 20px;
+  }
+
+  .tabItem {
+    min-height: 54px;
+    padding: 6px 2px;
+    border-radius: 16px;
+  }
+
+  .tabIcon {
+    font-size: 1.2rem;
+  }
+
+  .tabLabel {
+    font-size: 0.62rem;
+  }
+
+  .badge {
+    min-width: 16px;
+    font-size: 0.55rem;
+    right: -10px;
+  }
+}

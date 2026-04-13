@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 
+const GROUPS = Array.from({ length: 20 }, (_, index) => `group${index + 1}`);
+
 const userSchema = new mongoose.Schema(
     {
         name: {
@@ -64,13 +66,34 @@ const userSchema = new mongoose.Schema(
         },
         role: {
             type: String,
-            enum: ["user", "admin", "delivery"],
+            enum: ["user", "admin", "delivery", "group-admin"],
             default: "user",
         },
         group: {
             type: String,
-            enum: ["group1","group2","group3","group4","group5","group6","group7","group8","group9","group10","group11","group12","group13","group14","group15","group16","group17","group18","group19","group20"],
-            default: "group1",
+            enum: [...GROUPS, "unassigned"],
+            default: "unassigned",
+        },
+        referralCode: {
+            type: String,
+            trim: true,
+            uppercase: true,
+            unique: true,
+            sparse: true,
+        },
+        referredBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            default: null,
+        },
+        usedReferralCode: {
+            type: String,
+            trim: true,
+            uppercase: true,
+        },
+        referralAssignedAt: {
+            type: Date,
+            default: null,
         },
         lastLogin: {
             type: Date,

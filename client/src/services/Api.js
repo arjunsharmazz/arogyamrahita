@@ -189,6 +189,14 @@ export const adminAPI = {
         const response = await api.put(`/admin/users/${userId}/group`, { group });
         return response.data;
     },
+    listGroupAdmins: async () => {
+        const response = await api.get('/admin/group-admins');
+        return response.data;
+    },
+    assignGroupAdmin: async (userId, payload) => {
+        const response = await api.put(`/admin/users/${userId}/group-admin`, payload);
+        return response.data;
+    },
 };
 
 export const deliveryLogAPI = {
@@ -266,6 +274,64 @@ export const discountHeroAPI = {
         const formData = new FormData();
         formData.append('image', imageFile);
         const response = await api.post('/discount-hero/upload-image', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        return response.data;
+    },
+};
+
+export const videoAPI = {
+    getActive: async () => {
+        const response = await api.get('/videos/active');
+        return response.data;
+    },
+    listAll: async () => {
+        const response = await api.get('/videos/admin/all');
+        return response.data;
+    },
+    create: async (payload) => {
+        const response = await api.post('/videos', payload);
+        return response.data;
+    },
+    update: async (id, payload) => {
+        const response = await api.put(`/videos/${id}`, payload);
+        return response.data;
+    },
+    remove: async (id) => {
+        const response = await api.delete(`/videos/${id}`);
+        return response.data;
+    },
+};
+
+export const sharePostAPI = {
+    getActive: async () => {
+        const response = await api.get('/share-posts/active');
+        return response.data;
+    },
+    getById: async (id) => {
+        const response = await api.get(`/share-posts/${id}`);
+        return response.data;
+    },
+    listAll: async () => {
+        const response = await api.get('/share-posts/admin/all');
+        return response.data;
+    },
+    create: async (payload) => {
+        const response = await api.post('/share-posts', payload);
+        return response.data;
+    },
+    update: async (id, payload) => {
+        const response = await api.put(`/share-posts/${id}`, payload);
+        return response.data;
+    },
+    remove: async (id) => {
+        const response = await api.delete(`/share-posts/${id}`);
+        return response.data;
+    },
+    uploadImage: async (imageFile) => {
+        const formData = new FormData();
+        formData.append('image', imageFile);
+        const response = await api.post('/share-posts/upload-image', formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
         });
         return response.data;

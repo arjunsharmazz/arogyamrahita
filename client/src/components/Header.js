@@ -197,7 +197,7 @@ const Header = () => {
 
           <nav className={`${styles.nav} ${styles.desktopNav}`}>
             <ul className={styles.navList}>
-              {["Home", "Products", "About", "Contact"].map((item, idx) => (
+              {["Home", "Products", "Videos", "About", "Contact"].map((item, idx) => (
                 <motion.li
                   key={item}
                   initial={{ y: -20, opacity: 0 }}
@@ -316,7 +316,7 @@ const Header = () => {
               transition={{ duration: 0.3 }}
             >
               <ul>
-                {["Home", "Products", "About", "Contact"].map((item) => (
+                {["Home", "Products", "Videos", "About", "Contact"].map((item) => (
                   <li key={item}>
                     <NavLink
                       to={`/${item.toLowerCase()}`}

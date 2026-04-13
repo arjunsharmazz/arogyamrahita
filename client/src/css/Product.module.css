@@ -163,50 +163,91 @@
 @media (max-width: 768px) {
   .productsSection {
     width: 94%;
-    padding: 22px 10px;
+    padding: 18px 8px;
     border-radius: 14px;
   }
 
   .producterGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    gap: 8px;
   }
 
   .productImage,
   .skeleton {
-    height: 150px;
+    height: 132px;
   }
 
   .productInfo {
-    padding: 10px;
-    gap: 6px;
+    padding: 9px;
+    gap: 5px;
   }
 
   .productName {
-    font-size: 0.9rem;
+    font-size: 0.82rem;
+    line-height: 1.35;
   }
 
   .productPrice {
-    font-size: 0.98rem;
+    font-size: 0.92rem;
+  }
+
+  .productOldPrice {
+    font-size: 0.76rem;
+  }
+
+  .productDescription {
+    font-size: 0.74rem;
+    line-height: 1.45;
   }
 
   .buttonGroup {
-    padding: 0 10px 10px;
+    padding: 0 9px 9px;
   }
 
   .buyBtn {
-    padding: 9px;
-    font-size: 0.82rem;
+    padding: 8px;
+    font-size: 0.76rem;
+    border-radius: 9px;
   }
 }
 
 @media (max-width: 480px) {
+  .productsSection {
+    width: calc(100% - 16px);
+    margin-top: 20px;
+    padding: 16px 8px;
+  }
+
   .producterGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 
   .productImage,
   .skeleton {
-    height: 190px;
+    height: 118px;
+  }
+
+  .title {
+    margin-bottom: 18px;
+    font-size: 1.35rem;
+  }
+
+  .productInfo {
+    padding: 8px;
+  }
+
+  .productPrices {
+    gap: 6px;
+  }
+
+  .productDescription {
+    font-size: 0.72rem;
+  }
+
+  .showAllBtn {
+    width: 100%;
+    max-width: 220px;
+    padding: 9px 18px;
   }
 }

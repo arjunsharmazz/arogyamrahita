@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Header";
+import MobileTabBar from "./components/MobileTabBar";
 import Fotter from "./components/Fotter";
 import Login from "./pages/Login";
 import Signup from "./pages/Singup";
@@ -19,6 +20,9 @@ import AdminLayout from "./Admin/AdminLayout";
 import AdminOrders from "./Admin/AdminOrders";
 import AdminProducts from "./Admin/AdminProducts";
 import AdminUsers from "./Admin/AdminUsers";
+import AdminGroupAdmins from "./Admin/AdminGroupAdmins";
+import AdminVideos from "./Admin/AdminVideos";
+import AdminSharePosts from "./Admin/AdminSharePosts";
 import AdminDeliveryDistance from "./Admin/AdminDeliveryDistance";
 import Dashboard from "./Admin/Dashboard";
 import DiscountHeroAdmin from "./Admin/DiscountHeroAdmin";
@@ -40,6 +44,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import UserProfilePage from "./pages/UserProfilePage";
 import OrdersHistoryPage from "./pages/OrdersHistoryPage";
+import SharePostDetail from "./pages/SharePostDetail";
 import Videos from "./pages/Videos";
 import { ordersAPI } from "./services/Api";
 import "./App.css";
@@ -157,6 +162,9 @@ function App() {
                 <Route path="products" element={<AdminProducts />} />
                 <Route path="orders" element={<AdminOrders />} />
                 <Route path="users" element={<AdminUsers />} />
+                <Route path="group-admins" element={<AdminGroupAdmins />} />
+                <Route path="videos" element={<AdminVideos />} />
+                <Route path="share-posts" element={<AdminSharePosts />} />
                 <Route path="delivery-distance" element={<AdminDeliveryDistance />} />
                 <Route path="discount-hero" element={<DiscountHeroAdmin />} />
               </Route>
@@ -205,11 +213,14 @@ function App() {
               <Route path="/faq" element={<Faq />} />
               <Route path="/returnRefund" element={<ReturnRefund />} />
               <Route path="/video" element={<Videos />} />
+              <Route path="/videos" element={<Videos />} />
+              <Route path="/share-posts/:id" element={<SharePostDetail />} />
 
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
 
+          <MobileTabBar />
           <Fotter />
         </div>
         <ToastContainer />

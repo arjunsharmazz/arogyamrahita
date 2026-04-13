@@ -351,23 +351,17 @@
     width: 60px;
   }
 
+  .cartBtn,
+  .iconBox {
+    display: none;
+  }
+
   .adminBtn,
   .loginBtn {
     display: none;
   }
 
-  .iconBox {
-    width: 32px;
-    height: 32px;
-    font-size: 20px;
-  }
-
-  .cartIcon {
-    font-size: 21px;
-  }
-
-  .cartCount {
-    min-width: 15px;
-    font-size: 9px;
+  .searchBar {
+    min-width: 0;
   }
 }

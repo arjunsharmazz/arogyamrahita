@@ -25,6 +25,7 @@ const Signup = () => {
         number: "",
         password: "",
         confirmPassword: "",
+        referralCode: "",
     });
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -83,6 +84,10 @@ const Signup = () => {
         else if (formData.password !== formData.confirmPassword)
             newErrors.confirmPassword = "Passwords do not match";
 
+        if (!formData.referralCode.trim()) newErrors.referralCode = "Referral code is required";
+        else if (!/^[A-Za-z0-9_-]{4,20}$/.test(formData.referralCode.trim()))
+            newErrors.referralCode = "Enter a valid referral code";
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -98,6 +103,7 @@ const Signup = () => {
                 email: formData.email.trim().toLowerCase(),
                 number: formData.number.trim(),
                 password: formData.password,
+                referralCode: formData.referralCode.trim().toUpperCase(),
             });
             navigate("/login", {
                 state: { message: "Account created! Please login.", email: response.email },
@@ -142,8 +148,19 @@ const Signup = () => {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <Card className={styles.card}>
-                        <Card.Body className={styles.cardBody}>
+                    <div className={styles.authShell}>
+                        <div className={styles.heroPanel}>
+                            <span className={styles.badge}>New on Arogyam?</span>
+                            <h2 className={styles.heroTitle}>Create your account and shop essentials in a few taps.</h2>
+                            
+                            <div className={styles.heroHighlights}>
+                                <span className={styles.highlightChip}>Quick signup</span>
+                                <span className={styles.highlightChip}>Personalized orders</span>
+                                <span className={styles.highlightChip}>Easy tracking</span>
+                            </div>
+                        </div>
+                        <Card className={styles.card}>
+                            <Card.Body className={styles.cardBody}>
                             <motion.div
                                 className="text-center mb-4"
                                 initial={{ opacity: 0, y: -20 }}
@@ -202,6 +219,22 @@ const Signup = () => {
                                         className={styles.input}
                                     />
                                     <Form.Control.Feedback type="invalid">{errors.number}</Form.Control.Feedback>
+                                </Form.Group>
+
+                                <Form.Group className="mb-3">
+                                    <Form.Label className={styles.labelName}>
+                                        <FaUser className="me-2" /> Referral Code
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="referralCode"
+                                        value={formData.referralCode}
+                                        onChange={handleChange}
+                                        placeholder="Enter group referral code"
+                                        isInvalid={!!errors.referralCode}
+                                        className={styles.input}
+                                    />
+                                    <Form.Control.Feedback type="invalid">{errors.referralCode}</Form.Control.Feedback>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
@@ -284,8 +317,9 @@ const Signup = () => {
                                     </Link>
                                 </p>
                             </div>
-                        </Card.Body>
-                    </Card>
+                            </Card.Body>
+                        </Card>
+                    </div>
                 </motion.div>
             </div>
         </>

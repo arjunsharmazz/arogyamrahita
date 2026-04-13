@@ -1,69 +1,106 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "../css/Videos.module.css";
-
-const videoData = [
-    {
-        id: 1,
-        type: "youtube",
-        src: "https://www.youtube.com/embed/CyxNdfv0YQA",
-        classes: `${styles.card} ${styles.w4}`,
-        title: "Video 1",
-    },
-    {
-        id: 2,
-        type: "youtube",
-        src: "https://www.youtube.com/embed/RKK7wGAYP6k",
-        classes: `${styles.card} ${styles.w2} ${styles.h2}`,
-        title: "Video 2",
-    },
-    {
-        id: 3,
-        type: "youtube",
-        src: "https://www.youtube.com/embed/F4Zu5ZZAG7I",
-        classes: `${styles.card} ${styles.w2}`,
-        title: "Video 3",
-    },
-    {
-        id: 4,
-        type: "youtube",
-        src: "https://www.youtube.com/embed/2Vv-BfVoq4g",
-        classes: styles.card,
-        title: "Video 4",
-    },
-    {
-        id: 5,
-        type: "youtube",
-        src: "https://www.youtube.com/embed/3JZ_D3ELwOQ",
-        classes: styles.card,
-        title: "Video 5",
-    },
-    {
-        id: 6,
-        type: "local",
-        src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
-        classes: `${styles.card} ${styles.w3}`,
-        title: "Local Video",
-    },
-];
+import { sharePostAPI, videoAPI } from "../services/Api";
 
 const Videos = () => {
+    const [videos, setVideos] = useState([]);
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        const loadFeed = async () => {
+            try {
+                setLoading(true);
+                const [videoResponse, postResponse] = await Promise.all([
+                    videoAPI.getActive(),
+                    sharePostAPI.getActive(),
+                ]);
+                setVideos(videoResponse.data || []);
+                setPosts(postResponse.data || []);
+            } catch (err) {
+                console.error("Failed to load feed", err);
+                setError("Feed load nahi ho pa rahi hai.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadFeed();
+    }, []);
+
+    const feedItems = useMemo(() => {
+        const normalizedVideos = [...videos].sort((left, right) => {
+            if ((left.sortOrder || 0) !== (right.sortOrder || 0)) {
+                return (left.sortOrder || 0) - (right.sortOrder || 0);
+            }
+            return new Date(right.createdAt) - new Date(left.createdAt);
+        }).map((item) => ({ ...item, feedType: "video" }));
+
+        const normalizedPosts = [...posts].sort((left, right) => {
+            if ((left.sortOrder || 0) !== (right.sortOrder || 0)) {
+                return (left.sortOrder || 0) - (right.sortOrder || 0);
+            }
+            return new Date(right.createdAt) - new Date(left.createdAt);
+        }).map((item) => ({ ...item, feedType: "post" }));
+
+        const merged = [];
+        const maxLength = Math.max(normalizedVideos.length, normalizedPosts.length);
+
+        for (let index = 0; index < maxLength; index += 1) {
+            if (normalizedVideos[index]) merged.push(normalizedVideos[index]);
+            if (normalizedPosts[index]) merged.push(normalizedPosts[index]);
+        }
+
+        return merged;
+    }, [posts, videos]);
+
+    if (loading) {
+        return <div className={styles.container}><div className={styles.emptyState}>Feed loading...</div></div>;
+    }
+
+    if (error) {
+        return <div className={styles.container}><div className={styles.emptyState}>{error}</div></div>;
+    }
+
     return (
         <div className={styles.container}>
-            {/* <h1 className={styles.heading}>Videos Page</h1> */}
+            <div className={styles.hero}>
+                <p className={styles.eyebrow}>Video Library</p>
+                <h1 className={styles.heading}>Videos + share posts, ek hi mobile-friendly feed me</h1>
+                <p className={styles.subtext}>Yahan YouTube videos ke saath image-based posts bhi dikhenge. Ek video aur ek post alternate style me feed me show hoga.</p>
+            </div>
 
             <div className={styles.grid}>
-                {videoData.map((video) => (
-                    <div key={video.id} className={video.classes}>
-                        {video.type === "youtube" ? (
+                {feedItems.length === 0 ? (
+                    <div className={styles.emptyState}>Abhi koi active video ya share post publish nahi hui hai.</div>
+                ) : feedItems.map((item) => item.feedType === "video" ? (
+                    <div key={`video-${item._id}`} className={styles.card}>
+                        <div className={styles.videoFrameWrap}>
                             <iframe
-                                src={video.src}
-                                title={video.title}
+                                src={item.embedUrl}
+                                title={item.title}
                                 allowFullScreen
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             ></iframe>
-                        ) : (
-                            <video controls src={video.src}></video>
-                        )}
+                        </div>
+                        <div className={styles.cardBody}>
+                            <span className={styles.feedBadge}>Video</span>
+                            <h3>{item.title}</h3>
+                            {item.description ? <p>{item.description}</p> : null}
+                        </div>
                     </div>
+                ) : (
+                    <Link key={`post-${item._id}`} to={`/share-posts/${item._id}`} className={`${styles.card} ${styles.postCard}`}>
+                        <img src={item.imageUrl} alt={item.title} className={styles.postImage} />
+                        <div className={styles.cardBody}>
+                            <span className={styles.feedBadge}>Share Post</span>
+                            <h3>{item.title}</h3>
+                            <p>{item.description || (item.content ? `${item.content.slice(0, 120)}...` : "Tap to read full post")}</p>
+                            <span className={styles.readMore}>Tap to open full post</span>
+                        </div>
+                    </Link>
                 ))}
             </div>
         </div>
@@ -71,7 +108,3 @@ const Videos = () => {
 };
 
 export default Videos;
-
-
-
-<iframe width="1264" height="711" src="" title="7 Ways to Make a Conversation With Anyone | Malavika Varadan | TEDxBITSPilaniDubai" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

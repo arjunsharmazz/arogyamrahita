@@ -214,28 +214,81 @@
     font-size: 1.3rem;
   }
 
-  .scrollButton {
-    width: 34px;
-    height: 34px;
-    font-size: 0.95rem;
+  .navigationButtons {
+    display: none;
+  }
+
+  .productCarousel {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    overflow: visible;
+    padding: 0;
   }
 
   .productCard {
-    flex-basis: 232px;
-    min-height: 408px;
+    flex: initial;
+    min-height: 345px;
   }
 
   .productImagese,
   .skeleton {
-    height: 170px;
+    height: 135px;
   }
 
   .productContent {
-    padding: 10px;
+    padding: 9px;
+    gap: 6px;
+  }
+
+  .productName {
+    font-size: 0.84rem;
+  }
+
+  .currentPrice {
+    font-size: 0.96rem;
+  }
+
+  .oldPrice {
+    font-size: 0.74rem;
+  }
+
+  .productContent p {
+    font-size: 0.74rem;
+    line-height: 1.45;
   }
 
   .buyButton {
-    padding: 9px;
-    font-size: 0.83rem;
+    padding: 8px;
+    font-size: 0.76rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .featuredProductsContainer {
+    width: calc(100% - 16px);
+    padding: 16px 8px;
+  }
+
+  .sectionTitle {
+    font-size: 1.2rem;
+  }
+
+  .productCarousel {
+    gap: 8px;
+  }
+
+  .productCard {
+    min-height: 322px;
+    border-radius: 14px;
+  }
+
+  .productImagese,
+  .skeleton {
+    height: 118px;
+  }
+
+  .productContent {
+    padding: 8px;
   }
 }

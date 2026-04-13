@@ -49,9 +49,20 @@ const Login = () => {
     return (
         <Container fluid className={styles.container}>
             <Row className="w-100 justify-content-center">
-                <Col xs={12} sm={8} md={6} lg={4}>
+                <Col xs={12} lg={10} xl={9}>
                     <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-                        <Card className={styles.card}>
+                        <div className={styles.authShell}>
+                            <div className={styles.heroPanel}>
+                                <span className={styles.badge}>Arogyam Rahita</span>
+                                <h2 className={styles.heroTitle}>Fresh grocery shopping, built for quick mobile checkout.</h2>
+                                <p className={styles.heroText}>Login karke orders, delivery updates aur repeat purchases fast access karo.</p>
+                                <div className={styles.heroHighlights}>
+                                    <span className={styles.highlightChip}>Fast reorders</span>
+                                    <span className={styles.highlightChip}>Safe payments</span>
+                                    <span className={styles.highlightChip}>Order tracking</span>
+                                </div>
+                            </div>
+                            <Card className={styles.card}>
                             <Card.Body>
                                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4 }} className="text-center mb-4">
                                     <img src={logoImage} alt="Logo" className={styles.logo} />
@@ -110,7 +121,8 @@ const Login = () => {
                                     </p>
                                 </div>
                             </Card.Body>
-                        </Card>
+                            </Card>
+                        </div>
                     </motion.div>
                 </Col>
             </Row>

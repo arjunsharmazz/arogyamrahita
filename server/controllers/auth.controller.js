@@ -44,6 +44,9 @@ dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || "your_refresh_secret";
 const FRONTEND_URL = process.env.FRONTEND_URL || process.env.CLIENT_URL || "";
+const GROUP_ADMIN_ROLE = "group-admin";
+
+const normalizeReferralCode = (value = "") => value.trim().toUpperCase();
 
 const generateTokens = (user) => {
     const payload = {
@@ -52,6 +55,7 @@ const generateTokens = (user) => {
         email: user.email,
         role: user.role,
         number: user.number,
+        group: user.group,
     };
 
     const accessToken = jwt.sign(payload, JWT_SECRET, { expiresIn: "1d" });
@@ -69,6 +73,9 @@ const getUserData = (user) => ({
     phone: user.phone || user.number || "",
     number: user.number || "",
     role: user.role,
+    group: user.group || "unassigned",
+    referralCode: user.referralCode || "",
+    usedReferralCode: user.usedReferralCode || "",
 });
 
 exports.register = async (req, res) => {
@@ -92,13 +99,15 @@ exports.register = async (req, res) => {
                 .json({ message: errorMessages[0], errors: errorMessages });
         }
 
-        const { name, email, number, password } = req.body;
+        const { name, email, number, password, referralCode } = req.body;
 
-        if (!email || !password || !name) {
+        if (!email || !password || !name || !number || !referralCode) {
             return res
                 .status(400)
-                .json({ message: "Name, email and password are required" });
+                .json({ message: "Name, email, number, password and referral code are required" });
         }
+
+        const normalizedReferralCode = normalizeReferralCode(referralCode);
 
         const existingUser = await User.findOne({ email: email.toLowerCase() });
         if (existingUser) {
@@ -107,11 +116,30 @@ exports.register = async (req, res) => {
                 .json({ message: "User with this email already exists" });
         }
 
+        const existingNumber = await User.findOne({ number: String(number).trim() });
+        if (existingNumber) {
+            return res.status(400).json({ message: "User with this mobile number already exists" });
+        }
+
+        const referralOwner = await User.findOne({
+            referralCode: normalizedReferralCode,
+            role: GROUP_ADMIN_ROLE,
+            isActive: true,
+        });
+
+        if (!referralOwner) {
+            return res.status(400).json({ message: "Invalid referral code" });
+        }
+
         const user = new User({
             name: name.trim(),
             email: email.toLowerCase().trim(),
             number: number ? String(number).trim() : "",
             password,
+            group: referralOwner.group || "unassigned",
+            referredBy: referralOwner._id,
+            usedReferralCode: normalizedReferralCode,
+            referralAssignedAt: new Date(),
             isVerified: true,
             isActive: true,
         });
@@ -121,6 +149,7 @@ exports.register = async (req, res) => {
         res.status(201).json({
             message: "Account created successfully! You can now log in.",
             email: user.email,
+            group: user.group,
         });
     } catch (error) {
         console.error("Registration Error:", error);
@@ -272,6 +301,9 @@ exports.getProfile = async (req, res) => {
                 number: user.number,
                 phone: user.phone || user.number || "",
                 role: user.role,
+                group: user.group || "unassigned",
+                referralCode: user.referralCode || "",
+                usedReferralCode: user.usedReferralCode || "",
                 lastLogin: user.lastLogin,
                 address: user.address || "",
                 addressLine2: user.addressLine2 || "",
