@@ -4,9 +4,9 @@
     justify-content: center;
     align-items: center;
     background:
-        radial-gradient(circle at top left, rgba(236, 72, 153, 0.14), transparent 34%),
-        radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.14), transparent 32%),
-        linear-gradient(180deg, #fff8fc 0%, #f7f9fc 100%);
+        radial-gradient(circle at top left, rgba(15, 143, 95, 0.14), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(161, 204, 133, 0.18), transparent 32%),
+        linear-gradient(180deg, #f7fcf8 0%, #eef6f0 100%);
     padding: 20px;
     font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
@@ -24,9 +24,9 @@
     justify-content: center;
     padding: 34px;
     border-radius: 28px;
-    background: linear-gradient(135deg, #5b1239, #be185d 52%, #f472b6 100%);
+    background: linear-gradient(135deg, #0b4f39, #0f8f5f 52%, #6bbf78 100%);
     color: #ffffff;
-    box-shadow: 0 24px 60px rgba(190, 24, 93, 0.22);
+    box-shadow: 0 24px 60px rgba(11, 109, 72, 0.22);
 }
 
 .badge {
@@ -77,9 +77,9 @@
     width: 100%;
     border-radius: 28px;
     padding: 14px;
-    box-shadow: 0 22px 60px rgba(15, 23, 42, 0.12);
+    box-shadow: 0 22px 60px rgba(11, 53, 38, 0.12);
     border: none;
-    background: rgba(255, 255, 255, 0.94);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(12px);
 }
 
@@ -93,11 +93,11 @@
 .title {
     font-weight: 700;
     margin-bottom: 5px;
-    color: #111827;
+    color: #18392f;
 }
 
 .subtitle {
-    color: #6b7280;
+    color: #5f7167;
     margin-bottom: 20px;
 }
 
@@ -110,13 +110,13 @@
     font-size: 0.98rem;
     padding: 0.82rem 0.95rem;
     border-radius: 14px;
-    border: 1px solid #e5d5df;
-    background: #fffafd;
+    border: 1px solid #d8e7dc;
+    background: #fbfefb;
 }
 
 .input:focus {
-    border-color: #ec4899;
-    box-shadow: 0 0 0 0.2rem rgba(236, 72, 153, 0.15);
+    border-color: #0f8f5f;
+    box-shadow: 0 0 0 0.2rem rgba(15, 143, 95, 0.15);
     background: #ffffff;
 }
 
@@ -136,7 +136,7 @@
     transform: translateY(-50%);
     cursor: pointer;
     font-size: 1rem;
-    color: #6b7280;
+    color: #5f7167;
 }
 
 .button {
@@ -144,20 +144,20 @@
     padding: 0.85rem 1rem;
     border: none;
     border-radius: 14px;
-    background: linear-gradient(135deg, #d946ef, #ec4899);
-    box-shadow: 0 16px 30px rgba(217, 70, 239, 0.2);
+    background: linear-gradient(135deg, #0f8f5f, #0b6d48);
+    box-shadow: 0 16px 30px rgba(15, 143, 95, 0.2);
 }
 
 .button:hover,
 .button:focus,
 .button:active {
-    background: linear-gradient(135deg, #c026d3, #db2777) !important;
+    background: linear-gradient(135deg, #0d7f55, #09583b) !important;
 }
 
 .link {
     text-decoration: none;
     font-weight: 700;
-    color: #db2777;
+    color: #0b6d48;
 }
 
 .link:hover {

@@ -11,6 +11,10 @@
   position: relative;
 }
 
+.app-main-admin {
+  padding-top: 0;
+}
+
 .app-main::before {
   content: "";
   position: absolute;
@@ -22,9 +26,18 @@
   z-index: -1;
 }
 
+.app-main-admin::before {
+  display: none;
+}
+
 @media (max-width: 920px) {
   .app-main {
     padding-top: 86px;
     padding-bottom: 92px;
+  }
+
+  .app-main-admin {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }

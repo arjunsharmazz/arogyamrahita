@@ -11,7 +11,7 @@
 .headerNavigation {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 10px;
   margin-bottom: 18px;
 }
@@ -22,46 +22,14 @@
   color: #10231a;
 }
 
-.navigationButtons {
-  display: flex;
-  gap: 8px;
-}
-
-.scrollButton {
-  border: 1px solid rgba(11, 109, 72, 0.24);
-  border-radius: 10px;
-  width: 40px;
-  height: 40px;
-  background: #ffffff;
-  color: #0b6d48;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.scrollButton:hover {
-  background: #0f8f5f;
-  color: #ffffff;
-}
-
 .productCarousel {
-  display: flex;
-  gap: 14px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
   padding: 2px;
 }
 
-.productCarousel::-webkit-scrollbar {
-  height: 7px;
-}
-
-.productCarousel::-webkit-scrollbar-thumb {
-  border-radius: 999px;
-  background: #c7d8cb;
-}
-
 .productCard {
-  flex: 0 0 288px;
   border-radius: 16px;
   background: #ffffff;
   border: 1px solid rgba(11, 109, 72, 0.12);
@@ -214,20 +182,13 @@
     font-size: 1.3rem;
   }
 
-  .navigationButtons {
-    display: none;
-  }
-
   .productCarousel {
-    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
-    overflow: visible;
     padding: 0;
   }
 
   .productCard {
-    flex: initial;
     min-height: 345px;
   }
 
@@ -275,6 +236,7 @@
   }
 
   .productCarousel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
   }
 

@@ -5,9 +5,9 @@
     align-items: center;
     padding: 20px;
     background:
-        radial-gradient(circle at top left, rgba(236, 72, 153, 0.12), transparent 34%),
-        radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.14), transparent 30%),
-        linear-gradient(180deg, #fff7fb 0%, #f7f9fc 100%);
+        radial-gradient(circle at top left, rgba(15, 143, 95, 0.12), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(161, 204, 133, 0.16), transparent 30%),
+        linear-gradient(180deg, #f7fcf8 0%, #eff7f0 100%);
     font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
 
@@ -24,9 +24,9 @@
     justify-content: center;
     padding: 34px;
     border-radius: 28px;
-    background: linear-gradient(135deg, #6d1452, #db2777 52%, #f472b6 100%);
+    background: linear-gradient(135deg, #0b4f39, #0f8f5f 52%, #75c37f 100%);
     color: #ffffff;
-    box-shadow: 0 24px 60px rgba(190, 24, 93, 0.22);
+    box-shadow: 0 24px 60px rgba(11, 109, 72, 0.22);
 }
 
 .badge {
@@ -125,7 +125,7 @@
     min-width: 0;
     max-width: none;
     width: 100%;
-    box-shadow: 0 22px 60px rgba(15, 23, 42, 0.12);
+    box-shadow: 0 22px 60px rgba(11, 53, 38, 0.12);
     border: none;
     border-radius: 28px;
     padding: 14px;
@@ -145,24 +145,24 @@
 
 .title {
     font-weight: bold;
-    color: #212529;
+    color: #18392f;
 }
 
 .subTitle {
-    color: #6c757d;
+    color: #5f7167;
     font-size: 0.95rem;
 }
 
 .input {
     padding: 0.82rem 0.95rem !important;
     border-radius: 14px !important;
-    border: 1px solid #ecd5df !important;
-    background: #fffafd !important;
+    border: 1px solid #d8e7dc !important;
+    background: #fbfefb !important;
 }
 
 .input:focus {
-    border-color: #ec4899 !important;
-    box-shadow: 0 0 0 0.2rem rgba(236, 72, 153, 0.15) !important;
+    border-color: #0f8f5f !important;
+    box-shadow: 0 0 0 0.2rem rgba(15, 143, 95, 0.15) !important;
     background: #ffffff !important;
 }
 
@@ -173,7 +173,7 @@
     transform: translateY(-50%);
     border: none;
     background: transparent;
-    color: #6c757d;
+    color: #5f7167;
     font-size: 1.1rem;
     cursor: pointer;
 }
@@ -185,7 +185,7 @@
 }
 
 .passwordError {
-    color: #d9534f;
+    color: #b34a43;
     font-weight: 500;
     margin-bottom: 0.5rem;
 }
@@ -195,18 +195,18 @@
     padding: 0.88rem;
     border: none;
     border-radius: 14px;
-    background: linear-gradient(135deg, #d946ef, #ec4899);
-    box-shadow: 0 16px 30px rgba(217, 70, 239, 0.2);
+    background: linear-gradient(135deg, #0f8f5f, #0b6d48);
+    box-shadow: 0 16px 30px rgba(15, 143, 95, 0.2);
 }
 
 .submitBtn:hover,
 .submitBtn:focus,
 .submitBtn:active {
-    background: linear-gradient(135deg, #c026d3, #db2777) !important;
+    background: linear-gradient(135deg, #0d7f55, #09583b) !important;
 }
 
 .loginLink {
-    color: #db2777;
+    color: #0b6d48;
     font-weight: 600;
     text-decoration: none;
 }

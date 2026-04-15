@@ -248,6 +248,37 @@ export const categoryAPI = {
     },
 };
 
+export const homeBannerAPI = {
+    getActive: async () => {
+        const response = await api.get('/home-banners/active');
+        return response.data;
+    },
+    listAll: async () => {
+        const response = await api.get('/home-banners/admin/all');
+        return response.data;
+    },
+    create: async (data) => {
+        const response = await api.post('/home-banners', data);
+        return response.data;
+    },
+    update: async (id, data) => {
+        const response = await api.put(`/home-banners/${id}`, data);
+        return response.data;
+    },
+    remove: async (id) => {
+        const response = await api.delete(`/home-banners/${id}`);
+        return response.data;
+    },
+    uploadImage: async (imageFile) => {
+        const formData = new FormData();
+        formData.append('image', imageFile);
+        const response = await api.post('/home-banners/upload-image', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        return response.data;
+    },
+};
+
 export const discountHeroAPI = {
     getActive: async () => {
         const response = await api.get('/discount-hero/active');

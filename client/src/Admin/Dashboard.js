@@ -133,6 +133,11 @@ const Dashboard = () => {
       to: "/admin/share-posts",
     },
     {
+      title: "Update Home Banners",
+      description: "Control the homepage top slider images and their order from admin.",
+      to: "/admin/home-banners",
+    },
+    {
       title: "Update Discount Hero",
       description: "Refresh homepage promotional blocks and active campaign visuals.",
       to: "/admin/discount-hero",

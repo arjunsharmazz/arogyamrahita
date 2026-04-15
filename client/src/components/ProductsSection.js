@@ -1,12 +1,10 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import styles from "../css/ProductsSection.js.module.css";
 import { productAPI } from "../services/Api";
-import { FaAnglesRight, FaAnglesLeft } from "react-icons/fa6";
 
 export default function FeaturedProductsSection() {
-  const scrollContainerRef = useRef(null);
   const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
@@ -31,14 +29,6 @@ export default function FeaturedProductsSection() {
       console.error("Error fetching products:", err);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const scroll = (direction) => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 320;
-      scrollContainerRef.current.scrollLeft +=
-        direction === "left" ? -scrollAmount : scrollAmount;
     }
   };
 
@@ -121,24 +111,9 @@ export default function FeaturedProductsSection() {
     <div className={styles.featuredProductsContainer}>
       <div className={styles.headerNavigation}>
         <h2 className={styles.sectionTitle}>Featured Products</h2>
-        <div className={styles.navigationButtons}>
-          <button
-            onClick={() => scroll("left")}
-            className={styles.scrollButton}
-          >
-            <FaAnglesLeft />
-          </button>
-          <button
-            onClick={() => scroll("right")}
-            className={styles.scrollButton}
-          >
-            <FaAnglesRight />
-          </button>
-        </div>
       </div>
 
       <motion.div
-        ref={scrollContainerRef}
         className={styles.productCarousel}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

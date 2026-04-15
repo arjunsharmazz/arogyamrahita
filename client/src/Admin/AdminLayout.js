@@ -4,11 +4,11 @@ import {
   FiCompass,
   FiGift,
   FiGrid,
+  FiImage,
   FiLogOut,
   FiMapPin,
   FiPackage,
   FiPlayCircle,
-  FiImage,
   FiShare2,
   FiShoppingBag,
   FiUsers,
@@ -25,6 +25,7 @@ const navItems = [
   { to: "/admin/videos", label: "Videos", icon: <FiPlayCircle /> },
   { to: "/admin/share-posts", label: "Share Posts", icon: <FiImage /> },
   { to: "/admin/delivery-distance", label: "Delivery Distance", icon: <FiMapPin /> },
+  { to: "/admin/home-banners", label: "Home Banners", icon: <FiImage /> },
   { to: "/admin/discount-hero", label: "Discount Hero", icon: <FiGift /> },
 ];
 
@@ -37,6 +38,7 @@ const pageTitles = {
   "/admin/videos": "Videos Manager",
   "/admin/share-posts": "Share Posts Manager",
   "/admin/delivery-distance": "Delivery Distance",
+  "/admin/home-banners": "Home Banner Manager",
   "/admin/discount-hero": "Discount Hero Manager",
 };
 

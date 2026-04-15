@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Header";
+import GuestSignupPrompt from "./components/GuestSignupPrompt";
 import MobileTabBar from "./components/MobileTabBar";
 import Fotter from "./components/Fotter";
 import Login from "./pages/Login";
@@ -24,6 +25,7 @@ import AdminGroupAdmins from "./Admin/AdminGroupAdmins";
 import AdminVideos from "./Admin/AdminVideos";
 import AdminSharePosts from "./Admin/AdminSharePosts";
 import AdminDeliveryDistance from "./Admin/AdminDeliveryDistance";
+import AdminHomeBanner from "./Admin/AdminHomeBanner";
 import Dashboard from "./Admin/Dashboard";
 import DiscountHeroAdmin from "./Admin/DiscountHeroAdmin";
 import DeliveryLayout from "./Admin/DeliveryLayout";
@@ -166,6 +168,7 @@ function App() {
                 <Route path="videos" element={<AdminVideos />} />
                 <Route path="share-posts" element={<AdminSharePosts />} />
                 <Route path="delivery-distance" element={<AdminDeliveryDistance />} />
+                <Route path="home-banners" element={<AdminHomeBanner />} />
                 <Route path="discount-hero" element={<DiscountHeroAdmin />} />
               </Route>
 
@@ -222,6 +225,7 @@ function App() {
 
           <MobileTabBar />
           <Fotter />
+          <GuestSignupPrompt />
         </div>
         <ToastContainer />
       </CartProvider>
