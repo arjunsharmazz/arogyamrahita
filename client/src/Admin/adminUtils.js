@@ -19,6 +19,10 @@ export const categories = [
   "masala",
   "Special Churan",
   "rice",
+  "daliya",
+  "vegetables",
+  "vinegar",
+  "aamla",
   "tea",
   "fast(varat)",
 ];
