@@ -32,8 +32,8 @@ const Fotter = () => {
           </form>
           <p className={styles.note}>
             This site is intended for US consumers. By signing up, you agree to
-            our <Link to="/privacy">Privacy Policy</Link> and{" "}
-            <Link to="/termCondition">Terms of Use</Link>.
+            our <Link to="/privacy-policy">Privacy Policy</Link> and{" "}
+            <Link to="/terms-and-conditions">Terms of Use</Link>.
           </p>
         </motion.div>
 
@@ -48,7 +48,10 @@ const Fotter = () => {
               <Link to="/about">About</Link>
             </li>
             <li>
-              <Link to="/experts">Experts and Spokesmodels</Link>
+              <Link to="/faq">FAQ</Link>
+            </li>
+            <li>
+              <Link to="/shipping-delivery">Shipping & Delivery</Link>
             </li>
           </ul>
         </motion.div>
@@ -63,10 +66,13 @@ const Fotter = () => {
               <Link to="/contact">Contact Us</Link>
             </li>
             <li>
-              <Link to="/profile">My Account</Link>
+              <Link to="/help-support">Help & Support</Link>
             </li>
             <li>
-              <Link to="/orders-history">Order History</Link>
+              <Link to="/returnRefund">Return & Refund Policy</Link>
+            </li>
+            <li>
+              <Link to="/account-deletion">Account & Data Deletion</Link>
             </li>
           </ul>
         </motion.div>
@@ -75,15 +81,19 @@ const Fotter = () => {
           className={`${styles.footerSection} ${styles.linksSection}`}
           whileHover={{ x: 5 }}
         >
-          <h3>More to Explore</h3>
+          <h3>Legal & More</h3>
           <ul>
             <li>
-              <a href="https://www.instagram.com/#LorealParis" target="_blank" rel="noreferrer">
-                Instagram
-              </a>
+              <Link to="/privacy-policy">Privacy Policy</Link>
             </li>
             <li>
-              <Link to="/video">Videos</Link>
+              <Link to="/terms-and-conditions">Terms & Conditions</Link>
+            </li>
+            <li>
+              <Link to="/user-content-policy">User Content Policy</Link>
+            </li>
+            <li>
+              <Link to="/videos">Videos</Link>
             </li>
           </ul>
         </motion.div>
@@ -104,9 +114,10 @@ const Fotter = () => {
         </div>
         <div className={styles.bottomLinks}>
           <Link to="/sitemap">Site Map</Link>
-          <Link to="/privacy">Privacy</Link>
-          <Link to="/termCondition">Terms</Link>
-          <Link to="/userContent">User Content Terms</Link>
+          <Link to="/privacy-policy">Privacy</Link>
+          <Link to="/terms-and-conditions">Terms</Link>
+          <Link to="/shipping-delivery">Shipping</Link>
+          <Link to="/user-content-policy">User Content Terms</Link>
         </div>
         <p>© 2025 Āarogyām Rahita. All rights reserved.</p>
       </motion.div>

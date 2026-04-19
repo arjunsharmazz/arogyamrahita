@@ -1,0 +1,157 @@
+.page {
+  min-height: 100%;
+  padding: 32px 16px 56px;
+  background:
+    radial-gradient(circle at top left, rgba(242, 181, 69, 0.12), transparent 32%),
+    linear-gradient(180deg, #f8fcf9 0%, #eef6f0 100%);
+}
+
+.shell {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.hero {
+  padding: 28px;
+  border-radius: 28px;
+  background:
+    linear-gradient(135deg, rgba(8, 31, 22, 0.97), rgba(17, 55, 39, 0.94)),
+    #0b2318;
+  color: #f4f8f5;
+  box-shadow: 0 24px 60px rgba(10, 31, 22, 0.15);
+}
+
+.breadcrumb {
+  margin: 0 0 14px;
+  font-size: 0.9rem;
+  color: rgba(244, 248, 245, 0.74);
+}
+
+.breadcrumb a {
+  color: #f6cc74;
+  text-decoration: none;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: rgba(246, 204, 116, 0.16);
+  color: #f7d58f;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 16px 0 10px;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.1;
+}
+
+.intro {
+  max-width: 760px;
+  margin: 0;
+  color: #dbe9df;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.meta {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: #d0dfd5;
+  font-size: 0.92rem;
+}
+
+.content {
+  margin-top: 22px;
+  display: grid;
+  gap: 16px;
+}
+
+.section {
+  padding: 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(12, 42, 31, 0.08);
+  box-shadow: 0 14px 38px rgba(10, 31, 22, 0.07);
+}
+
+.sectionTitle {
+  margin: 0 0 12px;
+  color: #0c2a1f;
+  font-size: 1.28rem;
+}
+
+.paragraph {
+  margin: 0 0 12px;
+  color: #28453a;
+  line-height: 1.75;
+}
+
+.list {
+  margin: 0;
+  padding-left: 18px;
+  color: #28453a;
+}
+
+.list li + li {
+  margin-top: 10px;
+}
+
+.listLink {
+  color: #0f6a45;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.note {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-left: 4px solid #f2b545;
+  border-radius: 14px;
+  background: rgba(242, 181, 69, 0.12);
+  color: #4f3911;
+  line-height: 1.7;
+}
+
+.footerCard {
+  margin-top: 18px;
+  padding: 20px 22px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #123f2c, #0d2b1f);
+  color: #edf5ef;
+}
+
+.footerCard p {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.footerCard a {
+  color: #f6cd7c;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 20px 12px 46px;
+  }
+
+  .hero,
+  .section,
+  .footerCard {
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .sectionTitle {
+    font-size: 1.14rem;
+  }
+}

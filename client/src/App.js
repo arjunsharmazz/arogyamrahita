@@ -38,10 +38,15 @@ import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import PaymentPage from "./pages/PaymentPage";
-import Services from "./pages/Services";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermCondition from "./pages/TermCondition";
 import Faq from "./pages/Faq";
 import ReturnRefund from "./pages/ReturnRefund";
+import ShippingDelivery from "./pages/ShippingDelivery";
+import AccountDeletion from "./pages/AccountDeletion";
+import UserContentPolicy from "./pages/UserContentPolicy";
+import HelpSupport from "./pages/HelpSupport";
+import SiteMapPage from "./pages/SiteMapPage";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import UserProfilePage from "./pages/UserProfilePage";
@@ -211,10 +216,18 @@ function App() {
                 }
               />
 
-              <Route path="/privacy" element={<Services />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/termCondition" element={<TermCondition />} />
+              <Route path="/terms-and-conditions" element={<TermCondition />} />
               <Route path="/faq" element={<Faq />} />
               <Route path="/returnRefund" element={<ReturnRefund />} />
+              <Route path="/shipping-delivery" element={<ShippingDelivery />} />
+              <Route path="/account-deletion" element={<AccountDeletion />} />
+              <Route path="/userContent" element={<UserContentPolicy />} />
+              <Route path="/user-content-policy" element={<UserContentPolicy />} />
+              <Route path="/help-support" element={<HelpSupport />} />
+              <Route path="/sitemap" element={<SiteMapPage />} />
               <Route path="/video" element={<Videos />} />
               <Route path="/videos" element={<Videos />} />
               <Route path="/share-posts/:id" element={<SharePostDetail />} />
