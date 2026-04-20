@@ -105,6 +105,10 @@ const Fotter = () => {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.3 }}
       >
+        <div className={styles.certificateBadge}>
+          <span className={styles.certificateLabel}>FSSAI Registered</span>
+          <strong className={styles.certificateNumber}>Lic. No. 22725628000102</strong>
+        </div>
         <div className={styles.socialIcons}>
           <a href="https://www.instagram.com" target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i></a>
           <a href="https://www.facebook.com" target="_blank" rel="noreferrer"><i className="fab fa-facebook-f"></i></a>
