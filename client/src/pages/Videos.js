@@ -68,8 +68,8 @@ const Videos = () => {
         <div className={styles.container}>
             <div className={styles.hero}>
                 <p className={styles.eyebrow}>Video Library</p>
-                <h1 className={styles.heading}>Videos + share posts, ek hi mobile-friendly feed me</h1>
-                <p className={styles.subtext}>Yahan YouTube videos ke saath image-based posts bhi dikhenge. Ek video aur ek post alternate style me feed me show hoga.</p>
+                <h1 className={styles.heading}>Videos + share posts</h1>
+               
             </div>
 
             <div className={styles.grid}>

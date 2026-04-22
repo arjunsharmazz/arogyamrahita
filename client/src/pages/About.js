@@ -1,10 +1,10 @@
 import styles from "../css/About.module.css";
 import WhoWeAreImage from "../images/WhoWeAre.jpeg";
-import OurProductsImage from "../images/OurProductRange.jpeg";
-import OurMissionImage from "../images/OurPromise.jpeg";
-import CustomerSatisfactionImage from "../images/CustomerSatisfaction.jpeg";
-import WhyChooseUsImage from "../images/WhyChooseAarogyamRahita.jpeg";
-import MissionImage from "../images/OurMissionVision.jpeg"
+import OurProductsImage from "../images/ourproductrange.jpg";
+import OurMissionImage from "../images/ourpromise.jpg";
+import CustomerSatisfactionImage from "../images/customersatisfaction.jpg";
+import WhyChooseUsImage from "../images/whychooseaarogyamrahita.jpg";
+import MissionImage from "../images/ourmissionvision.jpg"
 
 const About = () => {
     const aboutData = [
@@ -80,11 +80,13 @@ const About = () => {
                         }`}
                 >
                     {section.image && (
-                        <img
-                            src={section.image}
-                            alt={section.title}
-                            className={styles.img}
-                        />
+                        <div className={styles.imageFrame}>
+                            <img
+                                src={section.image}
+                                alt={section.title}
+                                className={styles.img}
+                            />
+                        </div>
                     )}
                     <div className={styles.content}>
                         <h2>{section.title}</h2>

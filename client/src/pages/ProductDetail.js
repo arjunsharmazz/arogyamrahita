@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
@@ -17,6 +17,7 @@ const ProductDetail = () => {
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState(null);
+  const [allProducts, setAllProducts] = useState([]);
 
   const fetchProduct = useCallback(async () => {
     try {
@@ -43,6 +44,136 @@ const ProductDetail = () => {
       fetchProduct();
     }
   }, [id, fetchProduct]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadAllProducts = async () => {
+      try {
+        const response = await productAPI.getAllProducts();
+        if (mounted && response.success) {
+          setAllProducts(response.products || []);
+        }
+      } catch (fetchError) {
+        console.error("Error fetching related products:", fetchError);
+      }
+    };
+
+    loadAllProducts();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const getProductCategoryName = useCallback((item) => {
+    const categoryValue = typeof item?.category === "string"
+      ? item.category
+      : item?.category?.name;
+
+    return categoryValue?.trim() || "General";
+  }, []);
+
+  const formatCategoryLabel = useCallback((categoryName) => (
+    categoryName
+      .split(/[-_\s]+/)
+      .filter(Boolean)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ")
+  ), []);
+
+  const getCardPrice = useCallback((item) => {
+    const firstAvailableVariant = item?.variants?.find((variant) => variant?.newPrice);
+    return firstAvailableVariant?.newPrice || item?.newPrice || 0;
+  }, []);
+
+  const getCardOldPrice = useCallback((item) => {
+    const firstAvailableVariant = item?.variants?.find(
+      (variant) => variant?.oldPrice && variant.oldPrice > variant.newPrice
+    );
+
+    if (firstAvailableVariant) {
+      return firstAvailableVariant.oldPrice;
+    }
+
+    return item?.oldPrice && item.oldPrice > item.newPrice ? item.oldPrice : null;
+  }, []);
+
+  const visibleProducts = useMemo(
+    () => allProducts.filter((item) => item?._id !== id),
+    [allProducts, id]
+  );
+
+  const relatedProducts = useMemo(() => {
+    if (!product) {
+      return [];
+    }
+
+    const currentCategory = getProductCategoryName(product);
+
+    return visibleProducts
+      .filter((item) => getProductCategoryName(item) === currentCategory)
+      .slice(0, 4);
+  }, [getProductCategoryName, product, visibleProducts]);
+
+  const groupedProducts = useMemo(() => {
+    const groups = visibleProducts.reduce((accumulator, item) => {
+      const categoryName = getProductCategoryName(item);
+
+      if (!accumulator[categoryName]) {
+        accumulator[categoryName] = [];
+      }
+
+      accumulator[categoryName].push(item);
+      return accumulator;
+    }, {});
+
+    return Object.entries(groups).sort(([left], [right]) =>
+      left.localeCompare(right, undefined, { sensitivity: "base" })
+    );
+  }, [getProductCategoryName, visibleProducts]);
+
+  const renderProductCard = (item) => (
+    <motion.article
+      key={item._id}
+      className={styles.recommendationCard}
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.2 }}
+    >
+      <button
+        type="button"
+        className={styles.recommendationImageButton}
+        onClick={() => navigate(`/product/${item._id}`)}
+      >
+        <img
+          src={item.image || "/placeholder.png"}
+          alt={item.name || "Product"}
+          className={styles.recommendationImage}
+        />
+      </button>
+
+      <div className={styles.recommendationContent}>
+        <p className={styles.recommendationCategory}>
+          {formatCategoryLabel(getProductCategoryName(item))}
+        </p>
+        <h3 className={styles.recommendationName}>{item.name}</h3>
+        <div className={styles.recommendationPriceRow}>
+          {getCardOldPrice(item) && (
+            <span className={styles.recommendationOldPrice}>₹{getCardOldPrice(item)}</span>
+          )}
+          <span className={styles.recommendationPrice}>₹{getCardPrice(item)}</span>
+        </div>
+        <motion.button
+          type="button"
+          className={styles.recommendationButton}
+          whileTap={{ scale: 0.97 }}
+          onClick={() => navigate(`/product/${item._id}`)}
+        >
+          View Product
+        </motion.button>
+      </div>
+    </motion.article>
+  );
 
   // ----------- NEW: compute out-of-stock state (variant-aware) --------------
   const isVariantOutOfStock = () => {
@@ -302,23 +433,28 @@ const ProductDetail = () => {
               {/* Variant selector */}
               {product.variants && product.variants.length > 0 && (
                 <div className={styles.variantSelector}>
-                  <label htmlFor="variant-select">Select Weight:</label>
-                  <select
-                    id="variant-select"
-                    value={selectedVariant}
-                    onChange={(e) => {
-                      setSelectedVariant(Number(e.target.value));
-                      setQuantity(1);
-                    }}
-                    className={styles.variantDropdown}
-                    disabled={isOutOfStock}
-                  >
-                    {product.variants.map((variant, idx) => (
-                      <option key={idx} value={idx}>
-                        {variant.name} - {variant.weight} {variant.weightUnit} {variant.stock === 0 ? "(Out of stock)" : ""}
-                      </option>
-                    ))}
-                  </select>
+                  <div className={styles.variantSelectorHeader}>
+                    <label htmlFor="variant-select" className={styles.variantLabel}>Select Weight</label>
+                    <span className={styles.variantHint}>Choose the pack size you want to order</span>
+                  </div>
+                  <div className={styles.variantDropdownWrap}>
+                    <select
+                      id="variant-select"
+                      value={selectedVariant}
+                      onChange={(e) => {
+                        setSelectedVariant(Number(e.target.value));
+                        setQuantity(1);
+                      }}
+                      className={styles.variantDropdown}
+                      disabled={isOutOfStock}
+                    >
+                      {product.variants.map((variant, idx) => (
+                        <option key={idx} value={idx}>
+                          {variant.name} - {variant.weight} {variant.weightUnit} {variant.stock === 0 ? "(Out of stock)" : ""}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               )}
             </motion.div>
@@ -361,6 +497,48 @@ const ProductDetail = () => {
           </motion.div>
         </motion.div>
       </motion.div>
+
+      {(relatedProducts.length > 0 || groupedProducts.length > 0) && (
+        <section className={styles.recommendationsSection}>
+          {relatedProducts.length > 0 && (
+            <div className={styles.recommendationBlock}>
+              <div className={styles.sectionHeader}>
+                <h2 className={styles.sectionTitle}>Related Products</h2>
+                <p className={styles.sectionText}>
+                  Same category ke aur products jo is item ke saath relevant hain.
+                </p>
+              </div>
+              <div className={styles.recommendationGrid}>
+                {relatedProducts.map(renderProductCard)}
+              </div>
+            </div>
+          )}
+
+          {groupedProducts.length > 0 && (
+            <div className={styles.recommendationBlock}>
+              <div className={styles.sectionHeader}>
+                <h2 className={styles.sectionTitle}>Explore More Products</h2>
+                <p className={styles.sectionText}>
+                  Sab products category wise organize karke niche dikh rahe hain.
+                </p>
+              </div>
+
+              <div className={styles.categoryStack}>
+                {groupedProducts.map(([categoryName, items]) => (
+                  <section key={categoryName} className={styles.categorySection}>
+                    <div className={styles.categoryHeader}>
+                      <h3 className={styles.categoryTitle}>{formatCategoryLabel(categoryName)}</h3>
+                    </div>
+                    <div className={styles.recommendationGrid}>
+                      {items.map(renderProductCard)}
+                    </div>
+                  </section>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+      )}
     </>
   );
 };

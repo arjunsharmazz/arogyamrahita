@@ -4,6 +4,21 @@ import { motion } from "framer-motion";
 import styles from "../css/ProductsSection.js.module.css";
 import { productAPI } from "../services/Api";
 
+const getCategoryName = (product) => {
+  const categoryValue = typeof product?.category === "string"
+    ? product.category
+    : product?.category?.name;
+  const normalizedCategory = categoryValue?.trim();
+
+  return normalizedCategory || "General";
+};
+
+const formatCategoryLabel = (categoryName) => categoryName
+  .split(/[-_\s]+/)
+  .filter(Boolean)
+  .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+  .join(" ");
+
 export default function FeaturedProductsSection() {
   const navigate = useNavigate();
 
@@ -107,89 +122,96 @@ export default function FeaturedProductsSection() {
     );
   }
 
+  const groupedProducts = products.reduce((groups, product) => {
+    const categoryName = getCategoryName(product);
+
+    if (!groups[categoryName]) {
+      groups[categoryName] = [];
+    }
+
+    groups[categoryName].push(product);
+    return groups;
+  }, {});
+
+  const sortedCategoryEntries = Object.entries(groupedProducts).sort(([left], [right]) =>
+    left.localeCompare(right, undefined, { sensitivity: "base" })
+  );
+
   return (
     <div className={styles.featuredProductsContainer}>
       <div className={styles.headerNavigation}>
         <h2 className={styles.sectionTitle}>Featured Products</h2>
       </div>
 
-      <motion.div
-        className={styles.productCarousel}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.7 }}
-      >
-        {products.map((product) => (
-          <motion.div
-            key={product._id}
-            className={styles.productCard}
-          >
-            <div className={styles.productImageContainer}>
-              <motion.img
-                src={product.image || "/placeholder.png"}
-                alt={product.name || "Product"}
-                className={styles.productImagese}
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.3 }}
-                onClick={() => navigate(`/product/${product._id}`)}
-                style={{ cursor: "pointer" }}
-              />
+      {sortedCategoryEntries.map(([categoryName, categoryProducts], categoryIndex) => (
+        <motion.section
+          key={categoryName}
+          className={styles.categorySection}
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: categoryIndex * 0.08 }}
+        >
+          <div className={styles.categoryHeader}>
+            <h3 className={styles.categoryTitle}>{formatCategoryLabel(categoryName)}</h3>
+          </div>
 
-              {getDisplayOldPrice(product) && (
-                <span className={`${styles.productBadge} ${styles.sale}`}>
-                  Sale
-                </span>
-              )}
-            </div>
-            <div className={styles.productContent}>
-              <h3 className={styles.productName}>
-                {product.name}{" "}
-                <span style={{ fontSize: "1rem", color: "#1f1f1fff" }}>
-                  {product.weight ?? ""} {product.weightUnit ?? ""}
-                </span>
-              </h3>
-              <div className={styles.productPriceInfo}>
-                {getDisplayOldPrice(product) && (
-                  <span className={styles.oldPrice}>₹{getDisplayOldPrice(product)}</span>
-                )}
-                <span className={styles.currentPrice}>₹{getDisplayPrice(product)}</span>
-              </div>
-              <p>
-                {product.description
-                  ? product.description.split(" ").slice(0, 20).join(" ") +
-                  (product.description.split(" ").length > 20 ? "..." : "")
-                  : "No description available."}
-              </p>
-              <div className={styles.productActions}>
-                <motion.button
-                  className={styles.buyButton}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => navigate(`/product/${product._id}`)}
-                >
-                  Buy Now
-                </motion.button>
-                {/* <motion.button
-                  className={styles.cartButton}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() =>
-                    addToCart({
-                      _id: product._id,
-                      name: product.name,
-                      newPrice: getDisplayPrice(product),
-                      oldPrice: getDisplayOldPrice(product),
-                      image: product.image,
-                      category: product.category,
-                      selectedVariant: product.variants?.[product.variants.length - 1] || null,
-                    })
-                  }
-                >
-                  <GrCart />
-                </motion.button> */}
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
+          <div className={styles.productCarousel}>
+            {categoryProducts.map((product) => (
+              <motion.div
+                key={product._id}
+                className={styles.productCard}
+              >
+                <div className={styles.productImageContainer}>
+                  <motion.img
+                    src={product.image || "/placeholder.png"}
+                    alt={product.name || "Product"}
+                    className={styles.productImagese}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                    onClick={() => navigate(`/product/${product._id}`)}
+                    style={{ cursor: "pointer" }}
+                  />
+
+                  {getDisplayOldPrice(product) && (
+                    <span className={`${styles.productBadge} ${styles.sale}`}>
+                      Sale
+                    </span>
+                  )}
+                </div>
+                <div className={styles.productContent}>
+                  <h3 className={styles.productName}>
+                    {product.name}{" "}
+                    <span style={{ fontSize: "1rem", color: "#1f1f1fff" }}>
+                      {product.weight ?? ""} {product.weightUnit ?? ""}
+                    </span>
+                  </h3>
+                  <div className={styles.productPriceInfo}>
+                    {getDisplayOldPrice(product) && (
+                      <span className={styles.oldPrice}>₹{getDisplayOldPrice(product)}</span>
+                    )}
+                    <span className={styles.currentPrice}>₹{getDisplayPrice(product)}</span>
+                  </div>
+                  <p>
+                    {product.description
+                      ? product.description.split(" ").slice(0, 20).join(" ") +
+                      (product.description.split(" ").length > 20 ? "..." : "")
+                      : "No description available."}
+                  </p>
+                  <div className={styles.productActions}>
+                    <motion.button
+                      className={styles.buyButton}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => navigate(`/product/${product._id}`)}
+                    >
+                      Buy Now
+                    </motion.button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+      ))}
     </div>
   );
 }

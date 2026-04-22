@@ -63,6 +63,11 @@
     width: 80%;
     border-radius: 12px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.96);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -70,6 +75,7 @@
     width: 100%;
     height: 55vh;
     display: block;
+    object-fit: contain;
     transition: transform 0.3s ease;
 }
 
@@ -275,15 +281,84 @@
 
 .variantSelector {
     margin-top: 1rem;
+    padding: 16px 18px;
+    border: 1px solid rgba(25, 118, 210, 0.12);
+    border-radius: 14px;
+    background: linear-gradient(180deg, #f9fbff 0%, #f2f7ff 100%);
+    box-shadow: 0 10px 24px rgba(21, 56, 107, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.variantSelectorHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.variantLabel {
+    display: block;
+    margin: 0;
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: #18324a;
+}
+
+.variantHint {
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: #607284;
+}
+
+.variantDropdownWrap {
+    position: relative;
+}
+
+.variantDropdownWrap::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid #3b5877;
+    border-bottom: 2px solid #3b5877;
+    transform: translateY(-65%) rotate(45deg);
+    pointer-events: none;
 }
 
 .variantDropdown {
-    padding: 0.5rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
+    padding: 0.9rem 2.75rem 0.9rem 0.95rem;
+    border-radius: 12px;
+    border: 1px solid #c9d7e8;
+    font-size: 0.98rem;
+    font-weight: 600;
     width: 100%;
-    max-width: 150px;
+    max-width: 100%;
+    color: #18324a;
+    background: #ffffff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.variantDropdown:hover:not(:disabled) {
+    border-color: #8cb0d9;
+}
+
+.variantDropdown:focus {
+    outline: none;
+    border-color: #1976d2;
+    box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.14);
+}
+
+.variantDropdown:disabled {
+    background: #eef2f6;
+    color: #8393a3;
+    cursor: not-allowed;
 }
 
 @keyframes loading {
@@ -326,6 +401,129 @@
     background: #1565c0;
 }
 
+.recommendationsSection {
+    max-width: 1200px;
+    margin: 0 auto 48px;
+    padding: 0 20px 30px;
+}
+
+.recommendationBlock + .recommendationBlock {
+    margin-top: 34px;
+}
+
+.sectionHeader {
+    margin-bottom: 18px;
+}
+
+.sectionTitle {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: #173726;
+}
+
+.sectionText {
+    margin: 8px 0 0;
+    color: #5a6f63;
+    font-size: 0.96rem;
+}
+
+.categoryStack {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.categoryHeader {
+    margin-bottom: 12px;
+}
+
+.categoryTitle {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #2e7d32;
+}
+
+.recommendationGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.recommendationCard {
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(46, 125, 50, 0.12);
+    box-shadow: 0 12px 28px rgba(16, 35, 26, 0.08);
+}
+
+.recommendationImageButton {
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: rgba(255, 255, 255, 0.96);
+    cursor: pointer;
+}
+
+.recommendationImage {
+    width: 100%;
+    height: 210px;
+    object-fit: contain;
+}
+
+.recommendationContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+}
+
+.recommendationCategory {
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #5a8f48;
+}
+
+.recommendationName {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.4;
+    color: #173726;
+}
+
+.recommendationPriceRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.recommendationPrice {
+    color: #2e7d32;
+    font-size: 1.04rem;
+    font-weight: 700;
+}
+
+.recommendationOldPrice {
+    color: #8b9890;
+    text-decoration: line-through;
+    font-size: 0.9rem;
+}
+
+.recommendationButton {
+    margin-top: auto;
+    border: 0;
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #2e7d32, #43a047);
+    color: #ffffff;
+    cursor: pointer;
+}
+
 @media (max-width: 768px) {
     .productDetail {
         grid-template-columns: 1fr;
@@ -357,6 +555,42 @@
     .mainImage {
         height: 30vh;
         width: 100%;
+    }
+
+    .recommendationsSection {
+        padding: 0 16px 24px;
+    }
+
+    .sectionText {
+        font-size: 0.88rem;
+    }
+
+    .recommendationGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .recommendationImage {
+        height: 130px;
+    }
+
+    .recommendationContent {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .recommendationName {
+        font-size: 0.9rem;
+    }
+
+    .recommendationPrice,
+    .recommendationOldPrice {
+        font-size: 0.82rem;
+    }
+
+    .recommendationButton {
+        padding: 9px 10px;
+        font-size: 0.78rem;
     }
 
     .productInfo {
@@ -396,12 +630,43 @@
         padding: 16px;
     }
 
+    .nameRow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
     .productName {
         font-size: 13px;
     }
 
+    .productWeight {
+        font-size: 0.76rem;
+        padding: 5px 12px;
+    }
+
     .currentPrice {
         font-size: 13px;
+    }
+
+    .quantitySelector {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-bottom: 24px;
+    }
+
+    .quantitySelector label {
+        margin-bottom: 0;
+        font-size: 0.86rem;
+    }
+
+    .quantityControls {
+        width: 100%;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 6px 8px;
+        border-radius: 12px;
     }
 
     .quantityControls button {
@@ -409,21 +674,54 @@
         height: 36px;
     }
 
+    .quantityControls span {
+        flex: 1;
+        text-align: center;
+        font-size: 1rem;
+    }
+
     .buyNowBtn,
     .addToCartBtn {
         flex: 1;
-        padding: 0.5rem;
+        padding: 0.72rem 0.9rem;
         border: none;
         border-radius: 8px;
-        font-size: 1.1rem;
+        font-size: 0.92rem;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
     }
 
+    .variantSelector {
+        margin-top: 0;
+        padding: 12px;
+        border-radius: 12px;
+        gap: 8px;
+    }
+
+    .variantLabel {
+        font-size: 0.88rem;
+    }
+
     .variantDropdown {
         width: 100%;
-        max-width: 150px;
-        font-size: 13px;
+        max-width: 100%;
+        font-size: 12.5px;
+        padding: 0.8rem 2.5rem 0.8rem 0.85rem;
+    }
+
+    .variantDropdownWrap::after {
+        right: 14px;
+        width: 9px;
+        height: 9px;
+    }
+
+    .variantHint {
+        font-size: 0.72rem;
+        line-height: 1.35;
+    }
+
+    .productActions {
+        gap: 10px;
     }
 }

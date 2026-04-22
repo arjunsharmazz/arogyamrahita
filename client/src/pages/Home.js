@@ -13,7 +13,7 @@ function Home() {
       {/* <Products /> */}
       <ProductsSection />
       <DiscountHero />
-      <Review />
+      {/* <Review /> */}
     </div>
   );
 }

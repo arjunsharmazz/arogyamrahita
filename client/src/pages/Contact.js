@@ -10,10 +10,8 @@ export default function Contact() {
 
   const [formData, setFormData] = useState({
     first_name: "",
-    last_name: "",
     email: user?.email || "",
     phone: user?.phone || user?.number || "",
-    country: "",
     subject: "",
     message: "",
     agree: false,
@@ -32,7 +30,7 @@ export default function Contact() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    if (name === "email" || name === "phone") return;
+    if (name === "phone") return;
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -44,9 +42,9 @@ export default function Contact() {
 
     if (!formData.first_name.trim())
       newErrors.first_name = "First name required";
-    if (!formData.last_name.trim()) newErrors.last_name = "Last name required";
-    if (!formData.email.trim()) newErrors.email = "Email required";
-    if (!formData.country.trim()) newErrors.country = "Country required";
+    if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      newErrors.email = "Enter a valid email address";
+    }
     if (!formData.message.trim()) newErrors.message = "Message required";
     if (!formData.agree) newErrors.agree = "You must accept Terms & Conditions";
 
@@ -66,10 +64,10 @@ export default function Contact() {
 
     const templateParams = {
       first_name: formData.first_name,
-      last_name: formData.last_name,
-      email: formData.email,
+      last_name: "",
+      email: formData.email.trim(),
       phone: formData.phone,
-      country: formData.country,
+      country: "",
       subject: formData.subject,
       message: formData.message,
     };
@@ -85,11 +83,9 @@ export default function Contact() {
         (res) => {
           setFormData({
             first_name: "",
-            last_name: "",
             email: user?.email || "",
             phone: user?.phone || user?.number || "",
             number: user?.number || "",
-            country: "",
             subject: "",
             message: "",
             agree: false,
@@ -131,31 +127,16 @@ export default function Contact() {
                 <span className={styles.error}>{errors.first_name}</span>
               )}
             </div>
-
-            <div className={styles.field}>
-              <label>Last Name *</label>
-              <input
-                type="text"
-                name="last_name"
-                placeholder="Last Name"
-                value={formData.last_name}
-                onChange={handleChange}
-              />
-              {errors.last_name && (
-                <span className={styles.error}>{errors.last_name}</span>
-              )}
-            </div>
           </div>
 
           <div className={styles.field}>
-            <label>Email Address *</label>
+            <label>Email Address (Optional)</label>
             <input
               type="email"
               name="email"
               placeholder="Email Address"
               value={formData.email}
               onChange={handleChange}
-              readOnly
             />
             {errors.email && (
               <span className={styles.error}>{errors.email}</span>
@@ -172,23 +153,6 @@ export default function Contact() {
               onChange={handleChange}
               readOnly
             />
-          </div>
-
-          <div className={styles.field}>
-            <label>Country / Region *</label>
-            <select
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-            >
-              <option value="">-- Select Country --</option>
-              <option>United States (US)</option>
-              <option>India</option>
-              <option>UK</option>
-            </select>
-            {errors.country && (
-              <span className={styles.error}>{errors.country}</span>
-            )}
           </div>
 
           <div className={styles.field}>

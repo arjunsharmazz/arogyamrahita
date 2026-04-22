@@ -33,11 +33,25 @@
     flex-direction: row-reverse;
 }
 
-.img {
+.imageFrame {
     width: 100%;
     max-width: 450px;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     border-radius: 20px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease-in-out;
 }
 
@@ -78,6 +92,10 @@
     }
 
     .img {
+        max-width: 100%;
+    }
+
+    .imageFrame {
         max-width: 100%;
     }
 

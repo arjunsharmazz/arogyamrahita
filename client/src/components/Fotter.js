@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import styles from "../css/Fotter.module.css";
 import { Link } from "react-router-dom";
 
+const FSSAI_REGISTRATION_IMAGE = "https://5.imimg.com/data5/SELLER/Default/2023/1/ZR/EE/IT/61456754/fssai-registration-and-license-services.png";
+
 const Fotter = () => {
   return (
     <footer className={styles.footer}>
@@ -97,6 +99,32 @@ const Fotter = () => {
             </li>
           </ul>
         </motion.div>
+
+        <motion.div
+          className={`${styles.footerSection} ${styles.fssaiSection}`}
+          whileHover={{ y: -4 }}
+        >
+          <div className={styles.fssaiTextBlock}>
+            <span className={styles.fssaiEyebrow}>Compliance</span>
+            <h3 className={styles.fssaiTitle}>FSSAI Registration</h3>
+            <p className={styles.fssaiDescription}>
+              Our food business registration details are displayed here for quick customer verification and trust.
+            </p>
+          </div>
+
+          <div className={styles.fssaiImageCard}>
+            <img
+              src={FSSAI_REGISTRATION_IMAGE}
+              alt="FSSAI registration and license services"
+              className={styles.fssaiImage}
+            />
+          </div>
+
+          <div className={styles.fssaiMeta}>
+            <span className={styles.fssaiMetaLabel}>Registration No.</span>
+            <strong className={styles.fssaiMetaValue}>22725628000102</strong>
+          </div>
+        </motion.div>
       </motion.div>
 
       <motion.div
@@ -105,10 +133,6 @@ const Fotter = () => {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.3 }}
       >
-        <div className={styles.certificateBadge}>
-          <span className={styles.certificateLabel}>FSSAI Registered</span>
-          <strong className={styles.certificateNumber}>Lic. No. 22725628000102</strong>
-        </div>
         <div className={styles.socialIcons}>
           <a href="https://www.instagram.com" target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i></a>
           <a href="https://www.facebook.com" target="_blank" rel="noreferrer"><i className="fab fa-facebook-f"></i></a>

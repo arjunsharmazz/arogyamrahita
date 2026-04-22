@@ -6,6 +6,8 @@ import bottle from "../images/benar2.jpg";
 import logo from "../images/benar3.jpg";
 import { homeBannerAPI } from "../services/Api";
 
+const preloadedBannerImages = new Set();
+
 const fallbackSlides = [
   { image: lamp, title: "", subtitle: "" },
   { image: bottle, title: "", subtitle: "" },
@@ -32,6 +34,20 @@ const variants = {
   }),
 };
 
+const preloadSlides = (items) => {
+  items.forEach((item) => {
+    const imageSrc = item?.image;
+
+    if (!imageSrc || preloadedBannerImages.has(imageSrc)) {
+      return;
+    }
+
+    const image = new Image();
+    image.src = imageSrc;
+    preloadedBannerImages.add(imageSrc);
+  });
+};
+
 const Banner = () => {
   const [[current, direction], setCurrent] = useState([0, 0]);
   const [slides, setSlides] = useState(fallbackSlides);
@@ -42,6 +58,7 @@ const Banner = () => {
         const response = await homeBannerAPI.getActive();
         const items = response?.data;
         if (Array.isArray(items) && items.length > 0) {
+          preloadSlides(items);
           setSlides(items);
         }
       } catch (_error) {
@@ -51,6 +68,10 @@ const Banner = () => {
 
     loadSlides();
   }, []);
+
+  useEffect(() => {
+    preloadSlides(slides);
+  }, [slides]);
 
   useEffect(() => {
     setCurrent(([prev]) => [Math.min(prev, Math.max(slides.length - 1, 0)), 0]);
@@ -86,6 +107,8 @@ const Banner = () => {
             src={slides[current]?.image || fallbackSlides[0].image}
             alt={slides[current]?.title || "banner"}
             className={styles.slideImage}
+            loading="eager"
+            fetchPriority="high"
             variants={variants}
             custom={direction}
             initial="enter"

@@ -4,10 +4,7 @@
     justify-content: center;
     align-items: center;
     padding: 20px;
-    background:
-        radial-gradient(circle at top left, rgba(15, 143, 95, 0.12), transparent 34%),
-        radial-gradient(circle at bottom right, rgba(161, 204, 133, 0.16), transparent 30%),
-        linear-gradient(180deg, #f7fcf8 0%, #eff7f0 100%);
+    
     font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
 
@@ -140,17 +137,20 @@
 .logoImage {
     width: 100px;
     height: 100px;
-    margin-bottom: 8px;
+    display: block;
+    margin: 0 auto 8px;
 }
 
 .title {
     font-weight: bold;
     color: #18392f;
+    text-align: center;
 }
 
 .subTitle {
     color: #5f7167;
     font-size: 0.95rem;
+    text-align: center;
 }
 
 .input {
