@@ -71,7 +71,6 @@ const Videos = () => {
                 <h1 className={styles.heading}>Videos + share posts</h1>
                
             </div>
-//adeded
             <div className={styles.grid}>
                 {feedItems.length === 0 ? (
                     <div className={styles.emptyState}>Abhi koi active video ya share post publish nahi hui hai.</div>
