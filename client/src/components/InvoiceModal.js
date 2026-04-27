@@ -3,7 +3,7 @@ import { useReactToPrint } from "react-to-print";
 import logoImage from "../images/arogyamlogo.png";
 import styles from "../css/InvoiceModal.module.css";
 
-const InvoiceContent = React.forwardRef(({ order }, ref) => {
+export const InvoiceContent = React.forwardRef(({ order }, ref) => {
   const shippingAddress = order.shippingAddress || {};
   const fullAddress = [
     shippingAddress.address,

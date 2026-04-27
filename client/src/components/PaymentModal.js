@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "../css/PaymentModal.module.css";
 import { authAPI, userAPI } from "../services/Api";
+import { FaMapMarkerAlt } from "react-icons/fa";
 const states = [
     "Andhra Pradesh",
     "Arunachal Pradesh",
@@ -45,8 +46,11 @@ const PaymentModal = ({ isOpen, onClose, onPlaceOrder }) => {
         city: "",
         state: "",
         pincode: "",
+        latitude: null,
+        longitude: null,
     });
     const [error, setError] = useState("");
+    const [locationLoading, setLocationLoading] = useState(false);
 
     useEffect(() => {
         if (!isOpen) return;
@@ -65,6 +69,8 @@ const PaymentModal = ({ isOpen, onClose, onPlaceOrder }) => {
                     city: u.city || prev.city,
                     state: u.state || prev.state,
                     pincode: u.pincode || prev.pincode,
+                    latitude: u.latitude || prev.latitude,
+                    longitude: u.longitude || prev.longitude,
                 }));
             } catch (e) {
                 // ignore - user can fill manually
@@ -72,6 +78,51 @@ const PaymentModal = ({ isOpen, onClose, onPlaceOrder }) => {
         };
         loadSavedAddress();
     }, [isOpen]);
+
+    const handleGetCurrentLocation = () => {
+        if (!navigator.geolocation) {
+            setError("Geolocation is not supported by this browser.");
+            return;
+        }
+
+        setLocationLoading(true);
+        setError("");
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                setAddress(prev => ({
+                    ...prev,
+                    latitude,
+                    longitude,
+                }));
+                setLocationLoading(false);
+                setError(""); // Clear any previous errors
+            },
+            (error) => {
+                setLocationLoading(false);
+                switch (error.code) {
+                    case error.PERMISSION_DENIED:
+                        setError("Location access denied. Please enable location permissions and try again.");
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        setError("Location information is unavailable. Please try again.");
+                        break;
+                    case error.TIMEOUT:
+                        setError("Location request timed out. Please try again.");
+                        break;
+                    default:
+                        setError("An unknown error occurred while retrieving location.");
+                        break;
+                }
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 300000, // 5 minutes
+            }
+        );
+    };
 
     if (!isOpen) return null;
 
@@ -139,6 +190,8 @@ const PaymentModal = ({ isOpen, onClose, onPlaceOrder }) => {
                         city: address.city,
                         state: address.state,
                         pincode: address.pincode,
+                        latitude: address.latitude,
+                        longitude: address.longitude,
                     }).catch(() => {});
                 },
                 (err) => {
@@ -165,6 +218,8 @@ const PaymentModal = ({ isOpen, onClose, onPlaceOrder }) => {
             city: "",
             state: "",
             pincode: "",
+            latitude: null,
+            longitude: null,
         });
         setError("");
         onClose();
@@ -286,6 +341,26 @@ const PaymentModal = ({ isOpen, onClose, onPlaceOrder }) => {
                                 className={styles.input}
                                 disabled={processing}
                             />
+
+                            {/* Location Sharing Section */}
+                            <div className={styles.locationSection}>
+                                <button
+                                    type="button"
+                                    onClick={handleGetCurrentLocation}
+                                    disabled={processing || locationLoading}
+                                    className={`${styles.btn} ${styles.locationBtn}`}
+                                >
+                                    <FaMapMarkerAlt style={{ marginRight: '8px' }} />
+                                    {locationLoading ? "Getting Location..." : "Share Current Location"}
+                                </button>
+                                {address.latitude && address.longitude && (
+                                    <div className={styles.locationDisplay}>
+                                        <small style={{ color: '#28a745', fontSize: '0.8rem' }}>
+                                            ✓ Location shared: {address.latitude.toFixed(6)}, {address.longitude.toFixed(6)}
+                                        </small>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                         {error && (
                             <div className={styles.error}>{error}</div>

@@ -40,6 +40,8 @@ const orderSchema = new mongoose.Schema(
             state: { type: String },
             pincode: { type: String },
             phone: { type: String },
+            latitude: { type: Number },
+            longitude: { type: Number },
         },
         paymentInfo: {
             method: { type: String },

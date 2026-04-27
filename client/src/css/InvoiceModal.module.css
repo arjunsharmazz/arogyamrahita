@@ -33,7 +33,7 @@
 }
 
 .printBtn {
-  background: linear-gradient(135deg, #1e5b49, #2f7d67);
+  background: #1e5b49;
   color: #fff;
   border: none;
   padding: 10px 22px;
@@ -176,7 +176,7 @@
 /* ────────── Divider ────────── */
 .divider {
   height: 3px;
-  background: linear-gradient(90deg, #1b5e20, #66bb6a, #a5d6a7);
+  background: #1b5e20;
   border-radius: 4px;
   margin: 16px 0 24px;
 }
@@ -226,7 +226,7 @@
 }
 
 .itemsTable thead tr {
-  background: linear-gradient(135deg, #1b5e20, #2e7d32);
+  background: #1b5e20;
   color: #fff;
 }
 

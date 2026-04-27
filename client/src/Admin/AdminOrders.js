@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { FiCheckCircle, FiDownload, FiFileText, FiFilter, FiPrinter, FiTruck } from "react-icons/fi";
+import { FiCheckCircle, FiDownload, FiFileText, FiFilter, FiMessageSquare, FiPrinter, FiTruck } from "react-icons/fi";
 import InvoiceModal, { BulkInvoicePrint } from "../components/InvoiceModal";
 import OrderTracker from "../components/OrderTracker";
 import styles from "../css/AdminPanel.module.css";
 import { adminAPI, ordersAPI } from "../services/Api";
 import { useReactToPrint } from "react-to-print";
 import * as XLSX from "xlsx";
+import jsPDF from "jspdf";
 import {
   formatOrderDate,
   orderStatuses,
@@ -185,6 +186,134 @@ const AdminOrders = () => {
     contentRef: bulkPrintRef,
     documentTitle: `All-Invoices-${activeTab}-${dateFilter || new Date().toISOString().slice(0, 10)}`,
   });
+
+  const handleWhatsAppShare = async (order) => {
+    try {
+      // Generate PDF
+      const pdf = new jsPDF();
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      let yPosition = 20;
+
+      // Add header
+      pdf.setFontSize(20);
+      pdf.setFont("helvetica", "bold");
+      pdf.text("AROGYAM RAHITA", pageWidth / 2, yPosition, { align: "center" });
+      yPosition += 10;
+
+      pdf.setFontSize(12);
+      pdf.setFont("helvetica", "normal");
+      pdf.text("Pure & Natural Wellness", pageWidth / 2, yPosition, { align: "center" });
+      yPosition += 20;
+
+      // Invoice details
+      pdf.setFontSize(14);
+      pdf.setFont("helvetica", "bold");
+      pdf.text("INVOICE", 20, yPosition);
+      yPosition += 10;
+
+      pdf.setFontSize(10);
+      pdf.setFont("helvetica", "normal");
+      pdf.text(`Invoice #: ${order.invoiceNumber || order._id}`, 20, yPosition);
+      pdf.text(`Date: ${new Date(order.createdAt).toLocaleDateString()}`, pageWidth - 20, yPosition, { align: "right" });
+      yPosition += 15;
+
+      // Customer details
+      pdf.setFont("helvetica", "bold");
+      pdf.text("Bill To:", 20, yPosition);
+      yPosition += 8;
+
+      pdf.setFont("helvetica", "normal");
+      const shipping = order.shippingAddress || {};
+      pdf.text(`Name: ${shipping.name || order.user?.name || "N/A"}`, 20, yPosition);
+      yPosition += 6;
+      pdf.text(`Phone: ${shipping.phone || order.user?.phone || "N/A"}`, 20, yPosition);
+      yPosition += 6;
+
+      const address = [
+        shipping.address,
+        shipping.addressLine2,
+        shipping.landmark,
+        shipping.city,
+        shipping.state,
+        shipping.pincode,
+      ].filter(Boolean).join(", ");
+      pdf.text(`Address: ${address || "N/A"}`, 20, yPosition);
+      yPosition += 15;
+
+      // Items table
+      pdf.setFont("helvetica", "bold");
+      pdf.text("Items:", 20, yPosition);
+      yPosition += 10;
+
+      // Table headers
+      pdf.setFontSize(9);
+      pdf.text("Item", 20, yPosition);
+      pdf.text("Qty", 120, yPosition);
+      pdf.text("Price", 150, yPosition);
+      pdf.text("Total", 180, yPosition);
+      yPosition += 5;
+
+      // Draw line
+      pdf.line(20, yPosition, pageWidth - 20, yPosition);
+      yPosition += 8;
+
+      // Items
+      pdf.setFont("helvetica", "normal");
+      (order.items || []).forEach((item) => {
+        const itemName = item.name || "Unknown Item";
+        const quantity = item.quantity || 1;
+        const price = item.price || 0;
+        const total = quantity * price;
+
+        // Handle long item names
+        const maxWidth = 90;
+        const lines = pdf.splitTextToSize(itemName, maxWidth);
+        lines.forEach((line, index) => {
+          pdf.text(line, 20, yPosition + (index * 5));
+        });
+        yPosition += lines.length * 5;
+
+        pdf.text(quantity.toString(), 120, yPosition - ((lines.length - 1) * 5));
+        pdf.text(`₹${price}`, 150, yPosition - ((lines.length - 1) * 5));
+        pdf.text(`₹${total}`, 180, yPosition - ((lines.length - 1) * 5));
+        yPosition += 8;
+      });
+
+      // Total
+      yPosition += 5;
+      pdf.line(20, yPosition, pageWidth - 20, yPosition);
+      yPosition += 10;
+
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(12);
+      pdf.text(`Grand Total: ₹${order.totalAmount || 0}`, pageWidth - 20, yPosition, { align: "right" });
+
+      // Generate PDF blob
+      const pdfBlob = pdf.output('blob');
+      const file = new File([pdfBlob], `invoice-${order.invoiceNumber || order._id}.pdf`, { type: 'application/pdf' });
+
+      // Share via Web Share API if supported
+      if (navigator.share && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          title: 'Invoice',
+          text: `Invoice for ${order.shippingAddress?.name || order.user?.name}`,
+          files: [file],
+        });
+      } else {
+        // Fallback: download the PDF
+        const url = URL.createObjectURL(pdfBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `invoice-${order.invoiceNumber || order._id}.pdf`;
+        a.click();
+        URL.revokeObjectURL(url);
+        alert('Invoice PDF downloaded. Please share it manually via WhatsApp.');
+      }
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('Unable to generate invoice PDF. Please try again.');
+    }
+  };
 
   const getNormalizedPaymentType = (paymentType) => {
     if (paymentType === "cash") return "cash";
@@ -471,6 +600,19 @@ const AdminOrders = () => {
                   <p><strong>State:</strong> {order.shippingAddress?.state || "-"}</p>
                   <p><strong>Pincode:</strong> {order.shippingAddress?.pincode || "-"}</p>
                   <p><strong>Phone:</strong> {order.shippingAddress?.phone || "-"}</p>
+                  {order.shippingAddress?.latitude && order.shippingAddress?.longitude && (
+                    <p>
+                      <strong>Location:</strong>{" "}
+                      <a
+                        href={`https://www.google.com/maps?q=${order.shippingAddress.latitude},${order.shippingAddress.longitude}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: "#007bff", textDecoration: "underline" }}
+                      >
+                        📍 {order.shippingAddress.latitude.toFixed(6)}, {order.shippingAddress.longitude.toFixed(6)}
+                      </a>
+                    </p>
+                  )}
                 </div>
 
                 <div className={styles.orderItemsBlock}>
@@ -541,6 +683,13 @@ const AdminOrders = () => {
                     onClick={() => setInvoiceOrder(order)}
                   >
                     <FiFileText /> View Invoice
+                  </button>
+                  <button
+                    className={styles.secondaryButton}
+                    onClick={() => handleWhatsAppShare(order)}
+                    style={{ backgroundColor: "#25D366", color: "white", marginLeft: 8 }}
+                  >
+                    <FiMessageSquare /> WhatsApp
                   </button>
                 </div>
 
