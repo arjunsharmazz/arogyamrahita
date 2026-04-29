@@ -125,6 +125,8 @@ function PaymentPageWrapper() {
           state: address.state || "",
           pincode: address.pincode,
           phone: address.phone,
+          latitude: address.latitude || null,
+          longitude: address.longitude || null,
         },
         paymentInfo: {
           method,

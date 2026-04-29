@@ -600,17 +600,21 @@ const AdminOrders = () => {
                   <p><strong>State:</strong> {order.shippingAddress?.state || "-"}</p>
                   <p><strong>Pincode:</strong> {order.shippingAddress?.pincode || "-"}</p>
                   <p><strong>Phone:</strong> {order.shippingAddress?.phone || "-"}</p>
-                  {order.shippingAddress?.latitude && order.shippingAddress?.longitude && (
+                  {order.shippingAddress?.latitude != null && order.shippingAddress?.longitude != null ? (
                     <p>
                       <strong>Location:</strong>{" "}
                       <a
-                        href={`https://www.google.com/maps?q=${order.shippingAddress.latitude},${order.shippingAddress.longitude}`}
+                        href={`https://www.google.com/maps/search/?api=1&query=${order.shippingAddress.latitude},${order.shippingAddress.longitude}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: "#007bff", textDecoration: "underline" }}
                       >
                         📍 {order.shippingAddress.latitude.toFixed(6)}, {order.shippingAddress.longitude.toFixed(6)}
                       </a>
+                    </p>
+                  ) : (
+                    <p>
+                      <strong>Location:</strong> <span style={{ color: "#6b7280" }}>Not shared</span>
                     </p>
                   )}
                 </div>

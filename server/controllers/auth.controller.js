@@ -311,6 +311,8 @@ exports.getProfile = async (req, res) => {
                 city: user.city || "",
                 state: user.state || "",
                 pincode: user.pincode || "",
+                latitude: user.latitude != null ? user.latitude : null,
+                longitude: user.longitude != null ? user.longitude : null,
             },
         });
     } catch (error) {
@@ -358,6 +360,9 @@ exports.updateProfile = async (req, res) => {
             return res.status(400).json({ message: "Please enter a valid 6-digit pincode." });
         }
 
+        const latitude = req.body.latitude;
+        const longitude = req.body.longitude;
+
         if (name) user.name = name;
         if (number) user.number = number;
         if (address !== undefined) user.address = address;
@@ -366,6 +371,18 @@ exports.updateProfile = async (req, res) => {
         if (city !== undefined) user.city = city;
         if (state !== undefined) user.state = state;
         if (pincode !== undefined) user.pincode = pincode;
+        if (latitude !== undefined) {
+            if (latitude !== null && isNaN(Number(latitude))) {
+                return res.status(400).json({ message: "Latitude must be a valid number." });
+            }
+            user.latitude = latitude !== null ? Number(latitude) : null;
+        }
+        if (longitude !== undefined) {
+            if (longitude !== null && isNaN(Number(longitude))) {
+                return res.status(400).json({ message: "Longitude must be a valid number." });
+            }
+            user.longitude = longitude !== null ? Number(longitude) : null;
+        }
 
         await user.save();
 
@@ -385,6 +402,8 @@ exports.updateProfile = async (req, res) => {
                 city: user.city || "",
                 state: user.state || "",
                 pincode: user.pincode || "",
+                latitude: user.latitude != null ? user.latitude : null,
+                longitude: user.longitude != null ? user.longitude : null,
             },
         });
     } catch (error) {

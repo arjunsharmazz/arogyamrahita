@@ -25,6 +25,8 @@ export const categories = [
   "aamla",
   "tea",
   "fast(varat)",
+  "clusters",
+  "vegetables"
 ];
 
 export const orderStatuses = [

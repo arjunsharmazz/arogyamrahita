@@ -17,6 +17,8 @@ const UserProfile = ({ isOpen, onClose }) => {
         city: '',
         state: '',
         pincode: '',
+        latitude: null,
+        longitude: null,
     });
 
     useEffect(() => {
@@ -283,6 +285,17 @@ const UserProfile = ({ isOpen, onClose }) => {
                                         <label>Saved Address</label>
                                         <p>
                                             {[formData.address, formData.addressLine2, formData.landmark, formData.city, formData.state, formData.pincode].filter(Boolean).join(', ')}
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+                            {(formData.latitude != null && formData.longitude != null) && (
+                                <div className={styles.infoItem}>
+                                    <IoLocation className={styles.icon} />
+                                    <div>
+                                        <label>Saved Location</label>
+                                        <p>
+                                            {formData.latitude.toFixed(6)}, {formData.longitude.toFixed(6)}
                                         </p>
                                     </div>
                                 </div>
