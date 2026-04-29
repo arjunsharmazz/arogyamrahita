@@ -16,14 +16,14 @@ const ArogyamSections = () => {
       <div className={styles.cardsContainer}>
         <div 
           className={styles.card}
-          onClick={() => handleCardClick('Vegetables')}
+          onClick={() => handleCardClick('vegetables')}
         >
           <img src={vegetablesImg} alt="Arogyam Vegetables" className={styles.cardImage} />
           <h3 className={styles.cardTitle}>Arogyam Vegetables</h3>
         </div>
         <div 
           className={styles.card}
-          onClick={() => handleCardClick('Clusters')}
+          onClick={() => handleCardClick('clusters')}
         >
           <img src={clustersImg} alt="Arogyam Clusters" className={styles.cardImage} />
           <h3 className={styles.cardTitle}>Arogyam Clusters</h3>
