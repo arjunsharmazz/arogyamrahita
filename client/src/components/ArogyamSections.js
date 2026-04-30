@@ -7,7 +7,7 @@ import { ChevronRight } from 'lucide-react';
 
 const ArogyamSections = () => {
   const navigate = useNavigate();
-  const [hoveredCard, setHoveredCard] = useState(null);
+  const [, setHoveredCard] = useState(null);
 
   const handleCardClick = (category) => {
     navigate(`/products?category=${encodeURIComponent(category)}`);
