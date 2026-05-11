@@ -1,77 +1,146 @@
 import styles from "../css/About.module.css";
-import WhoWeAreImage from "../images/WhoWeAre.jpeg";
-import OurProductsImage from "../images/ourproductrange.jpg";
-import OurMissionImage from "../images/ourpromise.jpg";
-import CustomerSatisfactionImage from "../images/customersatisfaction.jpg";
-import WhyChooseUsImage from "../images/whychooseaarogyamrahita.jpg";
-import MissionImage from "../images/ourmissionvision.jpg"
 
 const About = () => {
     const aboutData = [
         {
-            title: "🌿 Who We Are",
-            text: `Welcome to Aarogyam Rahita, a brand dedicated to providing authentic and natural organic products that enrich your life with purity, taste, and health. 
-      We specialize in traditional Indian food products made with care, love, and the wisdom of Ayurveda and Indian culture. 
-      Our vision is to reconnect people with the power of nature and promote healthy, chemical-free living.`,
-            image: WhoWeAreImage,
+            title: "ABOUT US",
+            text: `आरोग्यम रहिता एक स्वास्थ्यवर्धक खाद्य एवं जीवनशैली ब्रांड है, जो शुद्ध भोजन सामग्री, पारंपरिक उत्पादन पद्धति और भोजन विज्ञान आधारित डाइट सिस्टम पर कार्य करता है।
+
+हमारा उद्देश्य केवल खाद्य उत्पाद उपलब्ध कराना नहीं है, बल्कि लोगों को ऐसा भोजन देना है जो शरीर के लिए उपयोगी, पाचक, संतुलित और स्वास्थ्यवर्धक जीवनशैली से जुड़ा हो।
+
+आरोग्यम रहिता में शुद्ध आटा, दलिया, खिचड़ी मिक्स, दालें, मसाले, तेल, अचार, सिरका, व्रत किट, आंवला उत्पाद, हर्बल सपोर्ट और अन्य स्वास्थ्यवर्धक खाद्य सामग्री तैयार की जाती है।
+
+हमारा विश्वास है कि भोजन केवल पेट भरने के लिए नहीं, बल्कि शरीर को सही पोषण, सही पाचन और सही संतुलन देने के लिए होना चाहिए।`,
         },
         {
-            title: "🥗 Our Product Range",
+            title: "आरोग्यम रहिता",
+            text: `भोजन सही से पचता है, वही शरीर को पोषण देता है।
+और जो भोजन सही पोषण देता है, वही स्वास्थ्य की नींव बनाता है।`,
+        },
+        {
+            title: "हमारी सोच",
+            text: `आरोग्यम रहिता में भोजन को केवल product के रूप में नहीं देखा जाता। हम भोजन को शरीर की आवश्यकता, पाचन क्षमता, मौसम, दिनचर्या और जीवनशैली से जोड़कर देखते हैं।
+
+हमारा मानना है कि शरीर को केवल भोजन नहीं चाहिए, बल्कि ऐसा भोजन चाहिए जो सही समय पर लिया जाए, ठीक से पचे और शरीर में पोषण के रूप में काम करे।
+
+इसीलिए आरोग्यम रहिता भोजन को केवल उत्पाद नहीं मानता, बल्कि उसे एक health-supporting food system के रूप में देखता है।`,
+        },
+        {
+            title: "हमारी विशेष उत्पादन पद्धति",
             list: [
-                "Pickles (Achar) → Prepared using cold-pressed oils, natural spices, and traditional recipes for authentic homemade taste.",
-                "Spices (Masale) → Pure, aromatic, and chemical-free spices to enhance the flavor of your cooking.",
-                "Pulses & Grains (Dal & Anaj) → Nutritious, farm-fresh pulses and grains that promote a healthy diet.",
-                "Health Foods & Other Products → Naturally prepared items that support wellness and immunity.",
+                "वैदिक चक्की का ठंडा पिसा आटा — हम विशेष धीमी गति वाली वैदिक चक्की से आटा तैयार करवाते हैं। धीमी पिसाई से आटे में अत्यधिक गर्मी नहीं बनती, जिससे उसकी प्राकृतिक गुणवत्ता, स्वाद और उपयोगिता बेहतर रूप से सुरक्षित रहती है।",
+                "लकड़ी कच्ची घानी तेल — हम शुद्ध लकड़ी कच्ची घानी तेल को प्राथमिकता देते हैं, जो विशेष लकड़ी के कोल्हू से धीमी प्रक्रिया में तैयार होता है। इससे तेल की प्राकृतिक सुगंध, स्वाद और पारंपरिक गुणवत्ता बनी रहती है।",
+                "इमामदस्ते से कुटे मसाले — हमारे मसाले सामान्य पाउडर मसाले नहीं हैं। इन्हें इमामदस्ते की शैली से कूटने की पारंपरिक पद्धति से तैयार किया जाता है। इससे मसालों की प्राकृतिक खुशबू, स्वाद और पारंपरिक रसोई का अनुभव बना रहता है।",
             ],
-            image: OurProductsImage,
         },
         {
-            title: "🤝 Our Promise",
+            title: "हमारा भोजन विज्ञान सिस्टम",
+            text: `आरोग्यम रहिता की पूरी प्रणाली भोजन विज्ञान पर आधारित है।
+
+हम भोजन को शरीर की आवश्यकता, पाचन क्षमता, दिनचर्या और जीवनशैली के अनुसार समझने का प्रयास करते हैं। हमारा उद्देश्य व्यक्ति को केवल उत्पाद देना नहीं, बल्कि सही भोजन की समझ देना भी है।
+
+आरोग्यम रहिता में product और diet अलग-अलग नहीं हैं। दोनों मिलकर एक complete food system बनाते हैं।`,
+        },
+        {
+            title: "क्लस्टर आधारित भोजन प्रणाली",
+            text: `हर व्यक्ति का शरीर, पाचन, दिनचर्या और आवश्यकता अलग होती है। इसलिए एक ही भोजन प्रणाली सभी के लिए समान रूप से उपयोगी नहीं हो सकती।
+
+इसी सोच से आरोग्यम रहिता ने Cluster-wise Food System तैयार किया है।
+
+इसमें शरीर के संकेतों, जीवनशैली और भोजन से जुड़ी जरूरतों को समझकर आटा, दलिया, खिचड़ी, मसाले, तेल, हर्बल सपोर्ट, डाइट प्लान और दिनचर्या को व्यवस्थित किया जाता है।`,
             list: [
-                "Offering 100% natural, organic, and preservative-free products.",
-                "Sourcing raw materials directly from trusted farmers.",
-                "Ensuring hygienic processing and safe packaging.",
-                "Providing products that are rich in taste, nutrition, and authenticity.",
+                "Cluster 1 – Digestion & Gut Reset: पाचन, गैस, भारीपन और पेट की सफाई पर फोकस।",
+                "Cluster 2 – Detox & Heat Balance: शरीर की गर्मी, सफाई और हल्केपन पर फोकस।",
+                "Cluster 3 – Energy & Strength: ऊर्जा, कमजोरी और रिकवरी पर फोकस।",
+                "Cluster 4 – Mind & Hormone Balance: नींद, तनाव, मन और शरीर के संतुलन पर फोकस।",
+                "Cluster 5 – Healthy Forever Maintenance: लंबे समय तक स्वस्थ जीवनशैली बनाए रखने पर फोकस।",
             ],
-            image: OurMissionImage,
         },
         {
-            title: "🌎 Our Mission & Vision",
-            text: `Our mission is to spread awareness about healthy eating and organic living.`,
+            title: "21 दिन ट्रांसफॉर्मेशन सिस्टम",
+            text: `आरोग्यम रहिता का 21 दिन ट्रांसफॉर्मेशन सिस्टम भोजन विज्ञान और क्लस्टर सिस्टम पर आधारित एक व्यवस्थित जीवनशैली कार्यक्रम है।
+
+यह कोई जादुई दावा नहीं है, बल्कि सही भोजन, सही पाचन, सही routine और सही समझ के साथ शरीर को संतुलन की दिशा में ले जाने का प्रयास है।`,
             list: [
-                "Promote the use of traditional food practices.",
-                "Support local farmers and sustainable agriculture.",
-                "Deliver pure and high-quality organic products to every household in India.",
+                "Detox → Balance → Nutrition → Healthy Life",
+                "शोधन → संतुलन → पोषण → स्वस्थ जीवन",
             ],
             footer:
-                "Our vision is to build a healthier community where people choose natural foods over processed alternatives and experience the true benefits of organic living.",
-            image: MissionImage,
+                "इस सिस्टम में व्यक्ति केवल उत्पाद नहीं लेता, बल्कि यह भी समझता है कि उसे क्या खाना है, क्यों खाना है, कब खाना है और किस तरह खाना है। यही समझ आरोग्यम रहिता को केवल food brand नहीं, बल्कि एक व्यवस्थित health-supporting lifestyle system बनाती है।",
         },
         {
-            title: "📦 Customer Satisfaction",
-            list: [
-                "Transparent product information.",
-                "On-time delivery across India.",
-                "Quality assurance for every order.",
-                "Friendly support for customer queries.",
-            ],
-            image: CustomerSatisfactionImage,
+            title: "आरोग्यम रहिता क्यों अलग है?",
+            text: `आरोग्यम रहिता केवल शुद्ध उत्पाद तक सीमित नहीं है और केवल डाइट प्लान तक भी सीमित नहीं है।
+
+यह चार महत्वपूर्ण आधारों को जोड़ता है:`,
+            list: ["शुद्ध उत्पादन + भोजन विज्ञान + क्लस्टर सिस्टम + 21 दिन ट्रांसफॉर्मेशन सिस्टम"],
+            footer:
+                "हम शुद्ध आटा, तेल, मसाले और भोजन सामग्री तैयार करते हैं। फिर उन्हीं उत्पादों को शरीर की आवश्यकता के अनुसार क्लस्टर में व्यवस्थित करते हैं। और फिर व्यक्ति को 21 दिन के व्यवस्थित भोजन-सिस्टम से जोड़ते हैं। इस तरह आरोग्यम रहिता व्यक्ति को केवल product नहीं, बल्कि एक समझदार, प्राकृतिक और व्यवस्थित भोजन जीवनशैली देता है।",
         },
         {
-            title: "✨ Why Choose Aarogyam Rahita?",
+            title: "हमारा वचन",
             list: [
-                "100% natural and chemical-free products.",
-                "Traditional recipes and authentic taste.",
-                "Ethical sourcing and farmer empowerment.",
-                "Reliable service and customer-first approach.",
+                "शुद्ध, प्राकृतिक और भरोसेमंद उत्पाद उपलब्ध कराएँगे।",
+                "जहाँ संभव हो, पारंपरिक उत्पादन पद्धति को अपनाएँगे।",
+                "ग्राहक को केवल उत्पाद नहीं, सही भोजन की समझ भी देंगे।",
+                "स्वाद, पोषण और शुद्धता—तीनों का संतुलन बनाए रखेंगे।",
+                "हर परिवार को स्वस्थ भोजन की ओर प्रेरित करेंगे।",
             ],
-            image: WhyChooseUsImage,
+        },
+        {
+            title: "हमारा मिशन",
+            list: [
+                "भारत के हर घर तक शुद्ध, पारंपरिक और स्वास्थ्यवर्धक भोजन पहुँचाना।",
+                "लोगों को सही भोजन, सही संयोजन और सही दिनचर्या के प्रति जागरूक करना।",
+                "स्थानीय किसानों, पारंपरिक उत्पादन और प्राकृतिक खाद्य संस्कृति को बढ़ावा देना।",
+                "अत्यधिक प्रोसेस्ड भोजन के स्थान पर शुद्ध और संतुलित विकल्प उपलब्ध कराना।",
+                "भोजन को केवल स्वाद नहीं, बल्कि स्वास्थ्य का आधार बनाना।",
+            ],
+        },
+        {
+            title: "हमारा विज़न",
+            text: `हमारा विज़न है कि आने वाले समय में आरोग्यम रहिता हर परिवार के लिए एक भरोसेमंद स्वास्थ्यवर्धक भोजन ब्रांड बने।
+
+हम चाहते हैं कि लोग भोजन, दिनचर्या और प्राकृतिक जीवनशैली की शक्ति को समझें।`,
+            list: ["हर रसोई में शुद्ध भोजन", "हर परिवार में स्वास्थ्य की समझ", "हर जीवन में प्राकृतिक संतुलन"],
+        },
+        {
+            title: "ग्राहक संतुष्टि",
+            text: "हम ग्राहक को केवल उत्पाद नहीं देते, बल्कि भरोसा, जानकारी और गुणवत्ता देने का प्रयास करते हैं। हम ध्यान रखते हैं कि:",
+            list: [
+                "उत्पाद की स्पष्ट जानकारी मिले।",
+                "क्वालिटी और पैकिंग सुरक्षित हो।",
+                "ऑर्डर समय पर पहुँचे।",
+                "ग्राहक की समस्या का सम्मानपूर्वक समाधान हो।",
+                "हर उत्पाद में स्वाद, शुद्धता और भरोसा बना रहे।",
+            ],
+        },
+        {
+            title: "आरोग्यम रहिता क्यों चुनें?",
+            text: `क्योंकि यहाँ आपको केवल खाद्य उत्पाद नहीं मिलते, बल्कि भोजन को समझने और जीवन में सही तरीके से अपनाने की दिशा मिलती है।
+
+आरोग्यम रहिता चुनने के कारण:`,
+            list: [
+                "शुद्ध आटा, दलिया, खिचड़ी और हेल्थ फूड्स।",
+                "इमामदस्ते से कुटे पारंपरिक मसाले।",
+                "शुद्ध अचार, सिरका और घरेलू स्वाद।",
+                "व्रत और नवरात्रि के लिए विशेष फूड सिस्टम।",
+                "आंवला और प्राकृतिक हेल्थ उत्पाद।",
+                "भोजन विज्ञान आधारित 21 दिन ट्रांसफॉर्मेशन सिस्टम।",
+                "क्लस्टर आधारित डाइट और लाइफस्टाइल प्लानिंग।",
+                "स्वाद, शुद्धता, पोषण और परंपरा का संतुलन।",
+            ],
+        },
+        {
+            title: "मुख्य संदेश",
+            text: "आरोग्यम रहिता में Product और Diet अलग-अलग नहीं हैं — दोनों मिलकर एक Complete Food System बनाते हैं।",
+            footer: "आरोग्यम रहिता — शुद्ध भोजन, सही विज्ञान, स्वस्थ जीवन।",
         },
     ];
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.heading}>About Us – Aarogyam Rahita</h1>
+            <h1 className={styles.heading}>About Us – आरोग्यम रहिता</h1>
 
             {aboutData.map((section, index) => (
                 <div
@@ -79,15 +148,6 @@ const About = () => {
                     className={`${styles.section} ${index % 2 === 0 ? styles.left : styles.right
                         }`}
                 >
-                    {section.image && (
-                        <div className={styles.imageFrame}>
-                            <img
-                                src={section.image}
-                                alt={section.title}
-                                className={styles.img}
-                            />
-                        </div>
-                    )}
                     <div className={styles.content}>
                         <h2>{section.title}</h2>
                         {section.text && <p>{section.text}</p>}

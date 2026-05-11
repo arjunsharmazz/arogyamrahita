@@ -28,10 +28,28 @@ export const InvoiceContent = React.forwardRef(({ order }, ref) => {
 
   return (
     <div ref={ref} className={styles.invoicePage}>
+      {/* Decorative Header Elements */}
+      <div className={styles.decorativeTop}>
+        <div className={styles.decorativeCircle}></div>
+        <div className={styles.decorativeCircle}></div>
+        <div className={styles.decorativeCircle}></div>
+      </div>
+
       {/* Header */}
       <div className={styles.invoiceHeader}>
         <div className={styles.brandSection}>
-          <img src={logoImage} alt="Arogyam Rahita" className={styles.logo} />
+          <div className={styles.logoContainer}>
+            <img
+              src={logoImage}
+              alt="Arogyam Rahita Logo"
+              className={styles.logo}
+              onError={(e) => {
+                e.target.style.display = 'none';
+                console.log('Logo failed to load');
+              }}
+            />            <div className={styles.logoFallback}>
+              <span className={styles.logoText}>AR</span>
+            </div>          </div>
           <div>
             <h1 className={styles.brandName}>Arogyam Rahita</h1>
             <p className={styles.brandTagline}>Pure & Natural Wellness</p>
@@ -58,7 +76,12 @@ export const InvoiceContent = React.forwardRef(({ order }, ref) => {
         </div>
       </div>
 
-      <div className={styles.divider} />
+      <div className={styles.divider} />{/* Decorative Elements */}
+      <div className={styles.decorativeElements}>
+        <div className={styles.leafIcon}>🌿</div>
+        <div className={styles.leafIcon}>🌱</div>
+        <div className={styles.leafIcon}>🌿</div>
+      </div>
 
       {/* Customer Address */}
       <div className={styles.addressGrid}>

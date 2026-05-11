@@ -55,7 +55,7 @@ const AdminLayout = () => {
   return (
     <div className={styles.adminShell}>
       <aside className={styles.adminSidebar}>
-        <div>
+        <div className={styles.sidebarContent}>
           <div className={styles.sidebarBrand}>
             <span className={styles.brandAccent}>AR</span>
             <div>
@@ -70,20 +70,22 @@ const AdminLayout = () => {
             <p>{user?.email || "Manage products, orders, and promotions."}</p>
           </div>
 
-          <nav className={styles.sidebarNav}>
-            {navItems.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `${styles.sidebarLink} ${isActive ? styles.sidebarLinkActive : ""}`
-                }
-              >
-                <span>{item.icon}</span>
-                <span>{item.label}</span>
-              </NavLink>
-            ))}
-          </nav>
+          <div className={styles.sidebarNavContainer}>
+            <nav className={styles.sidebarNav}>
+              {navItems.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    `${styles.sidebarLink} ${isActive ? styles.sidebarLinkActive : ""}`
+                  }
+                >
+                  <span>{item.icon}</span>
+                  <span>{item.label}</span>
+                </NavLink>
+              ))}
+            </nav>
+          </div>
         </div>
 
         <div className={styles.sidebarFooter}>

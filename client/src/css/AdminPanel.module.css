@@ -21,6 +21,13 @@
   height: 100vh;
 }
 
+.sidebarContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
 .sidebarBrand {
   display: flex;
   align-items: center;
@@ -78,6 +85,11 @@
   font-size: 0.74rem;
   font-weight: 700;
   color: #b46d34;
+}
+
+.sidebarNavContainer {
+  flex: 1;
+  overflow-y: auto;
 }
 
 .sidebarNav {

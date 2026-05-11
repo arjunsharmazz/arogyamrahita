@@ -77,80 +77,229 @@ export const privacyPolicyDocument = {
 };
 
 export const termsDocument = {
-  title: "Terms & Conditions",
-  badge: "Public Legal Page",
-  lastUpdated: "19 April 2026",
-  meta: "Use of the app and ordering platform",
+  title: "TERMS & CONDITIONS",
+  badge: "आरोग्यम रहिता",
+  lastUpdated: "10 May 2026",
+  meta: "Website Usage, Orders, Products & Services",
   intro:
-    "These Terms & Conditions govern access to Aarogyam Rahita digital properties, including the Android app, website, checkout flows, media content, and support tools.",
+    "Welcome to Aarogyam Rahita / आरोग्यम रहिता. By using our website, placing an order, contacting us, downloading information, or using any product/service information available on this website, you agree to follow these Terms & Conditions. Please read them carefully.",
+
   sections: [
     {
-      heading: "1. Acceptance of Terms",
+      heading: "1. ABOUT AAROGYAM RAHITA",
       paragraphs: [
-        "By browsing, registering, ordering, or using any part of the service, you agree to these Terms and the Privacy Policy.",
-        "If you do not agree, you should stop using the platform."
+        "आरोग्यम रहिता एक स्वास्थ्यवर्धक खाद्य एवं जीवनशैली ब्रांड है, जो शुद्ध भोजन सामग्री, पारंपरिक उत्पादन पद्धति, भोजन विज्ञान, क्लस्टर आधारित फूड प्लानिंग और 21 दिन ट्रांसफॉर्मेशन सिस्टम की सोच पर कार्य करता है।",
+        "हमारा उद्देश्य लोगों को शुद्ध, पाचक, संतुलित और स्वास्थ्यवर्धक भोजन जीवनशैली की दिशा में सहायता देना है।"
       ]
     },
+
     {
-      heading: "2. Accounts and Eligibility",
+      heading: "2. WEBSITE INFORMATION",
       paragraphs: [
-        "You are responsible for keeping your login details secure and for activity performed through your account.",
-        "Information provided during registration, checkout, or support must be accurate and up to date."
+        "इस वेबसाइट पर दी गई जानकारी सामान्य जागरूकता, उत्पाद जानकारी, भोजन विज्ञान, जीवनशैली मार्गदर्शन और ब्रांड परिचय के उद्देश्य से दी गई है।",
+        "हम वेबसाइट पर उपलब्ध जानकारी को सही और अपडेट रखने का प्रयास करते हैं, लेकिन किसी भी जानकारी की पूर्णता, उपलब्धता या बिना त्रुटि होने की गारंटी नहीं दी जाती।",
+        "वेबसाइट की सामग्री समय-समय पर बिना पूर्व सूचना के अपडेट, बदली या हटाई जा सकती है।"
+      ]
+    },
+
+    {
+      heading: "3. HEALTH & MEDICAL DISCLAIMER",
+      paragraphs: [
+        "आरोग्यम रहिता किसी भी बीमारी के निदान, उपचार, चिकित्सा या पूर्ण समाधान का दावा नहीं करता।",
+        "हमारे उत्पाद, डाइट प्लान, क्लस्टर सिस्टम, हर्बल सपोर्ट या 21 दिन ट्रांसफॉर्मेशन सिस्टम स्वास्थ्यवर्धक भोजन और संतुलित जीवनशैली की दिशा में सहायक प्रयास हैं।",
+        "किसी भी बीमारी, दवा, एलर्जी, गर्भावस्था, गंभीर स्वास्थ्य स्थिति, बच्चों, बुजुर्गों या विशेष मेडिकल कंडीशन में किसी भी उत्पाद, डाइट या हर्बल सपोर्ट का उपयोग करने से पहले योग्य डॉक्टर, डाइटिशियन या हेल्थ एक्सपर्ट से सलाह लेना आवश्यक है।",
+        "परिणाम व्यक्ति की उम्र, शरीर की प्रकृति, पाचन क्षमता, जीवनशैली, अनुशासन, स्वास्थ्य स्थिति और नियमितता पर निर्भर कर सकते हैं।"
+      ]
+    },
+
+    {
+      heading: "4. PRODUCT INFORMATION",
+      paragraphs: [
+        "आरोग्यम रहिता में शुद्ध आटा, दलिया, खिचड़ी मिक्स, दालें, मसाले, तेल, अचार, सिरका, व्रत किट, आंवला उत्पाद, हर्बल फूड सपोर्ट और अन्य स्वास्थ्यवर्धक खाद्य सामग्री उपलब्ध कराई जा सकती है।",
+        "उत्पादों की उपलब्धता, पैकिंग, मात्रा, कीमत, सामग्री, स्वाद और वैरिएंट समय-समय पर बदल सकते हैं।",
+        "उत्पाद की final जानकारी product label, invoice, packaging या official confirmation के अनुसार मानी जाएगी।"
+      ]
+    },
+
+    {
+      heading: "5. FOOD SAFETY & QUALITY",
+      paragraphs: [
+        "हम अपने उत्पादों में शुद्धता, गुणवत्ता और सुरक्षित प्रक्रिया का ध्यान रखने का प्रयास करते हैं।",
+        "जहाँ लागू हो, खाद्य सुरक्षा, पैकिंग, लेबलिंग और संबंधित नियमों का पालन करने का प्रयास किया जाता है।",
+        "ग्राहक को सलाह दी जाती है कि product label, ingredients, expiry/best before date, storage instructions और allergen information को उपयोग से पहले ध्यानपूर्वक पढ़ें।"
+      ]
+    },
+
+    {
+      heading: "6. ALLERGY & INDIVIDUAL SUITABILITY",
+      paragraphs: [
+        "कुछ उत्पादों में अनाज, दालें, बीज, मसाले, तेल, आंवला, हर्बल सामग्री या अन्य प्राकृतिक ingredients हो सकते हैं।",
+        "यदि आपको किसी ingredient से allergy, intolerance या sensitivity है, तो product इस्तेमाल करने से पहले label और expert advice अवश्य लें।",
+        "आरोग्यम रहिता किसी व्यक्ति की व्यक्तिगत allergy या शरीर की अलग प्रतिक्रिया के लिए जिम्मेदार नहीं होगा, यदि ग्राहक ने product information और expert advice को ध्यान में नहीं रखा।"
+      ]
+    },
+
+    {
+      heading: "7. CLUSTER SYSTEM & 21 DAY TRANSFORMATION SYSTEM",
+      paragraphs: [
+        "Cluster-Based Food Planning और 21 दिन ट्रांसफॉर्मेशन सिस्टम आरोग्यम रहिता की भोजन विज्ञान आधारित जीवनशैली प्रणाली का हिस्सा हैं।",
+        "यह कोई medical treatment या guaranteed result program नहीं है।",
+        "यह सही भोजन, सही routine, पाचन, संतुलन और जागरूकता की दिशा में एक structured lifestyle-support system है।",
+        "किसी भी व्यक्ति को system अपनाने से पहले अपनी health condition, medical history और body suitability को ध्यान में रखना चाहिए।"
+      ]
+    },
+
+    {
+      heading: "8. ORDERS & ACCEPTANCE",
+      paragraphs: [
+        "Website, phone, WhatsApp, app या अन्य माध्यम से किया गया order उपलब्धता और confirmation पर निर्भर करेगा।",
+        "Order place करने के बाद भी यदि product unavailable है, pricing error है या delivery संभव नहीं है, तो आरोग्यम रहिता order cancel या modify करने का अधिकार रखता है।",
+        "Order confirmation मिलने के after ही order final माना जाएगा।"
+      ]
+    },
+
+    {
+      heading: "9. PRICING & PAYMENT",
+      paragraphs: [
+        "सभी prices समय-समय पर बदल सकते हैं।",
+        "Website पर दिखाई गई price, offer या discount में कभी-कभी technical error हो सकता है। ऐसी स्थिति में final confirmed price ही मान्य होगी।",
+        "Payment online, cash, UPI, bank transfer या उपलब्ध payment method के अनुसार स्वीकार किया जा सकता है।"
+      ]
+    },
+
+    {
+      heading: "10. DELIVERY & SHIPPING",
+      paragraphs: [
+        "Delivery location, product availability, courier service और local conditions के अनुसार delivery time बदल सकता है।",
+        "हम समय पर delivery का प्रयास करते हैं, लेकिन courier delay, मौसम, festival rush, address issue, natural disturbance या अन्य कारणों से delay हो सकता है।",
+        "ग्राहक को सही नाम, mobile number, address और delivery details देना आवश्यक है।",
+        "गलत address या unavailable customer के कारण delivery fail होने पर extra delivery charges लागू हो सकते हैं।"
+      ]
+    },
+
+    {
+      heading: "11. CANCELLATION",
+      paragraphs: [
+        "Order cancellation product status पर निर्भर करेगी।",
+        "यदि order packing या dispatch से पहले cancel किया जाता है, तो cancellation request consider की जा सकती है।",
+        "Dispatch के बाद cancellation संभव हो या न हो, यह courier status और product nature पर निर्भर करेगा।"
+      ]
+    },
+
+    {
+      heading: "12. RETURN, REPLACEMENT & REFUND",
+      paragraphs: [
+        "Food products होने के कारण open, used, damaged after delivery, tampered या improper storage वाले products return नहीं किए जा सकते।",
+        "Return या replacement केवल निम्न स्थिति में consider किया जा सकता है:"
       ],
       list: [
-        "Accounts may be suspended for misuse, fraud, abuse, or policy violations",
-        "Order access, profile access, and admin features may depend on role-based permissions",
-        "Some services may require identity, address, or delivery verification"
+        "गलत product मिला हो",
+        "product damaged condition में मिला हो",
+        "product expired या clearly defective हो",
+        "packaging delivery के समय visibly damaged हो",
+        "Customer को delivery के 24 hours के अंदर photo/video proof के साथ complaint register करनी होगी।",
+        "Refund, replacement या store credit का निर्णय product condition, proof और internal verification के बाद लिया जाएगा।",
+        "Refund approved होने पर payment source या agreed method के माध्यम से process किया जाएगा।"
       ]
     },
+
     {
-      heading: "3. Orders, Pricing, and Availability",
+      heading: "13. CUSTOMER RESPONSIBILITY",
       paragraphs: [
-        "Products, prices, discounts, and stock availability can change without prior notice.",
-        "An order becomes final only after confirmation and successful processing under the applicable payment flow."
+        "Customer की जिम्मेदारी होगी कि वह:"
       ],
       list: [
-        "Displayed images and descriptions are presented as accurately as reasonably possible",
-        "Minor packaging or display variations may occur",
-        "The platform may refuse or cancel suspicious, duplicate, or technically invalid orders"
+        "Product label और instructions पढ़े",
+        "Allergy या health condition होने पर expert advice ले",
+        "Product को सही storage condition में रखे",
+        "Expiry/best before date का ध्यान रखे",
+        "Website या app का गलत उपयोग न करे",
+        "झूठी complaint, fake claim या misuse न करे"
       ]
     },
+
     {
-      heading: "4. Payments, Delivery, and Returns",
+      heading: "14. USE OF WEBSITE",
       paragraphs: [
-        "By placing an order, you agree to pay all applicable charges, including taxes, delivery fees, and order adjustments shown at checkout."
+        "User वेबसाइट का उपयोग केवल lawful और personal purpose के लिए कर सकता है।",
+        "User वेबसाइट पर उपलब्ध content को बिना अनुमति copy, modify, reproduce, sell, misuse या misleading context में use नहीं कर सकता।",
+        "Website की security, server, content, design, database या functionality में छेड़छाड़ करना सख्त मना है।"
+      ]
+    },
+
+    {
+      heading: "15. INTELLECTUAL PROPERTY",
+      paragraphs: [
+        "Website पर उपलब्ध logo, brand name, text, images, design, content, graphics, product names, system names, cluster concept और 21 दिन ट्रांसफॉर्मेशन सिस्टम से संबंधित सामग्री आरोग्यम रहिता / उसके owners की intellectual property हो सकती है।",
+        "बिना written permission के इस सामग्री का commercial use, copying या reproduction अनुमति नहीं है।"
+      ]
+    },
+
+    {
+      heading: "16. THIRD-PARTY LINKS",
+      paragraphs: [
+        "Website पर कभी-कभी third-party links, payment gateway, delivery partner, social media links या external pages हो सकते हैं।",
+        "ऐसे external websites या services की privacy, security, content या policy के लिए आरोग्यम रहिता जिम्मेदार नहीं होगा।"
+      ]
+    },
+
+    {
+      heading: "17. LIMITATION OF LIABILITY",
+      paragraphs: [
+        "आरोग्यम रहिता website use, product misuse, wrong storage, allergy, individual body reaction, delayed delivery, incorrect user information, third-party service issue या information interpretation से होने वाले किसी direct/indirect loss के लिए जिम्मेदार नहीं होगा, जहाँ गलती customer side, third party या uncontrollable situation से हो।"
+      ]
+    },
+
+    {
+      heading: "18. OFFERS & PROMOTIONS",
+      paragraphs: [
+        "Offers, discounts, combos, kits, workshops या special programs limited period और availability के आधार पर हो सकते हैं।",
+        "आरोग्यम रहिता किसी भी offer को बदलने, रोकने या withdraw करने का अधिकार रखता है।"
+      ]
+    },
+
+    {
+      heading: "19. PRIVACY",
+      paragraphs: [
+        "Customer data का उपयोग order processing, delivery, customer support, service improvement और communication के लिए किया जा सकता है।",
+        "User की privacy से संबंधित विस्तृत जानकारी हमारी Privacy Policy में दी जा सकती है।"
+      ]
+    },
+
+    {
+      heading: "20. CHANGES TO TERMS",
+      paragraphs: [
+        "आरोग्यम रहिता इन Terms & Conditions को समय-समय पर बदल या update कर सकता है।",
+        "Updated terms website पर publish होने के बाद लागू माने जाएँगे।",
+        "User को समय-समय पर इस page को review करना चाहिए।"
+      ]
+    },
+
+    {
+      heading: "21. GOVERNING LAW & JURISDICTION",
+      paragraphs: [
+        "ये Terms & Conditions भारत के लागू कानूनों के अनुसार संचालित माने जाएँगे।",
+        "किसी भी विवाद की स्थिति में संबंधित jurisdiction Meerut, Uttar Pradesh / India के competent courts के अधीन हो सकती है, जब तक applicable law कुछ और निर्धारित न करे।"
+      ]
+    },
+
+    {
+      heading: "22. CONTACT US",
+      paragraphs: [
+        "किसी भी order, product, complaint, return, refund या website-related query के लिए आप हमसे संपर्क कर सकते हैं:"
       ],
       list: [
-        { label: "Shipping & Delivery Policy", to: "/shipping-delivery", description: "Estimated dispatch and delivery expectations" },
-        { label: "Return & Refund Policy", to: "/returnRefund", description: "Cancellation, return, and refund rules" }
-      ]
-    },
-    {
-      heading: "5. User Conduct",
-      paragraphs: [
-        "You must not attempt to misuse the platform, interfere with operations, access restricted areas without permission, or upload harmful or illegal content.",
-        "Content submitted by users may be moderated or removed where needed to protect the service or other users."
-      ],
-      list: [
-        { label: "User Content Policy", to: "/user-content-policy", description: "Rules for videos, comments, posts, uploads, and other user submissions" }
-      ]
-    },
-    {
-      heading: "6. Intellectual Property and Liability",
-      paragraphs: [
-        "Branding, product data, images, layouts, text, software logic, and original platform materials remain protected by applicable intellectual property rights.",
-        "To the extent allowed by law, Aarogyam Rahita is not liable for indirect or incidental losses caused by service outages, courier delays, device issues, or user misuse."
-      ]
-    },
-    {
-      heading: "7. Changes to the Service or Terms",
-      paragraphs: [
-        "We may modify features, discontinue portions of the service, or update these Terms when needed for legal, operational, or product reasons. Material updates become effective when published on the platform."
+        "Aarogyam Rahita / आरोग्यम रहिता",
+        "Address: C-3, Sainik Vihar, Nangla Tashi, Kankarkhera, Meerut, Uttar Pradesh",
+        "Website: www.aarogyamrahita.com",
+        "App: Aarogyam Rahita",
+        "Mobile: 8979444801"
       ]
     }
   ],
+
   footerNote:
-    "Continued use of the platform after an updated version is published means the revised Terms will apply from that point onward."
+    "IMPORTANT NOTE: यह Terms & Conditions draft website use के लिए तैयार किया गया है। Final legal publishing से पहले इसे अपने business model, FSSAI details, GST details, payment gateway, refund policy और legal advisor के अनुसार review/update कर लेना बेहतर रहेगा।"
 };
 
 export const refundDocument = {
