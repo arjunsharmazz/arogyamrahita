@@ -15,6 +15,7 @@ const initialFormData = {
   newPrice: "",
   category: "general",
   stock: "",
+  isActive: true,
   variants: [],
 };
 
@@ -100,8 +101,11 @@ const AdminProducts = () => {
   };
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((current) => ({ ...current, [name]: value }));
+    const { name, value, type, checked } = event.target;
+    setFormData((current) => ({
+      ...current,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
   const handleVariantInputChange = (event) => {
@@ -221,6 +225,7 @@ const AdminProducts = () => {
       newPrice: product.newPrice || "",
       category: product.category || "general",
       stock: product.stock || "",
+      isActive: product.isActive !== undefined ? product.isActive : true,
       variants: Array.isArray(product.variants) ? product.variants : [],
     });
     setVariantInput(initialVariantInput);
@@ -436,6 +441,19 @@ const AdminProducts = () => {
                     onChange={handleInputChange}
                   />
                 </div>
+              </div>
+
+              <div className={legacyStyles.formGroup}>
+                <label>Status</label>
+                <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                  <input
+                    type="checkbox"
+                    name="isActive"
+                    checked={formData.isActive}
+                    onChange={handleInputChange}
+                  />
+                  <span>{formData.isActive ? "Active" : "Inactive"}</span>
+                </label>
               </div>
 
               <div className={legacyStyles.formGroup}>

@@ -46,17 +46,24 @@ exports.createProduct = async (req, res) => {
 exports.getAllProducts = async (req, res) => {
     try {
         const { category, search } = req.query;
-        const filter = { isActive: true };
+        // Filter: show products that are explicitly active OR don't have isActive field (legacy products)
+        const filter = {
+            $or: [{ isActive: true }, { isActive: { $exists: false } }]
+        };
 
         if (category) {
             filter.category = category;
         }
 
         if (search) {
-            filter.$or = [
-                { name: { $regex: search, $options: 'i' } },
-                { description: { $regex: search, $options: 'i' } },
-                { category: { $regex: search, $options: 'i' } }
+            filter.$and = [
+                {
+                    $or: [
+                        { name: { $regex: search, $options: 'i' } },
+                        { description: { $regex: search, $options: 'i' } },
+                        { category: { $regex: search, $options: 'i' } }
+                    ]
+                }
             ];
         }
 

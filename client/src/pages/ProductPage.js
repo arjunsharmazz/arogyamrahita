@@ -20,7 +20,7 @@ const ProductPage = () => {
         category: true,
         price: true,
     });
-    const [priceValue, setPriceValue] = useState(1000);
+    const [priceValue, setPriceValue] = useState(50000);
     const [products, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [loading, setLoading] = useState(true);
@@ -258,14 +258,14 @@ const ProductPage = () => {
                         <input
                             type="range"
                             min="0"
-                            max="1000"
+                            max="50000"
                             value={priceValue}
                             onChange={(e) => setPriceValue(e.target.value)}
                             className={styles.rangeInput}
                         />
                         <div className={styles.priceLabels}>
                             <span>₹{priceValue}</span>
-                            <span>₹1000</span>
+                            <span>₹50000</span>
                         </div>
                         <div className={styles.currentPrice}>
                             Selected: ₹{priceValue}
@@ -286,7 +286,7 @@ const ProductPage = () => {
                             <Menu size={18} />
                         </button>
                     )}
-                    <h1 className={styles.pageTitle}>Organic Products</h1>
+                    <h1 className={styles.pageTitle}>Products</h1>
                     <div className={styles.sortSection}>
                         <span className={styles.productCount}>
                             Showing {filteredAndSortedProducts.length} of{" "}
