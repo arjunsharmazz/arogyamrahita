@@ -157,6 +157,29 @@ exports.register = async (req, res) => {
     }
 };
 
+exports.getReferralCodes = async (req, res) => {
+    try {
+        const referralUsers = await User.find({
+            role: GROUP_ADMIN_ROLE,
+            isActive: true,
+            referralCode: { $exists: true, $ne: "" },
+        })
+            .select("referralCode group name")
+            .sort({ group: 1, name: 1 });
+
+        const referralCodes = referralUsers.map((user) => ({
+            code: user.referralCode,
+            group: user.group || "unassigned",
+            name: user.name,
+        }));
+
+        res.json(referralCodes);
+    } catch (error) {
+        console.error("Get Referral Codes Error:", error);
+        res.status(500).json({ message: "Server error while fetching referral codes" });
+    }
+};
+
 exports.login = async (req, res) => {
     try {
         const errors = validationResult(req);

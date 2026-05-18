@@ -47,6 +47,11 @@ export const authAPI = {
         return response.data;
     },
 
+    getReferralCodes: async () => {
+        const response = await api.get('/auth/referral-codes');
+        return response.data;
+    },
+
     refreshToken: async () => {
         const response = await api.post('/auth/refresh-token');
         return response.data;

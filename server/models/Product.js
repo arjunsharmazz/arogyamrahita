@@ -47,8 +47,9 @@ const productSchema = new mongoose.Schema(
         variants: [
             {
                 name: { type: String, required: true },
-                weight: { type: Number, required: true },
-                weightUnit: { type: String, enum: ["kg", "gm", "ltr", "ml"], required: true },
+                isKit: { type: Boolean, default: false },
+                weight: { type: Number, required: function() { return !this.isKit; } },
+                weightUnit: { type: String, enum: ["kg", "gm", "ltr", "ml"], required: function() { return !this.isKit; } },
                 oldPrice: { type: Number, required: true },
                 newPrice: { type: Number, required: true },
                 stock: { type: Number, default: 0 },

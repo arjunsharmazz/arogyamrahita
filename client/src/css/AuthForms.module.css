@@ -160,7 +160,21 @@
     background: #fbfefb !important;
 }
 
-.input:focus {
+.selectWrapper {
+    position: relative;
+}
+
+.selectIcon {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #5f7167;
+    font-size: 1rem;
+}
+
+.input {
     border-color: #0f8f5f !important;
     box-shadow: 0 0 0 0.2rem rgba(15, 143, 95, 0.15) !important;
     background: #ffffff !important;

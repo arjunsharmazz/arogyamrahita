@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, Form, Button, Spinner } from "react-bootstrap";
 import {
@@ -9,6 +9,7 @@ import {
     FaEyeSlash,
     FaCheckCircle,
     FaExclamationTriangle,
+    FaChevronDown,
 } from "react-icons/fa";
 import { authAPI } from "../services/Api";
 import { useAuth } from "../context/AuthContext";
@@ -32,11 +33,28 @@ const Signup = () => {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
     const [notification, setNotification] = useState(null);
+    const [referralCodes, setReferralCodes] = useState([]);
+    const [referralLoading, setReferralLoading] = useState(true);
 
     const showNotification = (message, type = "info") => {
         setNotification({ message, type });
         setTimeout(() => setNotification(null), 5000);
     };
+
+    useEffect(() => {
+        const loadReferralCodes = async () => {
+            try {
+                const codes = await authAPI.getReferralCodes();
+                setReferralCodes(codes);
+            } catch (error) {
+                console.error("Referral codes load failed", error);
+            } finally {
+                setReferralLoading(false);
+            }
+        };
+
+        loadReferralCodes();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -223,17 +241,47 @@ const Signup = () => {
 
                                 <Form.Group className="mb-3">
                                     <Form.Label className={styles.labelName}>
-                                        <FaUser className="me-2" /> Referral Code
+                                        <FaUser className="me-2" /> CHOOSE GROUP
                                     </Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="referralCode"
-                                        value={formData.referralCode}
-                                        onChange={handleChange}
-                                        placeholder="Enter group referral code"
-                                        isInvalid={!!errors.referralCode}
-                                        className={styles.input}
-                                    />
+                                    {referralLoading ? (
+                                        <div className="d-flex align-items-center gap-2">
+                                            <Spinner animation="border" size="sm" />
+                                            <span>Loading referral codes...</span>
+                                        </div>
+                                    ) : referralCodes.length > 0 ? (
+                                        <>
+                                            <div className={styles.selectWrapper}>
+                                                <Form.Select
+                                                    name="referralCode"
+                                                    value={formData.referralCode}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!errors.referralCode}
+                                                    className={styles.input}
+                                                >
+                                                    <option value="">CHOOSE GROUP</option>
+                                                    {referralCodes.map((ref) => (
+                                                        <option key={ref.code} value={ref.code}>
+                                                            {ref.code}
+                                                        </option>
+                                                    ))}
+                                                </Form.Select>
+                                                <FaChevronDown className={styles.selectIcon} />
+                                            </div>
+                                            <Form.Text className="text-muted">
+                                                CHOOSE GROUP to get exclusive benefits and offers. If you don't have one, ask your group admin for the referral code.
+                                            </Form.Text>
+                                        </>
+                                    ) : (
+                                        <Form.Control
+                                            type="text"
+                                            name="referralCode"
+                                            value={formData.referralCode}
+                                            onChange={handleChange}
+                                            placeholder="Enter group referral code"
+                                            isInvalid={!!errors.referralCode}
+                                            className={styles.input}
+                                        />
+                                    )}
                                     <Form.Control.Feedback type="invalid">{errors.referralCode}</Form.Control.Feedback>
                                 </Form.Group>
 

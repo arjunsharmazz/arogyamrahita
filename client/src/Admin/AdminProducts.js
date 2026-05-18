@@ -22,6 +22,7 @@ const initialVariantInput = {
   name: "",
   weight: "",
   weightUnit: "kg",
+  isKit: false,
   oldPrice: "",
   newPrice: "",
   stock: "",
@@ -104,8 +105,11 @@ const AdminProducts = () => {
   };
 
   const handleVariantInputChange = (event) => {
-    const { name, value } = event.target;
-    setVariantInput((current) => ({ ...current, [name]: value }));
+    const { name, value, type, checked } = event.target;
+    setVariantInput((current) => ({
+      ...current,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
   const addVariant = (event) => {
@@ -113,8 +117,7 @@ const AdminProducts = () => {
 
     if (
       !variantInput.name ||
-      !variantInput.weight ||
-      !variantInput.weightUnit ||
+      (!variantInput.isKit && !variantInput.weight) ||
       variantInput.stock === "" ||
       variantInput.oldPrice === "" ||
       variantInput.newPrice === ""
@@ -126,6 +129,7 @@ const AdminProducts = () => {
       const duplicateExists = current.variants.some(
         (variant) =>
           variant.name === variantInput.name &&
+          variant.isKit === variantInput.isKit &&
           Number(variant.weight) === Number(variantInput.weight) &&
           variant.weightUnit === variantInput.weightUnit
       );
@@ -140,8 +144,9 @@ const AdminProducts = () => {
           ...current.variants,
           {
             name: variantInput.name,
-            weight: Number(variantInput.weight),
-            weightUnit: variantInput.weightUnit,
+            isKit: variantInput.isKit,
+            weight: variantInput.isKit ? 0 : Number(variantInput.weight),
+            weightUnit: variantInput.isKit ? "" : variantInput.weightUnit,
             oldPrice: Number(variantInput.oldPrice),
             newPrice: Number(variantInput.newPrice),
             stock: Number(variantInput.stock),
@@ -323,7 +328,7 @@ const AdminProducts = () => {
                       <div className={panelStyles.variantChips}>
                         {product.variants.slice(0, 4).map((variant, index) => (
                           <span key={`${product._id}-${index}`} className={panelStyles.variantChip}>
-                            {variant.name} {variant.weight}{variant.weightUnit}
+                            {variant.name} {variant.isKit ? "(KIT)" : `${variant.weight}${variant.weightUnit}`}
                           </span>
                         ))}
                       </div>
@@ -455,6 +460,15 @@ const AdminProducts = () => {
                     placeholder="Variant"
                     style={{ width: "120px" }}
                   />
+                  <label style={{ display: "flex", alignItems: "center", gap: "0.25rem", marginTop: "0.4rem" }}>
+                    <input
+                      type="checkbox"
+                      name="isKit"
+                      checked={variantInput.isKit}
+                      onChange={handleVariantInputChange}
+                    />
+                    KIT
+                  </label>
                   <input
                     type="number"
                     name="weight"
@@ -464,12 +478,14 @@ const AdminProducts = () => {
                     min="0"
                     step="0.01"
                     style={{ width: "100px" }}
+                    disabled={variantInput.isKit}
                   />
                   <select
                     name="weightUnit"
                     value={variantInput.weightUnit}
                     onChange={handleVariantInputChange}
                     style={{ width: "100px" }}
+                    disabled={variantInput.isKit}
                   >
                     <option value="kg">kg</option>
                     <option value="gm">gm</option>
@@ -516,6 +532,7 @@ const AdminProducts = () => {
                       <thead>
                         <tr>
                           <th>Name</th>
+                          <th>Type</th>
                           <th>Weight</th>
                           <th>Unit</th>
                           <th>Old Price (₹)</th>
@@ -533,10 +550,13 @@ const AdminProducts = () => {
                                   <input type="text" value={variant.name} onChange={(e) => handleVariantFieldChange(index, "name", e.target.value)} style={{ width: "90px" }} />
                                 </td>
                                 <td>
-                                  <input type="number" value={variant.weight} onChange={(e) => handleVariantFieldChange(index, "weight", e.target.value)} min="0" step="0.01" style={{ width: "70px" }} />
+                                  <input type="checkbox" checked={variant.isKit} onChange={(e) => handleVariantFieldChange(index, "isKit", e.target.checked)} /> Kit
                                 </td>
                                 <td>
-                                  <select value={variant.weightUnit} onChange={(e) => handleVariantFieldChange(index, "weightUnit", e.target.value)} style={{ width: "70px" }}>
+                                  <input type="number" value={variant.weight} onChange={(e) => handleVariantFieldChange(index, "weight", e.target.value)} min="0" step="0.01" style={{ width: "70px" }} disabled={variant.isKit} />
+                                </td>
+                                <td>
+                                  <select value={variant.weightUnit} onChange={(e) => handleVariantFieldChange(index, "weightUnit", e.target.value)} style={{ width: "70px" }} disabled={variant.isKit}>
                                     <option value="kg">kg</option>
                                     <option value="gm">gm</option>
                                     <option value="ltr">ltr</option>
@@ -560,8 +580,8 @@ const AdminProducts = () => {
                             ) : (
                               <>
                                 <td>{variant.name}</td>
-                                <td>{variant.weight}</td>
-                                <td>{variant.weightUnit}</td>
+                                <td>{variant.isKit ? "KIT" : variant.weight}</td>
+                                <td>{variant.isKit ? "" : variant.weightUnit}</td>
                                 <td>{variant.oldPrice}</td>
                                 <td>{variant.newPrice}</td>
                                 <td>{variant.stock}</td>
