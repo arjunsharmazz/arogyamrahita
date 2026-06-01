@@ -39,6 +39,27 @@
   border-color: #b8b8d1;
 }
 
+@media (max-width: 768px) {
+  .orderHistoryPage {
+    padding: 20px;
+  }
+
+  .orderHistoryHeader {
+    font-size: 1.8rem;
+    margin-bottom: 24px;
+  }
+
+  .orderCardsGrid {
+    gap: 16px;
+  }
+
+  .orderCardPro {
+    min-width: 100%;
+    max-width: 100%;
+    padding: 20px 16px 16px 16px;
+  }
+}
+
 .orderCardPro .orderStatus {
   position: absolute;
   top: 18px;
@@ -64,6 +85,25 @@
   margin-bottom: 18px;
 }
 
+@media (max-width: 480px) {
+  .orderCardPro .orderStatus {
+    font-size: 0.8rem;
+    padding: 3px 10px;
+    top: 12px;
+    right: 12px;
+  }
+
+  .orderCardPro .orderDate {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+  }
+
+  .orderCardPro .orderTotal {
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+  }
+}
+
 .orderCardPro .orderItemsList {
   list-style: none;
   padding: 0;
@@ -84,28 +124,63 @@
   border-radius: 8px;
   border: 1px solid #eee;
   background: #fafafa;
+  flex-shrink: 0;
 }
 
 .orderCardPro .orderItemName {
   font-weight: 500;
   color: #22223b;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .orderCardPro .orderItemVariant {
   color: #888;
   font-size: 13px;
   margin-left: 4px;
+  white-space: nowrap;
 }
 
 .orderCardPro .orderItemQty {
   color: #6b7280;
   font-size: 14px;
+  flex-shrink: 0;
 }
 
 .orderCardPro .orderItemPrice {
   margin-left: auto;
   font-weight: 500;
   color: #3730a3;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .orderCardPro .orderItemRow {
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+  }
+
+  .orderCardPro .orderItemImg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .orderCardPro .orderItemName {
+    font-size: 0.9rem;
+  }
+
+  .orderCardPro .orderItemVariant {
+    font-size: 11px;
+  }
+
+  .orderCardPro .orderItemQty,
+  .orderCardPro .orderItemPrice {
+    font-size: 0.85rem;
+  }
 }
 
 .orderActions {
@@ -132,6 +207,18 @@
 .invoiceBtn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+@media (max-width: 480px) {
+  .orderActions {
+    justify-content: center;
+  }
+
+  .invoiceBtn {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    width: 100%;
+  }
 }
 
 @media (max-width: 480px) {

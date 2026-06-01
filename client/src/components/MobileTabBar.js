@@ -3,6 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { RiHome5Line, RiShoppingBag3Line, RiShoppingCart2Line } from "react-icons/ri";
 import { HiOutlineClipboardList } from "react-icons/hi";
 import { MdOutlinePerson } from "react-icons/md";
+import { FiGrid, FiMapPin } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import styles from "../css/MobileTabBar.module.css";
@@ -22,13 +23,15 @@ function MobileTabBar() {
 
   const pathname = location.pathname;
 
-  if (
-    hiddenPaths.includes(pathname) ||
-    pathname.startsWith("/admin") ||
-    pathname.startsWith("/delivery")
-  ) {
-    return null;
-  }
+  const { isAdmin, isDelivery } = useAuth();
+
+  // Hide completely on a set of sensitive paths (auth, payment, etc.)
+  if (hiddenPaths.includes(pathname)) return null;
+
+  // If on admin/delivery routes, only show the bar when the signed-in user
+  // has the appropriate role. Otherwise hide it.
+  if (pathname.startsWith("/admin") && !isAdmin()) return null;
+  if (pathname.startsWith("/delivery") && !isDelivery()) return null;
 
   const tabs = [
     {
@@ -68,6 +71,28 @@ function MobileTabBar() {
       badge: cartCount,
     },
   ];
+
+  // Add an Admin / Delivery quick tab for users with those roles
+  if (isAdmin() || isDelivery()) {
+    const adminTab = isAdmin()
+      ? {
+          key: "admin",
+          label: "Admin",
+          to: "/admin/overview",
+          icon: FiGrid,
+          isActive: pathname.startsWith("/admin"),
+        }
+      : {
+          key: "delivery",
+          label: "Delivery",
+          to: "/delivery/orders",
+          icon: FiMapPin,
+          isActive: pathname.startsWith("/delivery"),
+        };
+
+    // put admin button first for visibility
+    tabs.unshift(adminTab);
+  }
 
   return (
     <nav className={styles.mobileTabBar} aria-label="Mobile quick navigation">
