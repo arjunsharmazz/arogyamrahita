@@ -19,12 +19,19 @@
 
 .scrollContainer {
   display: flex;
-  overflow-x: hidden;
+  overflow-x: auto;
   gap: 1.5rem;
   padding: 12px 0;
   position: relative;
   white-space: nowrap;
   cursor: grab;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .scrollContainer.active {

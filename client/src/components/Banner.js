@@ -108,7 +108,6 @@ const Banner = () => {
             alt={slides[current]?.title || "banner"}
             className={styles.slideImage}
             loading="eager"
-            fetchPriority="high"
             variants={variants}
             custom={direction}
             initial="enter"

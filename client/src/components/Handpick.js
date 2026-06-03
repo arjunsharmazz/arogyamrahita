@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import styles from "../css/handpick.module.css";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
-import { productAPI } from "../services/Api";
+import { categoryAPI, productAPI } from "../services/Api";
 
 
 
 const CategoryCard = ({ title, imageUrl, onClick }) => {
-  const [imageSrc, setImageSrc] = useState(imageUrl);
+  const placeholderImage = `https://placehold.co/400x300/4CAF50/FFFFFF?text=${encodeURIComponent(title)}`;
+  const [imageSrc, setImageSrc] = useState(imageUrl || placeholderImage);
 
   const handleImageError = () => {
     setImageSrc("");
@@ -51,144 +52,135 @@ const Handpick = () => {
   const scrollContainerRef = useRef(null);
   const navigate = useNavigate();
 
-  const autoScrollRef = useRef(null);
-  const resumeTimeout = useRef(null);
-
-
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchCategories = async () => {
       setLoading(true);
       try {
-        const data = await productAPI.getAllProducts();
-        if (data && Array.isArray(data.products)) {
-          const catMap = {};
-          data.products.forEach((prod) => {
-            if (prod.category && !catMap[prod.category]) {
-              catMap[prod.category] = prod;
+        const data = await productAPI.getCategories();
+        if (data?.success && Array.isArray(data.categories) && data.categories.length) {
+          setCategoryProducts(
+            data.categories.map((name) => ({
+              name,
+              image: `https://placehold.co/400x300/4CAF50/FFFFFF?text=${encodeURIComponent(name)}`,
+            }))
+          );
+          return;
+        }
+
+        const fallback = await categoryAPI.getAllCategories();
+        if (fallback?.success && Array.isArray(fallback.categories) && fallback.categories.length) {
+          setCategoryProducts(
+            fallback.categories.map((cat) => ({
+              name: cat.name,
+              image: cat.image || `https://placehold.co/400x300/4CAF50/FFFFFF?text=${encodeURIComponent(cat.name)}`,
+            }))
+          );
+          return;
+        }
+
+        const productsRes = await productAPI.getAllProducts({ limit: 100 });
+        if (productsRes?.success && Array.isArray(productsRes.products) && productsRes.products.length) {
+          const unique = {};
+          productsRes.products.forEach((product) => {
+            if (product.category && !unique[product.category]) {
+              unique[product.category] = product.category;
             }
           });
-          setCategoryProducts(Object.values(catMap));
+          const derivedCategories = Object.keys(unique).map((name) => ({
+            name,
+            image: `https://placehold.co/400x300/4CAF50/FFFFFF?text=${encodeURIComponent(name)}`,
+          }));
+          setCategoryProducts(derivedCategories);
         } else {
           setCategoryProducts([]);
         }
       } catch (err) {
-        setError("Failed to load products");
+        setError("Failed to load categories");
       } finally {
         setLoading(false);
       }
     };
-    fetchProducts();
+    fetchCategories();
   }, []);
-
-  const startAutoScroll = useCallback(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const scrollSpeed = 0.7;
-
-    const scroll = () => {
-      container.scrollLeft += scrollSpeed;
-      if (container.scrollLeft >= container.scrollWidth / 2) {
-        container.scrollLeft = 0;
-      }
-      autoScrollRef.current = requestAnimationFrame(scroll);
-    };
-
-    autoScrollRef.current = requestAnimationFrame(scroll);
-  }, []);
-
-  const stopAutoScroll = useCallback(() => {
-    if (autoScrollRef.current) {
-      cancelAnimationFrame(autoScrollRef.current);
-      autoScrollRef.current = null;
-    }
-    if (resumeTimeout.current) {
-      clearTimeout(resumeTimeout.current);
-    }
-  }, []);
-
-  const restartAutoScroll = useCallback(() => {
-    resumeTimeout.current = setTimeout(() => {
-      startAutoScroll();
-    }, 2000);
-  }, [startAutoScroll]);
 
   useEffect(() => {
-    if (categoryProducts.length > 0) {
-      startAutoScroll();
-      const container = scrollContainerRef.current;
+    if (!scrollContainerRef.current) return;
 
-      let isDown = false;
-      let startX;
-      let scrollLeft;
+    const container = scrollContainerRef.current;
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
 
-      const handleMouseDown = (e) => {
-        isDown = true;
-        container.classList.add(styles.active);
-        startX = e.pageX - container.offsetLeft;
-        scrollLeft = container.scrollLeft;
-        stopAutoScroll();
-      };
+    const handleMouseDown = (e) => {
+      isDown = true;
+      container.classList.add(styles.active);
+      startX = e.pageX - container.offsetLeft;
+      scrollLeft = container.scrollLeft;
+    };
 
-      const handleMouseLeave = () => {
-        isDown = false;
-      };
+    const handleMouseLeave = () => {
+      isDown = false;
+      container.classList.remove(styles.active);
+    };
 
-      const handleMouseUp = () => {
-        isDown = false;
-        container.classList.remove(styles.active);
-        restartAutoScroll();
-      };
+    const handleMouseUp = () => {
+      isDown = false;
+      container.classList.remove(styles.active);
+    };
 
-      const handleMouseMove = (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - container.offsetLeft;
-        const walk = (x - startX) * 1.5;
-        container.scrollLeft = scrollLeft - walk;
-      };
+    const handleMouseMove = (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - container.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      container.scrollLeft = scrollLeft - walk;
+    };
 
-      const handleTouchStart = () => stopAutoScroll();
-      const handleTouchEnd = () => restartAutoScroll();
+    const handleTouchStart = (e) => {
+      isDown = true;
+      startX = e.touches[0].pageX - container.offsetLeft;
+      scrollLeft = container.scrollLeft;
+    };
 
-      container.addEventListener("mousedown", handleMouseDown);
-      container.addEventListener("mouseleave", handleMouseLeave);
-      container.addEventListener("mouseup", handleMouseUp);
-      container.addEventListener("mousemove", handleMouseMove);
+    const handleTouchEnd = () => {
+      isDown = false;
+    };
 
-      container.addEventListener("touchstart", handleTouchStart);
-      container.addEventListener("touchend", handleTouchEnd);
+    const handleTouchMove = (e) => {
+      if (!isDown) return;
+      const x = e.touches[0].pageX - container.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      container.scrollLeft = scrollLeft - walk;
+    };
 
-      return () => {
-        stopAutoScroll();
-        container.removeEventListener("mousedown", handleMouseDown);
-        container.removeEventListener("mouseleave", handleMouseLeave);
-        container.removeEventListener("mouseup", handleMouseUp);
-        container.removeEventListener("mousemove", handleMouseMove);
-        container.removeEventListener("touchstart", handleTouchStart);
-        container.removeEventListener("touchend", handleTouchEnd);
-      };
-    }
-  }, [categoryProducts, restartAutoScroll, startAutoScroll, stopAutoScroll]);
+    container.addEventListener("mousedown", handleMouseDown);
+    container.addEventListener("mouseleave", handleMouseLeave);
+    container.addEventListener("mouseup", handleMouseUp);
+    container.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("touchstart", handleTouchStart);
+    container.addEventListener("touchend", handleTouchEnd);
+    container.addEventListener("touchmove", handleTouchMove);
+
+    return () => {
+      container.removeEventListener("mousedown", handleMouseDown);
+      container.removeEventListener("mouseleave", handleMouseLeave);
+      container.removeEventListener("mouseup", handleMouseUp);
+      container.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("touchstart", handleTouchStart);
+      container.removeEventListener("touchend", handleTouchEnd);
+      container.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, [categoryProducts]);
 
   const scrollManually = (direction) => {
     const container = scrollContainerRef.current;
     if (!container) return;
     const amount = 320;
-    stopAutoScroll();
     container.scrollLeft += direction === "left" ? -amount : amount;
-
-    if (container.scrollLeft >= container.scrollWidth / 2) {
-      container.scrollLeft = 0;
-    }
-    if (container.scrollLeft < 0) {
-      container.scrollLeft = container.scrollWidth / 2;
-    }
-    restartAutoScroll();
   };
 
   const handleCategoryClick = (category) => {
-    navigate(`/products?category=${encodeURIComponent(category.category)}`);
+    navigate(`/products?category=${encodeURIComponent(category.name || category)}`);
   };
 
   return (
@@ -215,13 +207,17 @@ const Handpick = () => {
         <div className={styles.errorMessage}>
           <p>Unable to load categories. Please try again later.</p>
         </div>
+      ) : categoryProducts.length === 0 ? (
+        <div className={styles.errorMessage}>
+          <p>No categories available at the moment.</p>
+        </div>
       ) : (
         <div style={{ position: "relative" }}>
           <div className={styles.scrollContainer} ref={scrollContainerRef}>
             {categoryProducts.map((product, index) => (
               <CategoryCard
                 key={`cat-${index}`}
-                title={product.category}
+                title={product.name}
                 imageUrl={product.image}
                 onClick={() => handleCategoryClick(product)}
               />
