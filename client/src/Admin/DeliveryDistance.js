@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { FiMapPin, FiNavigation, FiPlusCircle, FiTruck } from "react-icons/fi";
+import { FiMapPin, FiNavigation, FiPlusCircle, FiTruck, FiTrash2 } from "react-icons/fi";
 import { deliveryLogAPI } from "../services/Api";
+import { toast } from "react-toastify";
 import styles from "../css/AdminPanel.module.css";
 
 const todayString = () => new Date().toISOString().slice(0, 10);
@@ -74,11 +75,24 @@ const DeliveryDistance = () => {
         routeText: form.routeText,
       });
       setForm({ entryDate: todayString(), distanceKm: "", routeText: "" });
+      toast.success("Delivery added successfully!");
       await fetchLogs();
     } catch (error) {
       console.error("Failed to save distance log", error);
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this entry?")) {
+      try {
+        await deliveryLogAPI.remove(id);
+        toast.success("Delivery entry deleted!");
+        await fetchLogs();
+      } catch (error) {
+        console.error("Failed to delete distance log", error);
+      }
     }
   };
 
@@ -186,9 +200,18 @@ const DeliveryDistance = () => {
 
                 <div className={styles.deliveryLogEntries}>
                   {group.routes.map((route) => (
-                    <div key={route._id} className={styles.deliveryLogEntry}>
-                      <strong>{Number(route.distanceKm).toFixed(1)} km</strong>
-                      <p>{route.routeText}</p>
+                    <div key={route._id} className={styles.deliveryLogEntry} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div>
+                        <strong>{Number(route.distanceKm).toFixed(1)} km</strong>
+                        <p>{route.routeText}</p>
+                      </div>
+                      <button 
+                        onClick={() => handleDelete(route._id)}
+                        style={{ background: 'none', border: 'none', color: '#ff4d4f', cursor: 'pointer', padding: '8px' }}
+                        title="Delete entry"
+                      >
+                        <FiTrash2 size={18} />
+                      </button>
                     </div>
                   ))}
                 </div>

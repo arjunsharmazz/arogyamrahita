@@ -58,3 +58,27 @@ exports.listDeliveryLogs = async (req, res) => {
         res.status(500).json({ message: "Server error while loading distance logs" });
     }
 };
+
+exports.deleteDeliveryLog = async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        const log = await DeliveryDistanceLog.findById(id);
+        
+        if (!log) {
+            return res.status(404).json({ message: "Delivery log not found" });
+        }
+        
+        // Ensure only the delivery boy who created it or an admin can delete it
+        if (req.user.role === "delivery" && log.deliveryBoy.toString() !== req.user.id.toString()) {
+            return res.status(403).json({ message: "Not authorized to delete this log" });
+        }
+        
+        await DeliveryDistanceLog.findByIdAndDelete(id);
+        
+        res.json({ message: "Delivery log deleted successfully" });
+    } catch (error) {
+        console.error("Delete Delivery Log Error:", error);
+        res.status(500).json({ message: "Server error while deleting distance log" });
+    }
+};

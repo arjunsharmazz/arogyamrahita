@@ -213,6 +213,10 @@ export const deliveryLogAPI = {
         const response = await api.post('/delivery-logs', payload);
         return response.data;
     },
+    remove: async (id) => {
+        const response = await api.delete(`/delivery-logs/${id}`);
+        return response.data;
+    },
 };
 
 export const categoryAPI = {
